@@ -1,0 +1,15 @@
+title: LockOrUnlockResponse
+type: object
+properties:
+  traceNo:
+    type: string
+  result:
+    type: boolean
+  statusCode:
+    type: string
+  userId:
+    type: string
+  statusDesc:
+    type: string
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

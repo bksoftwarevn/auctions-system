@@ -1,0 +1,5 @@
+title: Attributes
+type: object
+description: Additional properties
+additionalProperties:
+  type: string

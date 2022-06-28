@@ -1,0 +1,33 @@
+title: UserInfo
+type: object
+properties:
+  externalId:
+    type: string
+  legalEntityInternalId:
+    type: string
+  fullName:
+    type: string
+  preferredLanguage:
+    type: string
+  emailAddress:
+    type: string
+  mobileNumber:
+    type: string
+  status:
+    type: string
+  emailVerified:
+    type: string
+  createdDate:
+    type: string
+  requiredActions:
+    type: array
+    items:
+      type: string
+  givenName:
+    type: string
+  familyName:
+    type: string
+  attributes:
+    $ref: './attributes.yaml'
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

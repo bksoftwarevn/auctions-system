@@ -1,0 +1,31 @@
+title: DemographicResponse
+type: object
+properties:
+  traceNo:
+    type: string
+  result:
+    type: boolean
+  statusCode:
+    type: string
+  statusDesc:
+    type: string
+  devices:
+    type: array
+    items:
+      $ref: '../pdms-common.yaml#/components/schemas/Device'
+  identity:
+    $ref: '../pdms-common.yaml#/components/schemas/UserIdentity'
+  arrangements:
+    type: array
+    items:
+      $ref: '../pdms-common.yaml#/components/schemas/ArrangementItem'
+  fidoRegistrations:
+    type: array
+    items:
+      $ref: '../pdms-common.yaml#/components/schemas/RegistrationItem'
+  authInfo:
+    type: array
+    items:
+      $ref: '../pdms-common.yaml#/components/schemas/LoginManagementItem'
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

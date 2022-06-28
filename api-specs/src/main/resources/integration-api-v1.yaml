@@ -1,0 +1,51 @@
+openapi: 3.0.3
+
+info:
+  title: PDMS Client API Spec
+  description: Specs for PDMS Client API
+  version: 1.11.0
+  x-icon: pdms
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/v1
+
+tags:
+  - name: Retail
+
+paths:
+
+  /integration-api/v1/lockOrUnlock:
+    description: Lock & Unlock Users
+    post:
+      summary: Post request to lock or unlock user by cif
+      description: request to lock or unlock user by cif
+      operationId: postLockOrUnlock'
+      requestBody:
+        description: lock or unlock request
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/lock-unlock-request.yaml'
+      responses:
+        "200":
+          $ref: 'pdms-common.yaml#/components/responses/LockOrUnlockResponse'
+      tags:
+        - pdms-integration
+  /integration-api/v1/demographic:
+    description: Demographic
+    post:
+      summary: Post request to get demographic user by cif
+      description: request to get demographic user by cif
+      operationId: postDemographic'
+      requestBody:
+        description: demographic request
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/demographic-request.yaml'
+      responses:
+        "200":
+          $ref: 'pdms-common.yaml#/components/responses/DemographicResponse'
+      tags:
+        - pdms-integration

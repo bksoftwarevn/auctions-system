@@ -1,0 +1,13 @@
+title: PresentationProductItem
+type: object
+properties:
+  externalId:
+    type: string
+  externalTypeId:
+    type: string
+  typeName:
+    type: string
+  productKind:
+    $ref: '../pdms-common.yaml#/components/schemas/PresentationProductKindItem'
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

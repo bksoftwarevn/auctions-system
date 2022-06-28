@@ -1,0 +1,51 @@
+openapi: 3.0.3
+
+info:
+  title: OpenAPI Message Common
+  description: Common items to use in schemas.
+  version: 3.0.3
+
+paths: {}
+
+components:
+  responses:
+    LockOrUnlockResponse:
+      description: Successful lock or unlock response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LockOrUnlockResponse'
+    DemographicResponse:
+      description: Successful demographic response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DemographicResponse'
+
+  schemas:
+    LockOrUnlockResponse:
+      $ref: 'schemas/lock-unlock-response.yaml'
+    DemographicResponse:
+      $ref: 'schemas/demographic-response.yaml'
+    Device:
+      $ref: 'schemas/device.yaml'
+    UserIdentity:
+      $ref: 'schemas/user-identity.yaml'
+    ArrangementItem:
+      $ref: 'schemas/arrangement-item.yaml'
+    RegistrationItem:
+      $ref: 'schemas/registration-item.yaml'
+    DebitCardsItem:
+      $ref: 'schemas/debit-cards-item.yaml'
+    PresentationUserPreferencesItem:
+      $ref: 'schemas/presentation-user-preferences-item.yaml'
+    PresentationProductKindItem:
+      $ref: 'schemas/presentation-product-kind-item.yaml'
+    PresentationProductItem:
+      $ref: 'schemas/presentation-product-item.yaml'
+    PresentationStateItem:
+      $ref: 'schemas/presentation-state-item.yaml'
+    LoginManagementItem:
+      $ref: 'schemas/login-management-item.yaml'
+    ApplicationItem:
+      $ref: 'schemas/application-item.yaml'

@@ -1,0 +1,25 @@
+title: RegistrationItem
+type: object
+properties:
+  id:
+    type: string
+  application:
+    $ref: '../pdms-common.yaml#/components/schemas/ApplicationItem'
+  keyId:
+    type: string
+  signatureCounter:
+    type: string
+  authenticatorVersion:
+    type: string
+  aaId:
+    type: string
+  aaName:
+    type: string
+  deviceId:
+    type: string
+  userId:
+    type: string
+  username:
+    type: string
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

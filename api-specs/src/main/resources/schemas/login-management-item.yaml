@@ -1,0 +1,23 @@
+title: PresentationUserPreferencesItem
+type: object
+properties:
+  id:
+    type: string
+  userId:
+    type: string
+  descAuth:
+    type: string
+  ipAddress:
+    type: string
+  userAgent:
+    type: string
+  loginTime:
+    type: string
+  status:
+    type: string
+  error:
+    type: string
+  metadata:
+    $ref: './attributes.yaml'
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

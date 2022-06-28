@@ -1,0 +1,11 @@
+title: ApplicationItem
+type: object
+properties:
+  id:
+    type: string
+  appKey:
+    type: string
+  appId:
+    type: string
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

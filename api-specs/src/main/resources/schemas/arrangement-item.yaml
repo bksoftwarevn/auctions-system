@@ -1,0 +1,160 @@
+title: ArrangementItem
+type: object
+properties:
+  id:
+    type: string
+  externalArrangementId:
+    type: string
+  externalLegalEntityId:
+    type: boolean
+  externalProductId:
+    type: string
+  name:
+    type: string
+  bankAlias:
+    type: string
+  sourceId:
+    type: string
+  bookedBalance:
+    type: string
+  availableBalance:
+    type: string
+  creditLimit:
+    type: string
+  IBAN:
+    type: string
+  BBAN:
+    type: string
+  currency:
+    type: string
+  externalTransferAllowed:
+    type: string
+  urgentTransferAllowed:
+    type: string
+  accruedInterest:
+    type: string
+  number:
+    type: string
+  principalAmount:
+    type: string
+  currentInvestmentValue:
+    type: string
+  legalEntityIds:
+    type: array
+    items:
+      type: string
+  productId:
+    type: string
+  productNumber:
+    type: string
+  productKindName:
+    type: string
+  productTypeName:
+    type: string
+  BIC:
+    type: string
+  bankBranchCode:
+    type: string
+  visible:
+    type: boolean
+  accountOpeningDate:
+    type: string
+  accountInterestRate:
+    type: string
+  valueDateBalance:
+    type: string
+  creditLimitUsage:
+    type: string
+  creditLimitInterestRate:
+    type: string
+  creditLimitExpiryDate:
+    type: string
+    format: date
+  startDate:
+    type: string
+    format: date
+  termUnit:
+    type: string
+  termNumber:
+    type: string
+  interestPaymentFrequencyUnit:
+    type: string
+  interestPaymentFrequencyNumber:
+    type: string
+  maturityDate:
+    type: string
+    format: date
+  maturityAmount:
+    type: string
+  autoRenewalIndicator:
+    type: boolean
+  interestSettlementAccount:
+    type: string
+  outstandingPrincipalAmount:
+    type: string
+  monthlyInstalmentAmount:
+    type: string
+  amountInArrear:
+    type: string
+  minimumRequiredBalance:
+    type: string
+  creditCardAccountNumber:
+    type: string
+  validThru:
+    type: string
+    format: date
+  applicableInterestRate:
+    type: string
+  remainingCredit:
+    type: string
+  outstandingPayment:
+    type: string
+  minimumPayment:
+    type: string
+  minimumPaymentDueDate:
+    type: string
+    format: date
+  totalInvestmentValue:
+    type: string
+  debitCards:
+    type: array
+    items:
+      $ref: '../pdms-common.yaml#/components/schemas/DebitCardsItem'
+  accountHolderAddressLine1:
+    type: string
+  accountHolderAddressLine2:
+    type: string
+  accountHolderStreetName:
+    type: string
+  town:
+    type: string
+  postCode:
+    type: string
+  countrySubDivision:
+    type: string
+  accountHolderName:
+    type: string
+  accountHolderNames:
+    type: string
+  accountHolderCountry:
+    type: string
+  creditAccount:
+    type: string
+  debitAccount:
+    type: string
+  lastUpdateDate:
+    type: string
+  favorite:
+    type: string
+  userPreferences:
+    $ref: '../pdms-common.yaml#/components/schemas/PresentationUserPreferencesItem'
+  product:
+    $ref: '../pdms-common.yaml#/components/schemas/PresentationProductItem'
+  state:
+    $ref: '../pdms-common.yaml#/components/schemas/PresentationStateItem'
+  parentId:
+    type: string
+  externalParentId:
+    type: string
+  additions:
+    $ref: '../lib/schemas/additions.yaml'
