@@ -20,6 +20,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <auctions-spec.version>1.0.0</auctions-spec.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.release>${java.version}</maven.compiler.release>
@@ -32,6 +33,12 @@
         <jackson-threetenbp-version>2.9.10</jackson-threetenbp-version>
         <boat-maven-plugin.version>0.14.8</boat-maven-plugin.version>
         <swagger-annotations-version>1.6.6</swagger-annotations-version>
+        <spring-doc.version>1.6.9</spring-doc.version>
+        <open-api.tool.version>0.2.2</open-api.tool.version>
+        <hibernate-core.version>7.0.4.Final</hibernate-core.version>
+        <hikaricp.version>5.0.1</hikaricp.version>
+        <asciidoctor.version>1.5.8</asciidoctor.version>
+        <guava.version>31.1-jre</guava.version>
 
     </properties>
 
@@ -193,32 +200,32 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.0.1</version>
+            <version>${hikaricp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.9</version>
+            <version>${spring-doc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webmvc-core</artifactId>
-            <version>1.6.9</version>
+            <version>${spring-doc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-webflux-ui</artifactId>
-            <version>1.6.9</version>
+            <version>${spring-doc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-data-rest</artifactId>
-            <version>1.6.9</version>
+            <version>${spring-doc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
-            <version>1.6.9</version>
+            <version>${spring-doc.version}</version>
         </dependency>
         <!-- JSON processing: jackson -->
         <dependency>
@@ -241,12 +248,17 @@
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.2</version>
+            <version>${open-api.tool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>7.0.4.Final</version>
+            <version>${hibernate-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 
@@ -266,9 +278,22 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <version>0.2</version>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>1.5.8</version>
+                <version>${asciidoctor.version}</version>
                 <executions>
                     <execution>
                         <id>generate-docs</id>
@@ -301,11 +326,25 @@
                         </exclude>
                     </excludes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
 
                 <configuration>
                     <compilerVersion>${java.version}</compilerVersion>
@@ -361,7 +400,7 @@
                                 <artifactItem>
                                     <groupId>com.bksoftwarevn</groupId>
                                     <artifactId>auctions-spec</artifactId>
-                                    <version>1.0.0</version>
+                                    <version>${auctions-spec.version}</version>
                                     <classifier>api</classifier>
                                     <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
                                     <type>zip</type>
@@ -386,10 +425,10 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>
-                                ${project.build.directory}/dependencies/auctions-spec/integration-api-v1.11.0.yaml
+                                ${project.build.directory}/dependencies/auctions-spec/client-api-v${auctions-spec.version}.yaml
                             </inputSpec>
                             <apiPackage>com.bksoftwarevn.auction.api.client.v1</apiPackage>
-                            <modelPackage>com.bksoftwarevn.auction.client.v1.model</modelPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>

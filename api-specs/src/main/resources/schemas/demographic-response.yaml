@@ -12,20 +12,20 @@ properties:
   devices:
     type: array
     items:
-      $ref: '../pdms-common.yaml#/components/schemas/Device'
+      $ref: '../common.yaml#/components/schemas/Device'
   identity:
-    $ref: '../pdms-common.yaml#/components/schemas/UserIdentity'
+    $ref: '../common.yaml#/components/schemas/UserIdentity'
   arrangements:
     type: array
     items:
-      $ref: '../pdms-common.yaml#/components/schemas/ArrangementItem'
+      $ref: '../common.yaml#/components/schemas/ArrangementItem'
   fidoRegistrations:
     type: array
     items:
-      $ref: '../pdms-common.yaml#/components/schemas/RegistrationItem'
+      $ref: '../common.yaml#/components/schemas/RegistrationItem'
   authInfo:
     type: array
     items:
-      $ref: '../pdms-common.yaml#/components/schemas/LoginManagementItem'
+      $ref: '../common.yaml#/components/schemas/LoginManagementItem'
   additions:
     $ref: '../lib/schemas/additions.yaml'

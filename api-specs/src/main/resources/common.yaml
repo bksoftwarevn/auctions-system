@@ -1,7 +1,7 @@
 openapi: 3.0.3
 
 info:
-  title: OpenAPI Message Common
+  title: OpenAPI Common
   description: Common items to use in schemas.
   version: 3.0.3
 

@@ -4,7 +4,7 @@ properties:
   id:
     type: string
   application:
-    $ref: '../pdms-common.yaml#/components/schemas/ApplicationItem'
+    $ref: '../common.yaml#/components/schemas/ApplicationItem'
   keyId:
     type: string
   signatureCounter:

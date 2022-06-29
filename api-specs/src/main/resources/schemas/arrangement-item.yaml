@@ -119,7 +119,7 @@ properties:
   debitCards:
     type: array
     items:
-      $ref: '../pdms-common.yaml#/components/schemas/DebitCardsItem'
+      $ref: '../common.yaml#/components/schemas/DebitCardsItem'
   accountHolderAddressLine1:
     type: string
   accountHolderAddressLine2:
@@ -147,11 +147,11 @@ properties:
   favorite:
     type: string
   userPreferences:
-    $ref: '../pdms-common.yaml#/components/schemas/PresentationUserPreferencesItem'
+    $ref: '../common.yaml#/components/schemas/PresentationUserPreferencesItem'
   product:
-    $ref: '../pdms-common.yaml#/components/schemas/PresentationProductItem'
+    $ref: '../common.yaml#/components/schemas/PresentationProductItem'
   state:
-    $ref: '../pdms-common.yaml#/components/schemas/PresentationStateItem'
+    $ref: '../common.yaml#/components/schemas/PresentationStateItem'
   parentId:
     type: string
   externalParentId:

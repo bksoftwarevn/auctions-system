@@ -48,8 +48,12 @@ spring:
     allow-bean-definition-overriding: true
     allow-circular-references: true
 springdoc:
+  packagesToScan: com.bksoftwarevn
+  pathsToMatch: /api/**
   swagger-ui:
+    enabled: true
     path: /docs.html
     operationsSorter: method
   api-docs:
+    enabled: true
     path: /docs

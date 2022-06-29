@@ -8,6 +8,6 @@ properties:
   typeName:
     type: string
   productKind:
-    $ref: '../pdms-common.yaml#/components/schemas/PresentationProductKindItem'
+    $ref: '../common.yaml#/components/schemas/PresentationProductKindItem'
   additions:
     $ref: '../lib/schemas/additions.yaml'
