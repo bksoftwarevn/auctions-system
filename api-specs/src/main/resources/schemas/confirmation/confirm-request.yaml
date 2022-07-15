@@ -1,0 +1,16 @@
+title: ActiveUserRequest
+type: object
+properties:
+  username:
+    type: string
+    minLenght: 8
+    maxLenght: 64
+  otp:
+    type: string
+    minLenght: 4
+  action:
+    type: string
+required:
+  - username
+  - otp
+  - action

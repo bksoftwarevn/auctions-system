@@ -1,0 +1,9 @@
+title: CommonResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  additions:
+    $ref: '../lib/schemas/additions.yaml'

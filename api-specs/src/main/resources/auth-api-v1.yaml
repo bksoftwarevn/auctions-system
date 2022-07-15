@@ -1,0 +1,91 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions Auth API Spec
+  description: Specs for Auctions Auth API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/auth/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/auth/v1
+
+tags:
+  - name: Auth
+
+paths:
+
+  /api/auth/v1/signup:
+    description: Register user
+    post:
+      summary: Post request to register user
+      description: request to register user
+      operationId: postUserRegister
+      requestBody:
+        description: register user request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/user/user-register-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/UserRegisterResponse'
+      tags:
+        - auth
+  /api/auth/v1/login:
+    description: Authenticate
+    post:
+      summary: Post request to authen
+      description: request to authen
+      operationId: postUserAuthenticate
+      requestBody:
+        description: authen request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/auth/authen-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/AuthenResponse'
+      tags:
+        - auth
+  /api/auth/v1/active:
+    description: active user
+    post:
+      summary: Post active the registered user.
+      description: request to active user
+      operationId: postUserActive
+      requestBody:
+        description: active request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/auth/active-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/ActiveUserResponse'
+      tags:
+        - auth
+  /api/auth/v1/reset-pass:
+    description: reset password
+    post:
+      summary: Post reset password for user
+      description: request to reset pass
+      operationId: postResetPassword
+      requestBody:
+        description: reset password request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/user/reset-password-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - auth

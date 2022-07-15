@@ -1,0 +1,13 @@
+title: ActiveUserRequest
+type: object
+properties:
+  username:
+    type: string
+    minLenght: 8
+    maxLenght: 64
+  key:
+    type: string
+    minLenght: 8
+required:
+  - username
+  - key

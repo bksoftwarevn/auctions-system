@@ -1,0 +1,14 @@
+title: UserRegisterRequest
+type: object
+properties:
+  username:
+    type: string
+    minLenght: 8
+    maxLenght: 64
+  password:
+    type: string
+    minLenght: 8
+    maxLenght: 64
+required:
+  - username
+  - password

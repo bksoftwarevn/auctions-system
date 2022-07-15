@@ -1,0 +1,77 @@
+openapi: 3.0.3
+
+info:
+  title: OpenAPI Common
+  description: Common items to use in schemas.
+  version: 3.0.3
+
+paths: { }
+
+components:
+  responses:
+    UserRegisterResponse:
+      description: User register successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRegisterResponse'
+    UpdateUserResponse:
+      description: Update user successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateUserResponse'
+    AuthenResponse:
+      description: Authenticate response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthenResponse'
+    ActiveUserResponse:
+      description: Active user response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActiveUserResponse'
+    AccountResponse:
+      description: Account info
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserItem'
+    ChangePasswordResponse:
+      description: Change password response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChangePasswordResponse'
+    CommonResponse:
+      description: Change password response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommonResponse'
+    UserInfoResponse:
+      description: User info response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRegisterResponse'
+
+  schemas:
+    CommonResponse:
+      $ref: 'schemas/common-response.yaml'
+    UserRegisterResponse:
+      $ref: 'schemas/user/user-register-response.yaml'
+    UpdateUserResponse:
+      $ref: 'schemas/user/user-register-response.yaml'
+    AuthenResponse:
+      $ref: 'schemas/auth/authen-response.yaml'
+    ActiveUserResponse:
+      $ref: 'schemas/auth/active-response.yaml'
+    UserItem:
+      $ref: 'schemas/user/user-data-item.yaml'
+    RoleItem:
+      $ref: 'schemas/user/role-item.yaml'
+    ChangePasswordResponse:
+      $ref: 'schemas/user/change-password-response.yaml'

@@ -1,0 +1,37 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions Confirmation API Spec
+  description: Specs for Auctions Auth API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/confirmation/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/confirmation/v1
+
+tags:
+  - name: Confirmation
+
+paths:
+
+  /api/confirmation/v1/confirm:
+    description: confirm request by otp
+    post:
+      summary: Post confirm request
+      description: request to confirm request by otp
+      operationId: postConfirmByOTP
+      requestBody:
+        description: confirm request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/confirmation/confirm-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - confirmation
