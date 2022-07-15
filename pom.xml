@@ -19,6 +19,8 @@
 
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <auctions-spec.version>1.0.0</auctions-spec.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -34,12 +36,16 @@
         <boat-maven-plugin.version>0.14.8</boat-maven-plugin.version>
         <swagger-annotations-version>1.6.6</swagger-annotations-version>
         <spring-doc.version>1.6.9</spring-doc.version>
+        <spring-doc.openapi.version>0.2</spring-doc.openapi.version>
         <open-api.tool.version>0.2.2</open-api.tool.version>
         <hibernate-core.version>7.0.4.Final</hibernate-core.version>
         <hikaricp.version>5.0.1</hikaricp.version>
         <asciidoctor.version>1.5.8</asciidoctor.version>
         <guava.version>31.1-jre</guava.version>
-
+        <jwt.version>0.9.1</jwt.version>
+        <github-config4k.version>0.4.2</github-config4k.version>
+        <validator.version>1.7</validator.version>
+        <jsonwebtoken.version>0.11.5</jsonwebtoken.version>
     </properties>
 
 
@@ -84,6 +90,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
@@ -117,6 +127,10 @@
         <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.integration</groupId>
@@ -155,7 +169,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -260,6 +273,43 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.config4k</groupId>
+            <artifactId>config4k</artifactId>
+            <version>${github-config4k.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
     </dependencies>
 
 
@@ -280,15 +330,7 @@
             <plugin>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-maven-plugin</artifactId>
-                <version>0.2</version>
-                <executions>
-                    <execution>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>${spring-doc.openapi.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.asciidoctor</groupId>
@@ -326,20 +368,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>pre-integration-test</id>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-integration-test</id>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -427,10 +455,53 @@
                             <inputSpec>
                                 ${project.build.directory}/dependencies/auctions-spec/client-api-v${auctions-spec.version}.yaml
                             </inputSpec>
-                            <apiPackage>com.bksoftwarevn.auction.api.client.v1</apiPackage>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
                             <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-auth-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/auth-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-cf-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/confirmation-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-admin-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/admin-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
         </plugins>

@@ -1,9 +1,0 @@
-title: PresentationStateItem
-type: object
-properties:
-  externalStateId:
-    type: string
-  state:
-    type: string
-  additions:
-    $ref: '../lib/schemas/additions.yaml'

@@ -1,0 +1,11 @@
+title: AuthenRequest
+type: object
+properties:
+  access_token:
+    type: string
+  token_type:
+    type: string
+  expires_in:
+    type: string
+  user:
+    $ref: '../user/user-data-item.yaml'

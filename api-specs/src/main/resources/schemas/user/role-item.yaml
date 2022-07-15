@@ -1,0 +1,7 @@
+title: RoleItem
+type: object
+properties:
+  id:
+    type: string
+  role:
+    type: string

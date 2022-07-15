@@ -17,37 +17,61 @@ tags:
 
 paths:
 
-  /api/client/v1/lockOrUnlock:
-    description: Lock & Unlock Users
-    post:
-      summary: Post request to lock or unlock user by cif
-      description: request to lock or unlock user by cif
-      operationId: postLockOrUnlock'
-      requestBody:
-        description: lock or unlock request
-        content:
-          application/json:
-            schema:
-              $ref: 'schemas/lock-unlock-request.yaml'
+  /api/client/v1/account/info:
+    description: Get the current user.
+    get:
+      summary: Get request to get current account infomation
+      description: request to get current user
+      operationId: getAccount
       responses:
         "200":
-          $ref: 'common.yaml#/components/responses/LockOrUnlockResponse'
+          $ref: 'common.yaml#/components/responses/UserInfoResponse'
       tags:
-        - integration
-  /api/client/v1/demographic:
-    description: Demographic
+        - client
+  /api/client/v1/account/edit:
+    description: Update user
     post:
-      summary: Post request to get demographic user by cif
-      description: request to get demographic user by cif
-      operationId: postDemographic'
+      summary: Post update user infomation
+      description: request to update user infomation
+      operationId: postUpdateAccount
       requestBody:
-        description: demographic request
+        description: update user request body
+        required: true
         content:
           application/json:
             schema:
-              $ref: 'schemas/demographic-request.yaml'
+              $ref: 'schemas/user/update-user-request.yaml'
       responses:
         "200":
-          $ref: 'common.yaml#/components/responses/DemographicResponse'
+          $ref: 'common.yaml#/components/responses/UpdateUserResponse'
+      tags:
+        - client
+  /api/client/v1/password/change:
+    description: Update password
+    post:
+      summary: Post update my password
+      description: request to update password
+      operationId: postChangePassword
+      requestBody:
+        description: update pasword body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/user/change-password-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/ChangePasswordResponse'
+      tags:
+        - client
+  /api/client/v1/account/logout:
+    description: Logout
+    post:
+      summary: Post logout
+      description: request to logout
+      operationId: postLogoutAccount
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
       tags:
         - client

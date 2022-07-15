@@ -1,0 +1,33 @@
+title: UpdateUserRequest
+type: object
+properties:
+  email:
+    description: Email address
+    type: string
+    format: email
+  address:
+    description: Enter your address
+    type: string
+  name:
+    description: Enter your name
+    type: string
+    pattern: ([a-zA-Z])+
+  phone:
+    description: Enter your phone number
+    type: string
+    pattern: ([0-9])+
+  citizenId:
+    description: Enter your citizen id
+    type: string
+    minLenght: 9
+    pattern: ([0-9])+
+  avatar:
+    description: Enter url avartar
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - email
+  - rePassword
+  - name
+  - phone

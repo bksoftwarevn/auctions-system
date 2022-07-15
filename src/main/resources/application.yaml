@@ -8,7 +8,7 @@ spring:
     active: #spring.profiles.active#
   liquibase:
     enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
+    change-log: classpath:/db/changelog/changelog-master.xml
     database-change-log-lock-table: DATABASECHANGELOGLOCK
     database-change-log-table: DATABASECHANGELOG
   datasource:
@@ -47,9 +47,45 @@ spring:
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
+
+  security:
+    user:
+      name: admin
+      password: 123456
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dev@bksoftwarevn.com
+    password: nzuutdqevbhrlauc
+    properties:
+      mail:
+        smtp:
+          connectiontimeout: 5000
+          auth: true
+          timeout: 5000
+          writetimeout: 5000
+          starttls:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+        debug: true
+  thymeleaf:
+    cache: false
+
+auction:
+  mail:
+    enable: true
+    mail-templates-path: templates
+    from-address: noreply@bksoftwarevn.com
+    from-name: BKS
+  otp:
+    duration: 5 #MINUTES
+    size: 6
+
 springdoc:
-  packagesToScan: com.bksoftwarevn
-  pathsToMatch: /api/**
+  packagesToScan: com.bksoftwarevn, com.bksoftwarevn.auction.api.client.v1
+  pathsToMatch: /api, /**
   swagger-ui:
     enabled: true
     path: /docs.html
@@ -57,3 +93,19 @@ springdoc:
   api-docs:
     enabled: true
     path: /docs
+
+security:
+  authentication:
+    jwt:
+      secret: ImFjciI6IjEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJjdXN0b21lclR5c
+      base64-secret: SW1GamNpSTZJakVpTENKelkyOXdaU0k2SW5CeWIyWnBiR1VnWlcxaGFXd2lMQ0pqZFhOMGIyMWxjbFI1Yw==
+      token-validity-in-seconds: 86400
+      token-validity-in-seconds-for-remember-me: 2592000
+
+
+
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    vn.bksoftware.auction: DEBUG

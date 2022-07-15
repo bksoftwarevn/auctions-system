@@ -1,0 +1,51 @@
+title: UserRegisterRequest
+type: object
+properties:
+  username:
+    description: username
+    type: string
+    minLength: 8
+    maxLength: 36
+    pattern: ([a-zA-Z0-9 .-])+
+  email:
+    description: Email address
+    type: string
+    format: email
+  password:
+    description: Enter the password
+    type: string
+    minLength: 8
+    maxLength: 255
+    format: password
+  rePassword:
+    description: Re enter the password
+    type: string
+    minLength: 8
+    maxLength: 255
+  address:
+    description: Enter your address
+    type: string
+  name:
+    description: Enter your name
+    type: string
+    pattern: ([a-zA-Z])+
+  phone:
+    description: Enter your phone number
+    type: string
+    pattern: ([0-9])+
+  citizenId:
+    description: Enter your citizen id
+    type: string
+    minLenght: 9
+    pattern: ([0-9])+
+  avatar:
+    description: Enter url avartar
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - username
+  - email
+  - rePassword
+  - name
+  - phone
