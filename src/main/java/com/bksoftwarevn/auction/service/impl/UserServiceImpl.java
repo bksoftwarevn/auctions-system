@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
                         ConfirmationDto confirmationDto = ConfirmationDto.builder()
                                 .id(UUID.randomUUID().toString()).username(userEntity.getUsername())
                                 .action(ActionType.RESET_PASS.name()).status(StatusType.PENDING.name())
-                                .data(passwordEncoder.encode(resetPasswordRequest.getPassword()))
+                                .data(passwordEncoder.encode(resetPasswordRequest.getPassword().trim()))
                                 .otp(otp).expireDate(new Date(System.currentTimeMillis() + otpConfiguration.getDuration() * 60000).toInstant())
                                 .build();
                         if (confirmationService.create(confirmationDto)) {
@@ -185,6 +185,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean updatePassword(String username, String data) {
         boolean rs = false;
         try {
@@ -211,19 +212,63 @@ public class UserServiceImpl implements UserService {
                     .data(userMapper.mappingEntity(userEntity));
         } catch (Exception ex) {
             log.error("[UserServiceImpl.getAccount] Get account {}. Exception: ", currentUserId, ex);
-            userRegisterResponse.code(AucMessage.USERNAME_NOT_FOUND.getCode()).message(AucMessage.USERNAME_NOT_FOUND.getMessage());
+            userRegisterResponse.code(AucMessage.USERNAME_NOT_FOUND.getCode()).message(ex.getMessage());
         }
         return userRegisterResponse;
     }
 
     @Override
+    @Transactional
     public ChangePasswordResponse postChangePassword(String userId, String oldPassword, String password) {
-        return null;
+        ChangePasswordResponse userRegisterResponse = new ChangePasswordResponse().code(AucMessage.UPDATE_USER_FAILED.getCode()).message(AucMessage.UPDATE_USER_FAILED.getMessage());
+        try {
+            UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new AucException(AucMessage.USERNAME_NOT_FOUND.getCode(), AucMessage.USERNAME_NOT_FOUND.getMessage()));
+            if (passwordEncoder.matches(oldPassword, userEntity.getPassword())) {
+                String newPass = passwordEncoder.encode(password.trim());
+                userEntity.setPassword(newPass);
+                userEntity.setUpdatedDate(Instant.now());
+                if (userRepository.save(userEntity).getPassword().equals(newPass)) {
+                    userRegisterResponse.code(AucMessage.UPDATE_USER_SUCCESS.getCode()).message(AucMessage.UPDATE_USER_SUCCESS.getMessage());
+                }
+            }
+        } catch (Exception ex) {
+            log.error("[UserServiceImpl.getAccount] Get account {}. Exception: ", userId, ex);
+        }
+        return userRegisterResponse;
     }
 
     @Override
+    @Transactional
     public UserRegisterResponse postUpdateAccount(String userId, UpdateUserRequest updateUserRequest) {
-        return null;
+        UserRegisterResponse userRegisterResponse = new UserRegisterResponse().code(AucMessage.UPDATE_USER_FAILED.getCode()).message(AucMessage.UPDATE_USER_FAILED.getMessage());
+        try {
+            UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new AucException(AucMessage.USERNAME_NOT_FOUND.getCode(), AucMessage.USERNAME_NOT_FOUND.getMessage()));
+            if (StringUtils.isNotEmpty(updateUserRequest.getEmail())) {
+                userEntity.setEmail(updateUserRequest.getEmail());
+            }
+            if (StringUtils.isNotEmpty(updateUserRequest.getAddress())) {
+                userEntity.setAddress(updateUserRequest.getAddress());
+            }
+            if (StringUtils.isNotEmpty(updateUserRequest.getName())) {
+                userEntity.setName(updateUserRequest.getName());
+            }
+            if (StringUtils.isNotEmpty(updateUserRequest.getPhone())) {
+                userEntity.setPhone(updateUserRequest.getPhone());
+            }
+            if (StringUtils.isNotEmpty(updateUserRequest.getCitizenId())) {
+                userEntity.setCitizenId(updateUserRequest.getCitizenId());
+            }
+            if (StringUtils.isNotEmpty(updateUserRequest.getAvatar())) {
+                userEntity.setAvatar(updateUserRequest.getAvatar());
+            }
+            userEntity.setUpdatedDate(Instant.now());
+
+            userRegisterResponse.code(AucMessage.UPDATE_USER_SUCCESS.getCode()).message(AucMessage.UPDATE_USER_SUCCESS.getMessage())
+                    .data(userMapper.mappingEntity(userRepository.save(userEntity)));
+        } catch (Exception ex) {
+            log.error("[UserServiceImpl.getAccount] Update account {}. Exception: ", userId, ex);
+        }
+        return userRegisterResponse;
     }
 
     private AuthenResponse buildAuthenResponse(String token, Authentication authentication) {

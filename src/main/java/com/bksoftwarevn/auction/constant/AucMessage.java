@@ -31,7 +31,8 @@ public enum AucMessage {
     RESET_PASSWORD_SUCCESS("AUC-1008", "Reset password user successful.", HttpStatus.ACCEPTED),
     GET_USER_SUCCESS("AUC-1009", "Get user successful.", HttpStatus.ACCEPTED),
     GET_USER_FAILED("AUC-1010", "Get user failed.", HttpStatus.NOT_ACCEPTABLE),
-
+    UPDATE_USER_FAILED("AUC-1011", "Update user failed.", HttpStatus.NOT_ACCEPTABLE),
+    UPDATE_USER_SUCCESS("AUC-1012", "Update user successful.", HttpStatus.ACCEPTED),
 
     //ROLE
     ROLE_NOT_FOUND("AUC-2000", "Role not found.", HttpStatus.BAD_REQUEST),
