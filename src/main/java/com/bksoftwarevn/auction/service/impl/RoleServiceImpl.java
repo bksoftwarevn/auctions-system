@@ -66,7 +66,7 @@ public class RoleServiceImpl implements RoleService {
             if (!CollectionUtils.isEmpty(roleEntities)) {
                 rolesResponse.data(roleMapper.mappingItem(roleEntities)).code(AucMessage.PULL_ROLE_SUCCESS.getCode()).message(AucMessage.PULL_ROLE_SUCCESS.getMessage());
             } else {
-                rolesResponse.data(roleMapper.mappingItem(roleEntities)).code(AucMessage.ROLE_NOT_FOUND.getCode()).message(AucMessage.ROLE_NOT_FOUND.getMessage());
+                rolesResponse.code(AucMessage.ROLE_NOT_FOUND.getCode()).message(AucMessage.ROLE_NOT_FOUND.getMessage());
             }
         } catch (Exception ex) {
             log.error("[RoleServiceImpl.pull] Exception when get all role: ", ex);

@@ -35,14 +35,33 @@ public enum AucMessage {
     UPDATE_USER_SUCCESS("AUC-1012", "Update user successful.", HttpStatus.ACCEPTED),
 
     //ROLE
-    ROLE_NOT_FOUND("AUC-2000", "Role not found.", HttpStatus.BAD_REQUEST),
-    PULL_ROLE_SUCCESS("AUC-2001", "Pull list role successful.", HttpStatus.ACCEPTED),
-    PULL_ROLE_FAILED("AUC-2002", "Pull list role failed.", HttpStatus.ACCEPTED),
-    CREATE_ROLE_SUCCESS("AUC-2003", "Create list role successful.", HttpStatus.ACCEPTED),
-    CREATE_ROLE_FAILED("AUC-2004", "Create list role failed.", HttpStatus.NOT_ACCEPTABLE),
-    UPDATE_ROLE_SUCCESS("AUC-2005", "Update list role successful.", HttpStatus.ACCEPTED),
-    UPDATE_ROLE_FAILED("AUC-2006", "Update list role failed.", HttpStatus.NOT_ACCEPTABLE),
+    ROLE_NOT_FOUND("RL-2000", "Role not found.", HttpStatus.BAD_REQUEST),
+    PULL_ROLE_SUCCESS("RL-2001", "Pull list role successful.", HttpStatus.ACCEPTED),
+    PULL_ROLE_FAILED("RL-2002", "Pull list role failed.", HttpStatus.ACCEPTED),
+    CREATE_ROLE_SUCCESS("RL-2003", "Create list role successful.", HttpStatus.ACCEPTED),
+    CREATE_ROLE_FAILED("RL-2004", "Create list role failed.", HttpStatus.NOT_ACCEPTABLE),
+    UPDATE_ROLE_SUCCESS("RL-2005", "Update list role successful.", HttpStatus.ACCEPTED),
+    UPDATE_ROLE_FAILED("RL-2006", "Update list role failed.", HttpStatus.NOT_ACCEPTABLE),
 
+
+    //GROUPS
+    GROUP_NOT_FOUND("GR-2000", "GROUP not found.", HttpStatus.BAD_REQUEST),
+    PULL_GROUP_SUCCESS("GR-2001", "Pull list GROUP successful.", HttpStatus.ACCEPTED),
+    PULL_GROUP_FAILED("GR-2002", "Pull list GROUP failed.", HttpStatus.ACCEPTED),
+    CREATE_GROUP_SUCCESS("GR-2003", "Create list GROUP successful.", HttpStatus.ACCEPTED),
+    CREATE_GROUP_FAILED("GR-2004", "Create list GROUP failed.", HttpStatus.NOT_ACCEPTABLE),
+    UPDATE_GROUP_SUCCESS("GR-2005", "Update list GROUP successful.", HttpStatus.ACCEPTED),
+    UPDATE_GROUP_FAILED("GR-2006", "Update list GROUP failed.", HttpStatus.NOT_ACCEPTABLE),
+
+
+    //CATEGORY
+    CATEGORY_NOT_FOUND("CT-2000", "CATEGORY not found.", HttpStatus.BAD_REQUEST),
+    PULL_CATEGORY_SUCCESS("CT-2001", "Pull list CATEGORY successful.", HttpStatus.ACCEPTED),
+    PULL_CATEGORY_FAILED("CT-2002", "Pull list CATEGORY failed.", HttpStatus.ACCEPTED),
+    CREATE_CATEGORY_SUCCESS("CT-2003", "Create list CATEGORY successful.", HttpStatus.ACCEPTED),
+    CREATE_CATEGORY_FAILED("CT-2004", "Create list CATEGORY failed.", HttpStatus.NOT_ACCEPTABLE),
+    UPDATE_CATEGORY_SUCCESS("CT-2005", "Update list CATEGORY successful.", HttpStatus.ACCEPTED),
+    UPDATE_CATEGORY_FAILED("CT-2006", "Update list CATEGORY failed.", HttpStatus.NOT_ACCEPTABLE),
 
     //Token
     INVALID_JWT_TOKEN("AUC-3000", "Invalid JWT token.", HttpStatus.UNAUTHORIZED),
