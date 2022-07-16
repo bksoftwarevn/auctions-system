@@ -53,13 +53,13 @@
                 <version>${boat-maven-plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>boat-validation-client</id>
+                        <id>boat-validation-account</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>validate</goal>
                         </goals>
                         <configuration>
-                            <input>src/main/resources/client-api-v1.yaml</input>
+                            <input>src/main/resources/account-api-v1.yaml</input>
                             <failOnWarning>true</failOnWarning>
                         </configuration>
                     </execution>
@@ -93,6 +93,39 @@
                         </goals>
                         <configuration>
                             <input>src/main/resources/confirmation-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-category</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/category-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-auction</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/auction-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-role</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/role-api-v1.yaml</input>
                             <failOnWarning>true</failOnWarning>
                         </configuration>
                     </execution>
@@ -139,13 +172,13 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>boat-docs</id>
+                        <id>boat-docs-account</id>
                         <phase>package</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/unversioned/client-api-v1.yaml</inputSpec>
+                            <inputSpec>${project.build.directory}/unversioned/account-api-v1.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>html2</generatorName>
                             <generateAliasAsModel>true</generateAliasAsModel>
@@ -185,6 +218,45 @@
                         </goals>
                         <configuration>
                             <inputSpec>${project.build.directory}/unversioned/confirmation-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-docs-auction</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/auction-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-docs-category</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/category-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-docs-role</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/role-api-v1.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>html2</generatorName>
                             <generateAliasAsModel>true</generateAliasAsModel>

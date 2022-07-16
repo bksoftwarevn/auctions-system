@@ -1,0 +1,11 @@
+title: CreateAuctionRequest
+type: object
+properties:
+  category_id:
+    description: Cateogry id
+    type: integer
+
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - category_id

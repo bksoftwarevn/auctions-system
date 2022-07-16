@@ -1,0 +1,37 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions API Spec
+  description: Specs for Auctions API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/auctions/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/auctions/v1
+
+tags:
+  - name: Auction
+
+paths:
+
+  /api/auctions/v1/create:
+    description: Create auction
+    post:
+      summary: Post create auction
+      description: request to create auction
+      operationId: postCreateAuction
+      requestBody:
+        description: Create auction request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/user/update-user-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/UpdateUserResponse'
+      tags:
+        - aution

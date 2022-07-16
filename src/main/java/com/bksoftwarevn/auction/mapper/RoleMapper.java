@@ -14,7 +14,7 @@ public interface RoleMapper {
     List<RoleDto> mapping(List<RoleEntity> roleEntities);
     List<RoleItem> mappingRoleItems(List<RoleEntity> roleEntities);
     RoleItem mapping(RoleDto roleDto);
+    List<RoleItem> mappingItem(List<RoleEntity> roleEntities);
 
-
-
+    RoleItem mappingEntityToItem(RoleEntity roleEntity);
 }

@@ -1,23 +1,23 @@
 openapi: 3.0.3
 
 info:
-  title: Auctions Client API Spec
-  description: Specs for Auctions Client API
+  title: Auctions Account API Spec
+  description: Specs for Auctions Account API
   version: 1.0.0
   x-icon: auctions
 
 servers:
   - description: local test
-    url: http://localhost:8080/api/client/v1
+    url: http://localhost:8080/api/account/v1
   - description: prod test
-    url: https://auctions.bksoftwarevn.com/api/client/v1
+    url: https://auctions.bksoftwarevn.com/api/account/v1
 
 tags:
-  - name: Client
+  - name: Account
 
 paths:
 
-  /api/client/v1/account/info:
+  /api/account/v1/info:
     description: Get the current user.
     get:
       summary: Get request to get current account infomation
@@ -27,8 +27,8 @@ paths:
         "200":
           $ref: 'common.yaml#/components/responses/UserInfoResponse'
       tags:
-        - client
-  /api/client/v1/account/edit:
+        - Account
+  /api/account/v1/edit:
     description: Update user
     post:
       summary: Post update user infomation
@@ -45,8 +45,8 @@ paths:
         "200":
           $ref: 'common.yaml#/components/responses/UpdateUserResponse'
       tags:
-        - client
-  /api/client/v1/password/change:
+        - Account
+  /api/account/v1/change-password:
     description: Update password
     post:
       summary: Post update my password
@@ -63,8 +63,8 @@ paths:
         "200":
           $ref: 'common.yaml#/components/responses/ChangePasswordResponse'
       tags:
-        - client
-  /api/client/v1/account/logout:
+        - Account
+  /api/account/v1/logout:
     description: Logout
     post:
       summary: Post logout
@@ -74,4 +74,4 @@ paths:
         "200":
           $ref: 'common.yaml#/components/responses/CommonResponse'
       tags:
-        - client
+        - Account

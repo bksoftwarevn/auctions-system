@@ -10,14 +10,14 @@ import com.bksoftwarevn.auction.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import com.bksoftwarevn.auction.api.v1.ClientApi;
+import com.bksoftwarevn.auction.api.v1.AccountApi;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class ClientController implements ClientApi {
+public class AccountController implements AccountApi {
 
     private final UserService userService;
 

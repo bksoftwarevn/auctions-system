@@ -1,0 +1,17 @@
+title: UpdateRoleRequest
+type: object
+properties:
+  id:
+    description: Role id
+    type: integer
+  role:
+    description: Role name
+    type: string
+  descriptions:
+    description: Description
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - id
+  - role

@@ -1,0 +1,14 @@
+title: RoleItem
+type: object
+properties:
+  id:
+    description: Role id
+    type: string
+  role:
+    description: Role name
+    type: string
+  descriptions:
+    description: Description
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

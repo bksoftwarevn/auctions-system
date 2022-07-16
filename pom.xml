@@ -446,14 +446,14 @@
                 <version>${boat-maven-plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>generate-client-api-code</id>
+                        <id>generate-account-api-code</id>
                         <goals>
                             <goal>generate-spring-boot-embedded</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>
-                                ${project.build.directory}/dependencies/auctions-spec/client-api-v${auctions-spec.version}.yaml
+                                ${project.build.directory}/dependencies/auctions-spec/account-api-v${auctions-spec.version}.yaml
                             </inputSpec>
                             <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
                             <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
@@ -496,6 +496,49 @@
                         <configuration>
                             <inputSpec>
                                 ${project.build.directory}/dependencies/auctions-spec/admin-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-auction-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/auction-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-category-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/category-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>generate-role-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/role-api-v${auctions-spec.version}.yaml
                             </inputSpec>
                             <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
                             <modelPackage>com.bksoftwarevn.auction.model</modelPackage>

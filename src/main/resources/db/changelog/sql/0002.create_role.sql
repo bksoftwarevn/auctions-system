@@ -7,8 +7,12 @@ CREATE TABLE `auctions_system`.`role`
 (
     `id`          int(5)       NOT NULL AUTO_INCREMENT,
     `role`        varchar(36)  NOT NULL,
-    `description` varchar(350) NULL,
+    `descriptions` varchar(350) NULL,
     `additional`  tinytext         NULL,
     PRIMARY KEY (`id`),
-    INDEX `idx_role` (`role`)
+    UNIQUE INDEX `idx_role` (`role`)
 );
+
+INSERT INTO `auctions_system`.`role`(`role`, `descriptions`) VALUES ('ROLE_ADMIN', 'Admin');
+INSERT INTO `auctions_system`.`role`(`role`, `descriptions`) VALUES ('ROLE_USER', 'User');
+INSERT INTO `auctions_system`.`role`(`role`, `descriptions`) VALUES ('ROLE_GUEST', 'Guest');

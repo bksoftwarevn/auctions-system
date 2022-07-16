@@ -1,0 +1,13 @@
+title: CreateCategoryGroupResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    type: array
+    items:
+      $ref: './group-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

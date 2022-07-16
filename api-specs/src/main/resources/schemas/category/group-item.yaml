@@ -1,0 +1,17 @@
+title: GroupItem
+type: object
+properties:
+  id:
+    description: Group name
+    type: string
+  name:
+    description: Group name
+    type: string
+  type:
+    description: Group type
+    type: string
+  descriptions:
+    description: Description
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

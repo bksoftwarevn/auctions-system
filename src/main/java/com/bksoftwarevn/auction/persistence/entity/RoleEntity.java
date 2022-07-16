@@ -25,8 +25,8 @@ public class RoleEntity {
     @Column(name = "role", nullable = false, length = 36)
     private String role;
 
-    @Column(name = "description", length = 350)
-    private String description;
+    @Column(name = "descriptions", length = 350)
+    private String descriptions;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",

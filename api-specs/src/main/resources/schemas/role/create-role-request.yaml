@@ -1,0 +1,13 @@
+title: CreateRoleRequest
+type: object
+properties:
+  role:
+    description: Role name
+    type: string
+  descriptions:
+    description: Description
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - role
