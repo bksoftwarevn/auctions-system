@@ -1,0 +1,62 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions category API Spec
+  description: Specs for Auctions category API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/category/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/category/v1
+
+tags:
+  - name: Category
+
+paths:
+
+  /api/category/v1/group:
+    description: Create category group
+    post:
+      summary: Post create category group
+      description: request to create category group
+      operationId: postCreateCategoryGroup
+      requestBody:
+        description: Create category group request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/category/create-category-group-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateCategoryGroupResponse'
+      tags:
+        - category
+    get:
+      summary: Get list category group
+      description: request to get list category group
+      operationId: getCategoryGroups
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/GroupsResponse'
+      tags:
+        - category
+    put:
+      summary: Put update category group
+      description: request to update category group
+      operationId: putUpdateCategoryGroup
+      requestBody:
+        description: Update category group request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/category/update-category-group-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateCategoryGroupResponse'
+      tags:
+        - category

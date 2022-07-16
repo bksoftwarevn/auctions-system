@@ -30,11 +30,18 @@ public enum AucMessage {
     RESET_PASSWORD_FAILED("AUC-1007", "Reset password user failed.", HttpStatus.NOT_ACCEPTABLE),
     RESET_PASSWORD_SUCCESS("AUC-1008", "Reset password user successful.", HttpStatus.ACCEPTED),
     GET_USER_SUCCESS("AUC-1009", "Get user successful.", HttpStatus.ACCEPTED),
-    GET_USER_FAILED("AUC-1010", "Get user failed.", HttpStatus.NOT_ACCEPTABLE),
-
+    GET_USER_FAILED("AUC-1010", "Get user failed.", HttpStatus.ACCEPTED),
+    UPDATE_USER_FAILED("AUC-1011", "Update user failed.", HttpStatus.NOT_ACCEPTABLE),
+    UPDATE_USER_SUCCESS("AUC-1012", "Update user successful.", HttpStatus.ACCEPTED),
 
     //ROLE
     ROLE_NOT_FOUND("AUC-2000", "Role not found.", HttpStatus.BAD_REQUEST),
+    PULL_ROLE_SUCCESS("AUC-2001", "Pull list role successful.", HttpStatus.ACCEPTED),
+    PULL_ROLE_FAILED("AUC-2002", "Pull list role failed.", HttpStatus.ACCEPTED),
+    CREATE_ROLE_SUCCESS("AUC-2003", "Create list role successful.", HttpStatus.ACCEPTED),
+    CREATE_ROLE_FAILED("AUC-2004", "Create list role failed.", HttpStatus.NOT_ACCEPTABLE),
+    UPDATE_ROLE_SUCCESS("AUC-2005", "Update list role successful.", HttpStatus.ACCEPTED),
+    UPDATE_ROLE_FAILED("AUC-2006", "Update list role failed.", HttpStatus.NOT_ACCEPTABLE),
 
 
     //Token

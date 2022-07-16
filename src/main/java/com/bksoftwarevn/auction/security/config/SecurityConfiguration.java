@@ -64,7 +64,7 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 //admin
-                .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ROLE_ADMIN.name())
+                .antMatchers("/api/admin/**", "/api/role/**").hasAuthority(AuthoritiesConstants.ROLE_ADMIN.name())
                 //user
                 .anyRequest().authenticated()
                 .and().httpBasic()

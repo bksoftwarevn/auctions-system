@@ -1,0 +1,62 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions Role API Spec
+  description: Specs for Auctions Role API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/role/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/role/v1
+
+tags:
+  - name: Role
+
+paths:
+
+  /api/role/v1/role:
+    description: Create role
+    post:
+      summary: Post create role
+      description: request to create role
+      operationId: postCreateRole
+      requestBody:
+        description: Create role request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/role/create-role-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateRoleResponse'
+      tags:
+        - role
+    get:
+      summary: Get list role
+      description: request to get list role
+      operationId: getRoles
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/RolesResponse'
+      tags:
+        - role
+    put:
+      summary: Put update role
+      description: request to update role
+      operationId: putUpdateRole
+      requestBody:
+        description: Update role request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/role/update-role-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateRoleResponse'
+      tags:
+        - role

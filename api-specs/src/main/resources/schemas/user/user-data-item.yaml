@@ -16,7 +16,7 @@ properties:
   roles:
     type: array
     items:
-      $ref: './role-item.yaml'
+      $ref: '../role/role-item.yaml'
   avatar:
     type: string
   active:
