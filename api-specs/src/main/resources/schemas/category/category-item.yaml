@@ -1,14 +1,16 @@
-title: GroupItem
+title: CategoryItem
 type: object
 properties:
   id:
-    description: Group id
+    description: Category id
     type: string
   name:
-    description: Group name
+    description: Category name
     type: string
-  type:
-    description: Group type
+  group:
+    $ref: './group-item.yaml'
+  image:
+    description: Category image
     type: string
   descriptions:
     description: Description

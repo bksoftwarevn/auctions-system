@@ -19,5 +19,6 @@ CREATE TABLE `auctions_system`.`audit`
     PRIMARY KEY (`id`),
     INDEX `idx_event_type` (`event_category`, `event_action`, `actor_username`) USING BTREE,
     INDEX `idx_user_id` (`actor_user_id`) USING BTREE,
-    INDEX `idx_time` (`event_category`, `actor_username`, `event_action`, `event_time`) USING BTREE
+    INDEX `idx_time` (`event_category`, `actor_username`, `event_action`, `event_time`) USING BTREE,
+    CONSTRAINT `fk_audit_users` FOREIGN KEY (`actor_user_id`) REFERENCES `auctions_system`.`users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 );

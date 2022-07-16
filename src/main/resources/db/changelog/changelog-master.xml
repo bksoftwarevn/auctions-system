@@ -9,4 +9,5 @@
     <include file="sql/0004.create_audit.sql" relativeToChangelogFile="true"/>
     <include file="sql/0005.create_confirmation.sql" relativeToChangelogFile="true"/>
     <include file="sql/0006.create_category_group.sql" relativeToChangelogFile="true"/>
+    <include file="sql/0007.create_category.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

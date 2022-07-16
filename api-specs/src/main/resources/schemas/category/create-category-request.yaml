@@ -1,17 +1,20 @@
-title: GroupItem
+title: CreateCategoryRequest
 type: object
 properties:
-  id:
-    description: Group id
-    type: string
   name:
-    description: Group name
+    description: Category name
     type: string
   type:
     description: Group type
+    type: string
+  image:
+    description: Category image
     type: string
   descriptions:
     description: Description
     type: string
   additions:
     $ref: '../../lib/schemas/additions.yaml'
+required:
+  - name
+  - type

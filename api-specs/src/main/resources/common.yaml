@@ -81,6 +81,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/RolesResponse'
+    CategoriesResponse:
+      description: list category response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CategoriesResponse'
+    CreateCategoryResponse:
+      description: list category response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCategoryResponse'
 
   schemas:
     CommonResponse:
@@ -96,9 +108,11 @@ components:
     UserItem:
       $ref: 'schemas/user/user-data-item.yaml'
     RoleItem:
-      $ref: 'schemas/user/role-item.yaml'
+      $ref: 'schemas/role/role-item.yaml'
     GroupItem:
       $ref: 'schemas/category/group-item.yaml'
+    Category:
+      $ref: 'schemas/category/category-item.yaml'
     ChangePasswordResponse:
       $ref: 'schemas/user/change-password-response.yaml'
     CreateCategoryGroupResponse:
@@ -109,3 +123,7 @@ components:
       $ref: 'schemas/role/create-role-response.yaml'
     RolesResponse:
       $ref: 'schemas/role/roles-response.yaml'
+    CategoriesResponse:
+      $ref: 'schemas/category/categories-response.yaml'
+    CreateCategoryResponse:
+      $ref: 'schemas/category/create-category-response.yaml'

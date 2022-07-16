@@ -60,3 +60,47 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateCategoryGroupResponse'
       tags:
         - category
+      
+  /api/category/v1/management:
+    description: Create category 
+    post:
+      summary: Post create category 
+      description: request to create category 
+      operationId: postCreateCategory
+      requestBody:
+        description: Create category request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/category/create-category-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateCategoryResponse'
+      tags:
+        - category
+    get:
+      summary: Get list category 
+      description: request to get list category 
+      operationId: getCategories
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CategoriesResponse'
+      tags:
+        - category
+    put:
+      summary: Put update category 
+      description: request to update category 
+      operationId: putUpdateCategory
+      requestBody:
+        description: Update category  request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/category/update-category-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateCategoryResponse'
+      tags:
+        - category

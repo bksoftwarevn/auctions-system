@@ -4,4 +4,5 @@ import com.bksoftwarevn.auction.persistence.entity.GroupEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GroupRepository extends JpaRepository<GroupEntity, String> {
+    GroupEntity findByType(String type);
 }
