@@ -1,6 +1,5 @@
 package com.bksoftwarevn.auction.dto;
 
-import com.bksoftwarevn.auction.persistence.entity.CommentEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,9 +24,5 @@ public class UserDto implements Serializable {
     private final Boolean lock;
     private final String additional;
     private final String citizenId;
-    private final Set<AuditDto> audits;
-    private final Set<AuctionDto> auctions;
-    private final Set<CommentEntity> comments;
-    private final Set<ReplyDto> replies;
     private final Set<RoleDto> roles;
 }

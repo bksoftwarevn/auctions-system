@@ -14,5 +14,5 @@ public interface CommentService {
 
     com.bksoftwarevn.auction.model.CreateCommentResponse create(String userId, CreateCommentRequest createCommentRequest);
 
-    CreateCommentResponse update(UpdateCommentRequest updateCommentRequest);
+    CreateCommentResponse update(String userId, UpdateCommentRequest updateCommentRequest);
 }

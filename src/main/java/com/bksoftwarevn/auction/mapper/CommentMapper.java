@@ -14,5 +14,7 @@ public interface CommentMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateCommentEntityFromCommentDto(CommentDto commentDto, @MappingTarget CommentEntity commentEntity);
 
+    @Mapping(source = "entity.auction.id", target = "auctionId")
+    @Mapping(source = "entity.user.id", target = "userId")
     CommentItem mappingEntityToItem(CommentEntity entity);
 }

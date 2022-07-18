@@ -1,6 +1,9 @@
 title: CommentItem
 type: object
 properties:
+  id:
+    description: comment id
+    type: string
   auctionId:
     description: Auction id
     type: string

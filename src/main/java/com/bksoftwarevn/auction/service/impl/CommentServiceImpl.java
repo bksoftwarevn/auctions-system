@@ -21,6 +21,7 @@ import com.bksoftwarevn.auction.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -64,7 +65,9 @@ public class CommentServiceImpl implements CommentService {
             entity.setContent(createCommentRequest.getContent());
             entity.setCreatedDate(Instant.now());
             entity.setStatus(ActionStatus.CREATED.name());
-            entity.setParentId(repository.findById(createCommentRequest.getParentId()).orElseThrow(() -> new AucException(AucMessage.COMMENT_NOT_FOUND.getCode(), AucMessage.COMMENT_NOT_FOUND.getMessage())).getId());
+            if (StringUtils.isNotEmpty(createCommentRequest.getParentId())) {
+                entity.setParentId(repository.findById(createCommentRequest.getParentId()).orElseThrow(() -> new AucException(AucMessage.COMMENT_NOT_FOUND.getCode(), AucMessage.COMMENT_NOT_FOUND.getMessage())).getId());
+            }
             entity = repository.save(entity);
             if (ObjectUtils.isNotEmpty(entity)) {
                 response.data(mapper.mappingEntityToItem(entity)).code(AucMessage.CREATE_COMMENT_SUCCESS.getCode()).message(AucMessage.CREATE_COMMENT_SUCCESS.getMessage());
@@ -77,7 +80,25 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CreateCommentResponse update(UpdateCommentRequest updateCommentRequest) {
-        return null;
+    public CreateCommentResponse update(String userId, UpdateCommentRequest updateCommentRequest) {
+        CreateCommentResponse response = new CreateCommentResponse().code(AucMessage.CREATE_COMMENT_FAILED.getCode()).message(AucMessage.CREATE_COMMENT_FAILED.getMessage());
+
+        try {
+            CommentEntity entity = repository.findById(updateCommentRequest.getId()).orElseThrow(() -> new AucException(AucMessage.COMMENT_NOT_FOUND.getCode(), AucMessage.COMMENT_NOT_FOUND.getMessage()));
+            if (!entity.getUser().getId().equals(userId)) {
+                throw new AucException(AucMessage.FORBIDDEN.getCode(), AucMessage.FORBIDDEN.getMessage());
+            }
+            entity.setContent(updateCommentRequest.getContent());
+            entity.setStatus(ActionStatus.UPDATED.name());
+            entity.setUpdatedDate(Instant.now());
+            entity = repository.save(entity);
+            if (ObjectUtils.isNotEmpty(entity)) {
+                response.data(mapper.mappingEntityToItem(entity)).code(AucMessage.CREATE_COMMENT_SUCCESS.getCode()).message(AucMessage.CREATE_COMMENT_SUCCESS.getMessage());
+            }
+        } catch (Exception ex) {
+            log.error("[CommentServiceImpl.update] Exception when update comment: ", ex);
+            response.message(ex.getMessage());
+        }
+        return response;
     }
 }

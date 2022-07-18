@@ -49,6 +49,6 @@ public class CommentController implements com.bksoftwarevn.auction.api.v1.Commen
     @Override
     public ResponseEntity<CreateCommentResponse> putUpdateComment(UpdateCommentRequest updateCommentRequest) {
         log.info("[CommentController.putUpdateComment] Start update comment for auctions: {}", updateCommentRequest);
-        return ResponseEntity.ok(commentService.update(updateCommentRequest));
+        return ResponseEntity.ok(commentService.update(SecurityUtils.getCurrentUserId(),updateCommentRequest));
     }
 }
