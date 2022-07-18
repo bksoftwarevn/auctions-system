@@ -1,0 +1,64 @@
+openapi: 3.0.3
+
+info:
+  title:  Product API Spec
+  description: Specs for  Product API
+  version: 1.0.0
+  x-icon: products
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/product/v1
+  - description: prod test
+    url: https://products.bksoftwarevn.com/api/product/v1
+
+tags:
+  - name: Product
+
+paths:
+
+  /api/product/v1/management:
+    description: Create product
+    post:
+      summary: Post create product
+      description: request to create product
+      operationId: postCreateProduct
+      requestBody:
+        description: Create product request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/product/create-product-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateProductResponse'
+      tags:
+        - product
+    put:
+      summary: Put update product
+      description: request to update product
+      operationId: putUpdateProduct
+      requestBody:
+        description: update product request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/product/update-product-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateProductResponse'
+      tags:
+        - product
+    get:
+      summary: get info product
+      description: request to get info product
+      operationId: getProduct
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateProductResponse'
+      tags:
+        - product

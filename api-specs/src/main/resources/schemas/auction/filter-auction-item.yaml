@@ -1,0 +1,18 @@
+title: FilterAuctionItem
+type: object
+properties:
+  auctions:
+    type: array
+    items:
+      $ref: './auction-item.yaml'
+  user:
+    $ref: '../user/user-data-item.yaml'
+  category:
+    $ref: '../category/category-item.yaml'
+  group:
+    $ref: '../category/group-item.yaml'
+  total:
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

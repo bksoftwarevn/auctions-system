@@ -1,0 +1,13 @@
+title: RolesResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    type: array
+    items:
+      $ref: './auction-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

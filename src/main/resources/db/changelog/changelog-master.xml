@@ -10,4 +10,8 @@
     <include file="sql/0005.create_confirmation.sql" relativeToChangelogFile="true"/>
     <include file="sql/0006.create_category_group.sql" relativeToChangelogFile="true"/>
     <include file="sql/0007.create_category.sql" relativeToChangelogFile="true"/>
+    <include file="sql/0008.create_auctions.sql" relativeToChangelogFile="true"/>
+    <include file="sql/0009.create_brand.sql" relativeToChangelogFile="true"/>
+    <include file="sql/0010.create_product.sql" relativeToChangelogFile="true"/>
+    <include file="sql/0011.create_comment.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -1,12 +1,11 @@
 package com.bksoftwarevn.auction.persistence.entity;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "audit", indexes = {
@@ -29,8 +28,10 @@ public class AuditEntity {
     @Column(name = "event_time", nullable = false)
     private Instant eventTime;
 
-    @Column(name = "actor_user_id", nullable = false, length = 36)
-    private String actorUserId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "actor_user_id", nullable = false)
+    @ToString.Exclude
+    private UserEntity actorUser;
 
     @Column(name = "event_category", nullable = false, length = 35)
     private String eventCategory;
@@ -53,4 +54,16 @@ public class AuditEntity {
     @Column(name = "additional")
     private String additional;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        AuditEntity that = (AuditEntity) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

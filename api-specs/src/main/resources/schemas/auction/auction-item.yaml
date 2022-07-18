@@ -1,0 +1,33 @@
+title: AuctionItem
+type: object
+properties:
+  id:
+    description: Auction id
+    type: string
+  category:
+    $ref: '../category/category-item.yaml'
+  user:
+    $ref: '../user/user-data-item.yaml'
+  title:
+    description: aution title
+    type: string
+  startDate:
+    description: aution start time
+    type: string
+  endDate:
+    description: aution end time
+    type: string
+  createdDate:
+    description: aution created time
+    type: string
+  status:
+    description: aution status
+    type: string
+  reason:
+    description: aution update reason
+    type: string
+  descriptions:
+    description: aution descriptions
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

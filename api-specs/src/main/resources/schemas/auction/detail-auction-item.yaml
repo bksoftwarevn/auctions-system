@@ -1,0 +1,20 @@
+title: DetailAuctionItem
+type: object
+properties:
+  auctions:
+    $ref: './auction-item.yaml'
+  sellingUser:
+    $ref: '../user/user-data-item.yaml'
+  buyingUser:
+    $ref: '../user/user-data-item.yaml'
+  category:
+    $ref: '../category/category-item.yaml'
+  products:
+    $ref: '../product/product-item.yaml'
+  maxBid:
+    type: string
+  like:
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

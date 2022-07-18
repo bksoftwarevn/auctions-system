@@ -8,6 +8,17 @@ info:
 paths: { }
 
 components:
+
+  parameters:
+
+    IdPathParam:
+      name: id
+      description: ID
+      in: query
+      required: true
+      schema:
+        type: string
+
   responses:
     UserRegisterResponse:
       description: User register successful response
@@ -93,6 +104,66 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CreateCategoryResponse'
+    CreateAuctionResponse:
+      description: create auction response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateAuctionResponse'
+    AuctionsResponse:
+      description: list auction response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuctionsResponse'
+    FilterAuctionResponse:
+      description: filter auction response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FilterAuctionResponse'
+    DetailAuctionResponse:
+      description: detail auction response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DetailAuctionResponse'
+    AuctionInfoResponse:
+      description: info auction response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuctionInfoResponse'
+    CreateProductResponse:
+      description: create product response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateProductResponse'
+    CreateBrandResponse:
+      description: create brand response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateBrandResponse'
+    BrandsResponse:
+      description: get list brand response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BrandsResponse'
+    CreateCommentResponse:
+      description: create comment response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateCommentResponse'
+    CommentsResponse:
+      description: get list comments response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CommentsResponse'
 
   schemas:
     CommonResponse:
@@ -113,6 +184,9 @@ components:
       $ref: 'schemas/category/group-item.yaml'
     Category:
       $ref: 'schemas/category/category-item.yaml'
+    AutionItem:
+      $ref: 'schemas/auction/auction-item.yaml'
+
     ChangePasswordResponse:
       $ref: 'schemas/user/change-password-response.yaml'
     CreateCategoryGroupResponse:
@@ -123,7 +197,27 @@ components:
       $ref: 'schemas/role/create-role-response.yaml'
     RolesResponse:
       $ref: 'schemas/role/roles-response.yaml'
+    AuctionsResponse:
+      $ref: 'schemas/auction/auctions-response.yaml'
     CategoriesResponse:
       $ref: 'schemas/category/categories-response.yaml'
     CreateCategoryResponse:
       $ref: 'schemas/category/create-category-response.yaml'
+    CreateAuctionResponse:
+      $ref: 'schemas/auction/create-auction-response.yaml'
+    FilterAuctionResponse:
+      $ref: 'schemas/auction/filter-auction-response.yaml'
+    DetailAuctionResponse:
+      $ref: 'schemas/auction/detail-auction-response.yaml'
+    AuctionInfoResponse:
+      $ref: 'schemas/auction/info-auction-response.yaml'
+    CreateProductResponse:
+      $ref: 'schemas/product/create-product-response.yaml'
+    CreateBrandResponse:
+      $ref: 'schemas/brand/create-brand-response.yaml'
+    BrandsResponse:
+      $ref: 'schemas/brand/brands-response.yaml'
+    CreateCommentResponse:
+      $ref: 'schemas/comment/create-comment-response.yaml'
+    CommentsResponse:
+      $ref: 'schemas/comment/comments-response.yaml'

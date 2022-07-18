@@ -1,11 +1,27 @@
 title: CreateAuctionRequest
 type: object
 properties:
-  category_id:
+  categoryId:
     description: Cateogry id
-    type: integer
-
+    type: string
+  title:
+    description: aution title
+    type: string
+  startDate:
+    description: aution start time
+    type: string
+    example: "21/20/2022 14:05:33"
+  endDate:
+    description: aution end time
+    type: string
+    example: "21/20/2022 15:05:33"
+  descriptions:
+    description: aution descriptions
+    type: string
   additions:
     $ref: '../../lib/schemas/additions.yaml'
 required:
-  - category_id
+  - categoryId
+  - title
+  - startDate
+  - endDate

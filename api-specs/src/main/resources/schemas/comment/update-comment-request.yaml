@@ -1,0 +1,14 @@
+title: UpdateCommentRequest
+type: object
+properties:
+  id:
+    description: comment id
+    type: string
+  content:
+    description: content
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - id
+  - content

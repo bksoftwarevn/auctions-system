@@ -162,12 +162,12 @@ public class UserServiceImpl implements UserService {
             if (StringUtils.isNotEmpty(resetPasswordRequest.getUsername())) {
                 UserEntity userEntity = userRepository.findByUsername(resetPasswordRequest.getUsername());
                 if (!ObjectUtils.isEmpty(userEntity)) {
-                    List<ConfirmationDto> confirmationDtos = confirmationService.find(userEntity.getUsername(), ActionType.RESET_PASS.name(), StatusType.PENDING.name());
+                    List<ConfirmationDto> confirmationDtos = confirmationService.find(userEntity.getUsername(), ActionType.RESET_PASS.name(), ActionStatus.PENDING.name());
                     if (confirmationDtos.isEmpty() || confirmationDtos.stream().noneMatch(confirmationDto -> confirmationDto.getExpireDate().isAfter(now))) {
                         String otp = String.valueOf(otpService.generateOTP(userEntity.getUsername()));
                         ConfirmationDto confirmationDto = ConfirmationDto.builder()
                                 .id(UUID.randomUUID().toString()).username(userEntity.getUsername())
-                                .action(ActionType.RESET_PASS.name()).status(StatusType.PENDING.name())
+                                .action(ActionType.RESET_PASS.name()).status(ActionStatus.PENDING.name())
                                 .data(passwordEncoder.encode(resetPasswordRequest.getPassword().trim()))
                                 .otp(otp).expireDate(new Date(System.currentTimeMillis() + otpConfiguration.getDuration() * 60000).toInstant())
                                 .build();

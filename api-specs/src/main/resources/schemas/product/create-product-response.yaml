@@ -1,0 +1,11 @@
+title: CreateProductResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    $ref: './product-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

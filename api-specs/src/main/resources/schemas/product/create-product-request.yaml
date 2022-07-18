@@ -1,0 +1,35 @@
+title: CreateProductRequest
+type: object
+properties:
+  name:
+    description: Product name
+    type: string
+  startPrice:
+    description: Product start price
+    type: string
+  brandId:
+    description: Brand id
+    type: string
+  series:
+    description: Product series
+    type: string
+  descriptions:
+    description: product descriptions
+    type: string
+  mainImage:
+    description: product images
+    type: string
+  auctionId:
+    description: auction id
+    type: string
+  images:
+    description: product images
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - name
+  - startPrice
+  - brandId
+  - descriptions
+  - acutionId

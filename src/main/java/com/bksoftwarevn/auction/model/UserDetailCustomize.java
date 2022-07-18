@@ -20,7 +20,7 @@ public class UserDetailCustomize extends User {
     private String address;
     private String avatar;
     private String lang;
-    private String createDate;
+    private String createdDate;
     private boolean lock;
     private boolean active;
     private String citizenId;
@@ -48,6 +48,6 @@ public class UserDetailCustomize extends User {
         this.avatar = avatar;
         this.address = address;
         this.lang = lang;
-        this.createDate = createdDate.toString();
+        this.createdDate = createdDate.toString();
     }
 }

@@ -1,0 +1,11 @@
+title: DetailAuctionResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    $ref: './detail-auction-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

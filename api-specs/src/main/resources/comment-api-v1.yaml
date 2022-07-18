@@ -1,0 +1,80 @@
+openapi: 3.0.3
+
+info:
+  title: Comment API Spec
+  description: Specs for Comment API
+  version: 1.0.0
+  x-icon: products
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/comment/v1
+  - description: prod test
+    url: https://products.bksoftwarevn.com/api/comment/v1
+
+tags:
+  - name: Product
+
+paths:
+
+  /api/comment/v1/management:
+    description: Create comment
+    post:
+      summary: Post create comment
+      description: request to create comment
+      operationId: postCreateComment
+      requestBody:
+        description: Create comment request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/comment/create-comment-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateCommentResponse'
+      tags:
+        - comment
+    put:
+      summary: Put update comment
+      description: request to update comment
+      operationId: putUpdateComment
+      requestBody:
+        description: update comment request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/comment/update-comment-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateCommentResponse'
+      tags:
+        - comment
+    get:
+      summary: get list comments
+      description: request to get comments
+      operationId: getComments
+      requestBody:
+        description: update comment request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/comment/search-comment-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommentsResponse'
+      tags:
+        - comment
+    delete:
+      summary: delete comment
+      description: request to delete comment
+      operationId: deleteComment
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - comment

@@ -1,0 +1,17 @@
+title: UpdateBrandRequest
+type: object
+properties:
+  id:
+    description: Brand id
+    type: string
+  name:
+    description: Brand name
+    type: string
+  info:
+    description: brand info
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - id
+  - name

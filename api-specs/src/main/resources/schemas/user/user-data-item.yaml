@@ -21,7 +21,7 @@ properties:
     type: string
   active:
     type: boolean
-  createDate:
+  createdDate:
     type: string
   lock:
     type: boolean

@@ -1,0 +1,11 @@
+title: CreateCommentResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    $ref: './comment-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

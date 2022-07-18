@@ -1,10 +1,12 @@
 package com.bksoftwarevn.auction.persistence.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -40,6 +42,15 @@ public class UserEntity {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "lang", nullable = false)
+    private String lang;
+
+    @Column(name = "active_key")
+    private String activeKey;
+
     @Column(name = "active")
     private Boolean active;
 
@@ -58,20 +69,39 @@ public class UserEntity {
     @Column(name = "citizen_id", length = 16)
     private String citizenId;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "actorUser", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<AuditEntity> audits = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<AuctionEntity> auctions = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<CommentEntity> comments = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<ReplyEntity> replies = new LinkedHashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @ToString.Exclude
     private Set<RoleEntity> roles = new LinkedHashSet<>();
 
-    @Column(name = "address")
-    private String address;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserEntity that = (UserEntity) o;
+        return id != null && Objects.equals(id, that.id);
+    }
 
-    @Column(name = "active_key", length = 64)
-    private String activeKey;
-
-    @Column(name = "lang", length = 8)
-    private String lang;
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

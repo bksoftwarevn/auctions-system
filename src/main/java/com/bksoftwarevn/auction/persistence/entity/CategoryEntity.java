@@ -33,7 +33,7 @@ public class CategoryEntity {
     @Column(name = "additional")
     private String additional;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", nullable = false)
     @ToString.Exclude
     private GroupEntity group;

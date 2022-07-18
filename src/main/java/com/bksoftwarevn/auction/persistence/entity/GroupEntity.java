@@ -4,7 +4,9 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "groups", indexes = {
@@ -32,12 +34,16 @@ public class GroupEntity {
     @Column(name = "additional")
     private String additional;
 
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<CategoryEntity> categories = new LinkedHashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        GroupEntity that = (GroupEntity) o;
-        return id != null && Objects.equals(id, that.id);
+        GroupEntity entity = (GroupEntity) o;
+        return id != null && Objects.equals(id, entity.id);
     }
 
     @Override

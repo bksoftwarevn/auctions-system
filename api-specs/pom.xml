@@ -129,6 +129,39 @@
                             <failOnWarning>true</failOnWarning>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>boat-validation-product</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/product-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-brand</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/brand-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-comment</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/comment-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
                     <!-- main version of the specs - dynamically versioned filename -->
                     <execution>
                         <id>boat-bundle</id>
@@ -262,7 +295,48 @@
                             <generateAliasAsModel>true</generateAliasAsModel>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>boat-docs-product</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/product-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-docs-brand</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/brand-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-docs-comment</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/comment-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
                 </executions>
+
+
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>

@@ -1,0 +1,26 @@
+title: CommentItem
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  parentId:
+    description: comment parent id
+    type: string
+  content:
+    description: content
+    type: string
+  userId:
+    description: user comment
+    type: string
+  createdDate:
+    description: create date
+    type: string
+  updatedDate:
+    description: update date
+    type: string
+  status:
+    description: status
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

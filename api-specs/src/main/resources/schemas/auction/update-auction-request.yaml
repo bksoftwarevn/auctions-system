@@ -1,0 +1,33 @@
+title: UpdateAutionRequest
+type: object
+properties:
+  id:
+    description: Auction id
+    type: string
+  categoryId:
+    description: Cateogry id
+    type: string
+  title:
+    description: aution title
+    type: string
+  startDate:
+    description: aution start time
+    type: string
+  endDate:
+    description: aution end time
+    type: string
+  descriptions:
+    description: aution descriptions
+    type: string
+  reason:
+    description: aution update reason
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - id
+  - categoryId
+  - title
+  - startDate
+  - endDate
+  - reason

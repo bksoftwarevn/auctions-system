@@ -1,0 +1,17 @@
+title: CreateCommentRequest
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  parentId:
+    description: comment parent id
+    type: string
+  content:
+    description: content
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - auctionId
+  - content

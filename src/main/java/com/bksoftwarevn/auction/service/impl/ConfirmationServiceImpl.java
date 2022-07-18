@@ -2,14 +2,13 @@ package com.bksoftwarevn.auction.service.impl;
 
 import com.bksoftwarevn.auction.constant.ActionType;
 import com.bksoftwarevn.auction.constant.AucMessage;
-import com.bksoftwarevn.auction.constant.StatusType;
+import com.bksoftwarevn.auction.constant.ActionStatus;
 import com.bksoftwarevn.auction.dto.ConfirmationDto;
 import com.bksoftwarevn.auction.exception.AucException;
 import com.bksoftwarevn.auction.mapper.ConfirmationMapper;
 import com.bksoftwarevn.auction.model.CommonResponse;
 import com.bksoftwarevn.auction.model.ConfirmRequest;
 import com.bksoftwarevn.auction.persistence.entity.ConfirmationEntity;
-import com.bksoftwarevn.auction.persistence.entity.UserEntity;
 import com.bksoftwarevn.auction.persistence.repository.ConfirmationRepository;
 import com.bksoftwarevn.auction.service.ConfirmationService;
 import com.bksoftwarevn.auction.service.UserService;
@@ -74,10 +73,10 @@ public class ConfirmationServiceImpl implements ConfirmationService {
     public CommonResponse confirm(ConfirmRequest confirmRequest) {
         CommonResponse commonResponse = new CommonResponse().code(AucMessage.CONFIRM_FAILED.getCode()).message(AucMessage.CONFIRM_FAILED.getMessage());
         try {
-            ConfirmationEntity confirmationEntity = confirmationRepository.findAllByUsernameAndActionAndStatusAndOtp(confirmRequest.getUsername(), confirmRequest.getAction(), StatusType.PENDING.name(), confirmRequest.getOtp())
+            ConfirmationEntity confirmationEntity = confirmationRepository.findAllByUsernameAndActionAndStatusAndOtp(confirmRequest.getUsername(), confirmRequest.getAction(), ActionStatus.PENDING.name(), confirmRequest.getOtp())
                     .stream().findFirst().orElseThrow(() -> new AucException(AucMessage.CONFIRMATION_NOT_FOUND.getCode(), AucMessage.CONFIRMATION_NOT_FOUND.getMessage()));
             if (ActionType.RESET_PASS.name().equalsIgnoreCase(confirmRequest.getAction()) && confirmationEntity.getExpireDate().isAfter(Instant.now())) {
-                confirmationEntity.setStatus(StatusType.CONFIRMED.name());
+                confirmationEntity.setStatus(ActionStatus.CONFIRMED.name());
                 confirmationRepository.save(confirmationEntity);
                 if (userService.updatePassword(confirmRequest.getUsername(), confirmationEntity.getData())) {
                     commonResponse.code(AucMessage.CONFIRM_SUCCESS.getCode()).message(AucMessage.CONFIRM_SUCCESS.getMessage());

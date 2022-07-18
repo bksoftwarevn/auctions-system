@@ -1,0 +1,62 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions Brand API Spec
+  description: Specs for Auctions Brand API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/brand/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/brand/v1
+
+tags:
+  - name: Brand
+
+paths:
+
+  /api/brand/v1/management:
+    description: Create Brand
+    post:
+      summary: Post create Brand
+      description: request to create Brand
+      operationId: postCreateBrand
+      requestBody:
+        description: Create Brand request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/brand/create-brand-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateBrandResponse'
+      tags:
+        - Brand
+    get:
+      summary: Get list Brand
+      description: request to get list Brand
+      operationId: getBrands
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/BrandsResponse'
+      tags:
+        - Brand
+    put:
+      summary: Put update Brand
+      description: request to update Brand
+      operationId: putUpdateBrand
+      requestBody:
+        description: Update Brand request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/brand/update-brand-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateBrandResponse'
+      tags:
+        - Brand

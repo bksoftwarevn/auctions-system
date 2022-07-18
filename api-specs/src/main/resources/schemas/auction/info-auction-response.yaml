@@ -1,0 +1,11 @@
+title: AuctionInfoResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    $ref: './auction-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

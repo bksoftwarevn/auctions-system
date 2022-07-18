@@ -8,16 +8,70 @@ info:
 
 servers:
   - description: local test
-    url: http://localhost:8080/api/auctions/v1
+    url: http://localhost:8080/api/auctionss/v1
   - description: prod test
-    url: https://auctions.bksoftwarevn.com/api/auctions/v1
+    url: https://auctions.bksoftwarevn.com/api/auctionss/v1
 
 tags:
   - name: Auction
 
 paths:
 
-  /api/auctions/v1/create:
+  /api/auctions/v1/search:
+    post:
+      summary: get list auctions
+      description: return list actions
+      operationId: filterAuctions
+      requestBody:
+        description: Create auction request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/auction/filter-auction-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/FilterAuctionResponse'
+      tags:
+        - auction
+  /api/auctions/v1/detail:
+    get:
+      summary: get detail auction
+      description: return detail actions
+      operationId: getDetailAuction
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/DetailAuctionResponse'
+      tags:
+        - auction
+  /api/auctions/v1/info:
+    get:
+      summary: get info auction
+      description: return info actions
+      operationId: getAuctionInfo
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/AuctionInfoResponse'
+      tags:
+        - auction
+  /api/auctions/v1/delete:
+    delete:
+      summary: delete auction
+      description: return result delete actions
+      operationId: deleteAuction
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - auction
+
+  /api/auctions/v1/management:
     description: Create auction
     post:
       summary: Post create auction
@@ -29,9 +83,49 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'schemas/user/update-user-request.yaml'
+              $ref: 'schemas/auction/create-auction-request.yaml'
       responses:
         "200":
-          $ref: 'common.yaml#/components/responses/UpdateUserResponse'
+          $ref: 'common.yaml#/components/responses/CreateAuctionResponse'
       tags:
-        - aution
+        - auction
+    get:
+      summary: Get list auction
+      description: request to get list auction
+      operationId: getAuctions
+      parameters:
+        - name: page
+          description: Page
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: size
+          description: size
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/AuctionsResponse'
+      tags:
+        - auction
+    put:
+      summary: Put update auction
+      description: request to update auction
+      operationId: putUpdateAuction
+      requestBody:
+        description: Update auction  request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/auction/update-auction-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateAuctionResponse'
+      tags:
+        - auction

@@ -1,0 +1,34 @@
+title: ProductItem
+type: object
+properties:
+  id:
+    description: product id
+    type: string
+  name:
+    description: Product name
+    type: string
+  brandId:
+    description: brand Id
+    type: string
+  series:
+    description: series
+    type: string
+  startPrice:
+    description: Start price
+    type: string
+  buyer:
+    description: buyer info
+    type: string
+  mainImage:
+    description: mainImage
+    type: string
+  auctionId:
+    description: auction Id
+    type: string
+  images:
+    type: string
+  descriptions:
+    description: Description
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
