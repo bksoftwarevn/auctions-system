@@ -129,8 +129,11 @@ public enum AucMessage {
     UPDATE_PRODUCT_FAILED("PD-2006", "Update list PRODUCT failed.", HttpStatus.NOT_ACCEPTABLE),
     CANNOT_CREATE_PRODUCT("AU-2008", "Can't update auction after approval.", HttpStatus.BAD_REQUEST),
 
-
+    // CONTACT-US
+    CONTACT_US_FAILED("CU-2009", "Cannot send message.", HttpStatus.BAD_REQUEST),
+    CONTACT_US_SUCCESS("CU-2010", "Send message success.", HttpStatus.ACCEPTED),
     ;
+
     String code;
     String message;
     HttpStatus status;

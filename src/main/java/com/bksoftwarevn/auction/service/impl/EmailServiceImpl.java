@@ -151,6 +151,30 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public EmailBody buildEmailContactUs(String originalFilename, String encodedString, String phone, String email, String name, String content, String reportType) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("content", name);
+        map.put("phone", phone);
+        map.put("reportType", reportType);
+
+        List<Attachment> attachments = new ArrayList<>();
+        Attachment attachment = Attachment.builder()
+                .content(encodedString)
+                .fileName(originalFilename)
+                .build();
+        attachments.add(attachment);
+
+        return EmailBody.builder()
+                .subject(ResourceMessageUtil.getMessage("mail.reset.pass.subject", "vn"))
+                .to(Collections.singletonList("dev@bksoftwarevn.com"))
+                .body(emailUtil.generateHTMLContent("contact-us", map, new Locale("vn")))
+                .attachments(attachments)
+                .html(true)
+                .build();
+    }
+
+    @Override
     public EmailBody buildEmailNotificationResetPassword(UserEntity userEntity) {
         Map<String, Object> activeContextModel = new HashMap<>();
         activeContextModel.put("name", userEntity.getName());

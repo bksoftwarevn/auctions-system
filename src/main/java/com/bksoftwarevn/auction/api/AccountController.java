@@ -1,17 +1,14 @@
 package com.bksoftwarevn.auction.api;
 
-import com.bksoftwarevn.auction.model.ChangePasswordRequest;
-import com.bksoftwarevn.auction.model.ChangePasswordResponse;
-import com.bksoftwarevn.auction.model.CommonResponse;
-import com.bksoftwarevn.auction.model.UpdateUserRequest;
-import com.bksoftwarevn.auction.model.UserRegisterResponse;
+import com.bksoftwarevn.auction.api.v1.AccountApi;
+import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.security.util.SecurityUtils;
 import com.bksoftwarevn.auction.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import com.bksoftwarevn.auction.api.v1.AccountApi;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -21,6 +18,10 @@ public class AccountController implements AccountApi {
 
     private final UserService userService;
 
+    @Override
+    public ResponseEntity<CommonResponse> contactUs(MultipartFile file, String name, String phone, String email, String content, String reportType) {
+        return ResponseEntity.ok(userService.contactUs(file, name, phone, email, content, reportType));
+    }
 
     @Override
     public ResponseEntity<UserRegisterResponse> getAccount() {

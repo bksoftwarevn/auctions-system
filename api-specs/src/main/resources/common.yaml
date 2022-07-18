@@ -164,12 +164,20 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CommentsResponse'
+    ContactUsResponse:
+      description: submit request to admin user
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactUsResponse'
 
   schemas:
     CommonResponse:
       $ref: 'schemas/common-response.yaml'
     UserRegisterResponse:
       $ref: 'schemas/user/user-register-response.yaml'
+    ContactUsResponse:
+      $ref: 'schemas/user/contact-us-response.yaml'
     UpdateUserResponse:
       $ref: 'schemas/user/user-register-response.yaml'
     AuthenResponse:

@@ -1,0 +1,27 @@
+title: ContactUsRequest
+type: object
+properties:
+  name:
+    description: Enter your name
+    type: string
+    pattern: ([a-zA-Z])+
+  phone:
+    description: Enter your phone number
+    type: string
+    pattern: ([0-9])+
+  email:
+    description: Email address
+    type: string
+    format: email
+  content:
+    description: Enter your content
+    type: string
+  reportType:
+    description: Enter your reportType
+    type: string
+  file:
+    type: string
+    format: binary
+
+required:
+  - file

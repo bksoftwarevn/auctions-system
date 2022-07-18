@@ -8,18 +8,6 @@ import com.bksoftwarevn.auction.exception.AucException;
 import com.bksoftwarevn.auction.mapper.RoleMapper;
 import com.bksoftwarevn.auction.mapper.UserMapper;
 import com.bksoftwarevn.auction.model.*;
-import com.bksoftwarevn.auction.model.ActiveRequest;
-import com.bksoftwarevn.auction.model.ActiveResponse;
-import com.bksoftwarevn.auction.model.AuthenDataItem;
-import com.bksoftwarevn.auction.model.AuthenRequest;
-import com.bksoftwarevn.auction.model.AuthenResponse;
-import com.bksoftwarevn.auction.model.ChangePasswordResponse;
-import com.bksoftwarevn.auction.model.CommonResponse;
-import com.bksoftwarevn.auction.model.ResetPasswordRequest;
-import com.bksoftwarevn.auction.model.UpdateUserRequest;
-import com.bksoftwarevn.auction.model.UserDataItem;
-import com.bksoftwarevn.auction.model.UserRegisterRequest;
-import com.bksoftwarevn.auction.model.UserRegisterResponse;
 import com.bksoftwarevn.auction.persistence.entity.UserEntity;
 import com.bksoftwarevn.auction.persistence.repository.RoleRepository;
 import com.bksoftwarevn.auction.persistence.repository.UserRepository;
@@ -42,13 +30,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.Instant;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -341,4 +328,21 @@ public class UserServiceImpl implements UserService {
         return authentication;
     }
 
+    @Override
+    public CommonResponse contactUs(MultipartFile file, String phone, String email, String name, String content, String reportType) {
+        try {
+            byte[] fileContent = file.getBytes();
+            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+            EmailBody emailBody = emailService.buildEmailContactUs(file.getOriginalFilename(), encodedString,
+                    phone, email, name, content, reportType);
+            emailService.sendEmail(emailBody);
+        } catch (IOException e) {
+            log.error("Cannot convert image to base64 string");
+            throw new AucException(AucMessage.CONTACT_US_FAILED.getCode(), AucMessage.CONTACT_US_FAILED.getMessage());
+        }
+        CommonResponse commonResponse = new CommonResponse();
+        commonResponse.setCode(AucMessage.CONTACT_US_SUCCESS.getCode());
+        commonResponse.setMessage(AucMessage.CONTACT_US_SUCCESS.getMessage());
+        return commonResponse;
+    }
 }

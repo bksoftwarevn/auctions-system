@@ -75,3 +75,21 @@ paths:
           $ref: 'common.yaml#/components/responses/CommonResponse'
       tags:
         - Account
+  /api/account/v1/contact-us:
+    description: Send request to admin user
+    post:
+      summary: Post request to admin user
+      description: request to send infomation to admin user
+      operationId: contactUs
+      requestBody:
+        description: request infomation request body
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: 'schemas/user/contact-us-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - Account

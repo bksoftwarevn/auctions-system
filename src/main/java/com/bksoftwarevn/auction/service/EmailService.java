@@ -10,5 +10,7 @@ public interface EmailService {
 
     EmailBody buildEmailResetPassword(UserEntity userEntity, String otp);
 
+    EmailBody buildEmailContactUs(String originalFilename, String encodedString, String phone, String email, String name, String content, String reportType);
+
     EmailBody buildEmailNotificationResetPassword(UserEntity userEntity);
 }
