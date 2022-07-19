@@ -1,0 +1,14 @@
+title: LikeItem
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  userId:
+    description: user comment
+    type: string
+  isLiked:
+    description: status
+    type: boolean
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

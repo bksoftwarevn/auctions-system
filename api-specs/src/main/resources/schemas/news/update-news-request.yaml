@@ -1,0 +1,33 @@
+title: UpdateNewsRequest
+type: object
+properties:
+  id:
+    description: news id
+    type: string
+  title:
+    type: string
+  content:
+    description: brand info
+    type: string
+  descriptions:
+    description: desc
+    type: string
+  createdBy:
+    description: user name
+    type: string
+  createdDate:
+    description: created date
+    type: string
+  updatedDate:
+    description: updated date
+    type: string
+  status:
+    description: news status
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - id
+  - title
+  - content
+  - descriptions

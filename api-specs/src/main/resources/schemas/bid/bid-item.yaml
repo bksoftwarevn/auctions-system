@@ -1,0 +1,26 @@
+title: BidItem
+type: object
+properties:
+  userId:
+    description: user bid
+    type: string
+  productId:
+    description: product id
+    type: string
+  price:
+    description: price
+    type: string
+  createdDate:
+    description: create date
+    type: string
+  updatedDate:
+    description: update date
+    type: string
+  total:
+    description: total
+    type: integer
+  status:
+    description: status
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

@@ -1,0 +1,80 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions Notifications API Spec
+  description: Specs for Auctions Notifications API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/notifications/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/notifications/v1
+
+tags:
+  - name: Notifications
+
+paths:
+
+  /api/notifications/v1/management:
+    description: Create Notifications
+    post:
+      summary: Post create Notifications
+      description: request to create Notifications
+      operationId: postCreateNotifications
+      requestBody:
+        description: Create Notifications request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/noti/create-notifications-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - Notifications
+    get:
+      summary: Get list Notifications
+      description: request to get list Notifications
+      operationId: getListNotifications
+      requestBody:
+        description: get list notifications request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/noti/search-notifications-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/SearchNotificationsResponse'
+      tags:
+        - Notifications
+    put:
+      summary: Put update Notifications
+      description: request to update Notifications
+      operationId: putUpdateNotifications
+      requestBody:
+        description: Update Notifications request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/noti/update-notifications-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - Notifications
+    delete:
+      summary: Put delete Notifications
+      description: request to delete Notifications
+      operationId: putDeleteNotifications
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - Notifications

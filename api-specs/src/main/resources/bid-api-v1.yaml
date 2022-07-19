@@ -1,0 +1,71 @@
+openapi: 3.0.3
+
+info:
+  title: Bid API Spec
+  description: Specs for bid API
+  version: 1.0.0
+  x-icon: products
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/bid/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/bid/v1
+
+tags:
+  - name: Bid
+
+paths:
+
+  /api/bid/v1/management:
+    description: Create bid
+    post:
+      summary: Post create bid
+      description: request to create bid
+      operationId: postCreateBid
+      requestBody:
+        description: Create bid request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/bid/create-bid-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateBidResponse'
+      tags:
+        - bid
+    get:
+      summary: get list bids
+      description: request to get bids
+      operationId: getBids
+      requestBody:
+        description: get bids request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/bid/search-bid-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/BidsResponse'
+      tags:
+        - bid
+  /api/bid/v1/accept:
+    description: Accept bid
+    post:
+      summary: Post accept bid
+      description: request to accept bid
+      operationId: postAcceptedBid
+      requestBody:
+        description: accept bid request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/bid/accept-bid-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/AcceptedBidResponse'
+      tags:
+        - bid

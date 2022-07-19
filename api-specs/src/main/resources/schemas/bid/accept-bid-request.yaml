@@ -1,0 +1,17 @@
+title: AcceptedBidRequest
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  productId:
+    description: product id
+    type: string
+  info:
+    description: selling info
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - auctionId
+  - productId

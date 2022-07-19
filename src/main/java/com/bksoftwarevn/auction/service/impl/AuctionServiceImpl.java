@@ -135,7 +135,7 @@ public class AuctionServiceImpl implements AuctionService {
 
             PaginationDTO<AuctionEntity> auctionItemPaginationDTO = commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null);
 
-            auctionsResponse.code(AucMessage.PULL_AUCTION_SUCCESS.getCode()).message(AucMessage.PULL_GROUP_SUCCESS.getMessage())
+            auctionsResponse.code(AucMessage.PULL_AUCTION_SUCCESS.getCode()).message(AucMessage.PULL_AUCTION_SUCCESS.getMessage())
                     .data(mapper.mappings(auctionItemPaginationDTO.getItems()));
 
         } catch (Exception ex) {

@@ -599,6 +599,48 @@
                             <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-bid-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/bid-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-news-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/news-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-noti-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.build.directory}/dependencies/auctions-spec/notifications-api-v${auctions-spec.version}.yaml
+                            </inputSpec>
+                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
+                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

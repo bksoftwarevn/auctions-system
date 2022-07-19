@@ -1,0 +1,8 @@
+title: CreateLikeRequest
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+required:
+  - auctionId

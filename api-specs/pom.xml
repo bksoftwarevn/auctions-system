@@ -162,6 +162,39 @@
                             <failOnWarning>true</failOnWarning>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>boat-validation-bid</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/bid-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-news</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/bid-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-validation-notifications</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                        <configuration>
+                            <input>src/main/resources/notifications-api-v1.yaml</input>
+                            <failOnWarning>true</failOnWarning>
+                        </configuration>
+                    </execution>
                     <!-- main version of the specs - dynamically versioned filename -->
                     <execution>
                         <id>boat-bundle</id>
@@ -329,6 +362,47 @@
                         </goals>
                         <configuration>
                             <inputSpec>${project.build.directory}/unversioned/comment-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>boat-docs-bid</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/bid-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>boat-docs-news</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/news-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                            <generateAliasAsModel>true</generateAliasAsModel>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>boat-docs-noti</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/unversioned/notifications-api-v1.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>html2</generatorName>
                             <generateAliasAsModel>true</generateAliasAsModel>

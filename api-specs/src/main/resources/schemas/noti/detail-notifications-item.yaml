@@ -1,0 +1,17 @@
+title: DetailNotificationsItem
+type: object
+properties:
+  isRead:
+    type: boolean
+  auctions:
+    $ref: '../auction/auction-item.yaml'
+  actionType:
+    type: string
+  actionCategory:
+    type: string
+  category:
+    $ref: '../category/category-item.yaml'
+  product:
+    $ref: '../product/product-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

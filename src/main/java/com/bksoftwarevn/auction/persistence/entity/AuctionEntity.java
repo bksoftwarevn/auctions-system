@@ -25,6 +25,7 @@ public class AuctionEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
+    @ToString.Exclude
     private CategoryEntity category;
 
     @Column(name = "title", nullable = false, length = 500)
@@ -60,6 +61,11 @@ public class AuctionEntity {
     private String additional;
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private Set<CommentEntity> comments = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<ProductEntity> products = new LinkedHashSet<>();
 
     @Override

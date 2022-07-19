@@ -1,0 +1,23 @@
+title: UpdateNotificationsRequest
+type: object
+properties:
+  id:
+    description: news id
+    type: string
+  eventId:
+    type: string
+  actionType:
+    type: string
+  actionCategory:
+    type: string
+  receiver:
+    type: string
+  content:
+    type: string
+  reason:
+    description: reason deny
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - id

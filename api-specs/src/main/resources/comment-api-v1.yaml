@@ -10,10 +10,10 @@ servers:
   - description: local test
     url: http://localhost:8080/api/comment/v1
   - description: prod test
-    url: https://products.bksoftwarevn.com/api/comment/v1
+    url: https://auctions.bksoftwarevn.com/api/comment/v1
 
 tags:
-  - name: Product
+  - name: Comment
 
 paths:
 
@@ -76,5 +76,54 @@ paths:
       responses:
         "200":
           $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - comment
+
+  /api/like/v1/management:
+    description: Create like
+    post:
+      summary: Post create like
+      description: request to create like
+      operationId: postCreateLike
+      requestBody:
+        description: Create like request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/comment/create-like-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateLikeResponse'
+      tags:
+        - comment
+    get:
+      summary: get list auctions liked
+      description: request to get auction liked
+      operationId: getAuctionsLiked
+      requestBody:
+        description: get list auctions liked request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/comment/search-auction-liked-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/AuctionsLikedResponse'
+      tags:
+        - comment
+
+  /api/like/v1/total:
+    description: get total like of auction
+    get:
+      summary: get total liked of auction
+      description: request to get total auction liked
+      operationId: getTotalLikedAuction
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/TotalLikedResponse'
       tags:
         - comment

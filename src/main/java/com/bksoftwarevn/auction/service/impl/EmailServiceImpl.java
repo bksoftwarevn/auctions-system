@@ -5,6 +5,7 @@ import com.bksoftwarevn.auction.constant.AucMessage;
 import com.bksoftwarevn.auction.constant.EmailPriority;
 import com.bksoftwarevn.auction.constant.EmailsConsumer;
 import com.bksoftwarevn.auction.exception.AucException;
+import com.bksoftwarevn.auction.model.AcceptBidResponse;
 import com.bksoftwarevn.auction.model.Attachment;
 import com.bksoftwarevn.auction.model.EmailBody;
 import com.bksoftwarevn.auction.persistence.entity.UserEntity;
@@ -18,6 +19,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -159,6 +161,29 @@ public class EmailServiceImpl implements EmailService {
                 .subject(ResourceMessageUtil.getMessage("mail.reset.pass.notification.subject", userEntity.getLang()))
                 .to(Collections.singletonList(userEntity.getEmail()))
                 .body(emailUtil.generateHTMLContent("reset-password-notification", activeContextModel, new Locale(userEntity.getLang())))
+                .html(true)
+                .build();
+    }
+
+    @Override
+    public EmailBody buildEmailAcceptedBid(AcceptBidResponse response) {
+        Map<String, Object> activeContextModel = new HashMap<>();
+        activeContextModel.put("productName", response.getData().getProduct().getName());
+        activeContextModel.put("productId", response.getData().getProduct().getId());
+        activeContextModel.put("series", response.getData().getProduct().getSeries());
+        activeContextModel.put("maxBid", response.getData().getProduct().getMaxBid());
+        activeContextModel.put("buyerName", response.getData().getProduct().getBuyer().getName());
+        activeContextModel.put("sellerName", response.getData().getProduct().getSeller().getName());
+        activeContextModel.put("auctionId", response.getData().getAuction().getId());
+        activeContextModel.put("auctionStart", response.getData().getAuction().getStartDate());
+        activeContextModel.put("auctionEnd", response.getData().getAuction().getEndDate());
+        activeContextModel.put("description", response.getData().getProduct().getAcceptedInfo());
+        activeContextModel.put("valueDate", ResourceMessageUtil.getMessage("mail.accepted.bid.time", response.getData().getProduct().getBuyer().getLang()));
+
+        return EmailBody.builder()
+                .subject(ResourceMessageUtil.getMessage("mail.accepted.bid.subject", response.getData().getProduct().getBuyer().getLang()))
+                .to(Collections.singletonList(response.getData().getProduct().getBuyer().getEmail()))
+                .body(emailUtil.generateHTMLContent("accept-bid", activeContextModel, new Locale(response.getData().getProduct().getBuyer().getLang())))
                 .html(true)
                 .build();
     }

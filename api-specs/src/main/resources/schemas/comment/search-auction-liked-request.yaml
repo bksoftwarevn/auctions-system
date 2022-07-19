@@ -1,0 +1,17 @@
+title: SearchAuctionLikeRequest
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  page:
+    description: page
+    type: integer
+  size:
+    description: size
+    type: integer
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - auctionId
+  - page

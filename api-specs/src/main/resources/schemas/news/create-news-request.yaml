@@ -1,0 +1,17 @@
+title: CreateBrandRequest
+type: object
+properties:
+  title:
+    type: string
+  content:
+    description: brand info
+    type: string
+  descriptions:
+    description: desc
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - title
+  - content
+  - descriptions

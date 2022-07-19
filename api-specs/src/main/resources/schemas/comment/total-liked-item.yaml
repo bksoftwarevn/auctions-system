@@ -1,0 +1,12 @@
+title: TotalLikeItem
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  totalLiked:
+    description: total liked for auction
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

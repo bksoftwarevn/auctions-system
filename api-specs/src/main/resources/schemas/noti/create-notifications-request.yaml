@@ -1,0 +1,20 @@
+title: CreateNotificationsRequest
+type: object
+properties:
+  eventId:
+    type: string
+  actionType:
+    type: string
+  actionCategory:
+    type: string
+  receiver:
+    type: string
+  content:
+    type: string
+  reason:
+    description: reason deny
+    type: string
+required:
+  - eventId
+  - actionType
+  - reason

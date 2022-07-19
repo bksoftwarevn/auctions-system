@@ -1,0 +1,80 @@
+openapi: 3.0.3
+
+info:
+  title: Auctions News API Spec
+  description: Specs for Auctions News API
+  version: 1.0.0
+  x-icon: auctions
+
+servers:
+  - description: local test
+    url: http://localhost:8080/api/news/v1
+  - description: prod test
+    url: https://auctions.bksoftwarevn.com/api/news/v1
+
+tags:
+  - name: News
+
+paths:
+
+  /api/news/v1/management:
+    description: Create News
+    post:
+      summary: Post create News
+      description: request to create News
+      operationId: postCreateNews
+      requestBody:
+        description: Create News request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/news/create-news-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateNewsResponse'
+      tags:
+        - News
+    get:
+      summary: Get list News
+      description: request to get list News
+      operationId: getListNews
+      requestBody:
+        description: get list news request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/news/search-news-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/SearchNewsResponse'
+      tags:
+        - News
+    put:
+      summary: Put update News
+      description: request to update News
+      operationId: putUpdateNews
+      requestBody:
+        description: Update News request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/news/update-news-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateNewsResponse'
+      tags:
+        - News
+    delete:
+      summary: Put delete News
+      description: request to delete News
+      operationId: putDeleteNews
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - News

@@ -1,0 +1,17 @@
+title: SearchNotificationsRequest
+type: object
+properties:
+  page:
+    description: page
+    type: integer
+  size:
+    description: size
+    type: integer
+  isRead:
+    description: is read
+    type: boolean
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - page
+  - size

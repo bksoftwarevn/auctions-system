@@ -1,0 +1,14 @@
+title: SearchNewsRequest
+type: object
+properties:
+  page:
+    description: page
+    type: integer
+  size:
+    description: size
+    type: integer
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - page
+  - size

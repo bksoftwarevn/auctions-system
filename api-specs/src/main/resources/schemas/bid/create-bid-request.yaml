@@ -1,0 +1,18 @@
+title: CreateBidRequest
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  productId:
+    description: product id
+    type: string
+  price:
+    description: price
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - auctionId
+  - productId
+  - price

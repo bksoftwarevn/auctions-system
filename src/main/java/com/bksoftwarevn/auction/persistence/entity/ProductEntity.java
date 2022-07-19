@@ -4,7 +4,11 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "product", indexes = {
@@ -23,11 +27,12 @@ public class ProductEntity {
     @Column(name = "name", nullable = false, length = 500)
     private String name;
 
-    @Column(name = "start_price", nullable = false, length = 50)
-    private String startPrice;
+    @Column(name = "start_price", nullable = false, precision = 30)
+    private BigDecimal startPrice;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "brand_id", nullable = false)
+    @ToString.Exclude
     private BrandEntity brand;
 
     @Column(name = "descriptions", nullable = false)
@@ -41,6 +46,7 @@ public class ProductEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "auction_id", nullable = false)
+    @ToString.Exclude
     private AuctionEntity auction;
 
     @Column(name = "series")
@@ -48,6 +54,26 @@ public class ProductEntity {
 
     @Column(name = "buyer", length = 36)
     private String buyer;
+
+    @Column(name = "max_bid", nullable = false, precision = 30)
+    private BigDecimal maxBid;
+
+    @OneToMany(mappedBy = "product")
+    @ToString.Exclude
+    private Set<BidEntity> bids = new LinkedHashSet<>();
+
+    @Lob
+    @Column(name = "accepted_info", columnDefinition = "LONGTEXT")
+    private String acceptedInfo;
+
+    @Column(name = "updated_date")
+    private Instant updatedDate;
+
+    @Column(name = "created_date")
+    private Instant createdDate;
+
+    @Column(name = "status")
+    private String status;
 
     @Override
     public boolean equals(Object o) {

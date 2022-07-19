@@ -23,4 +23,11 @@ public interface AuctionMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateAuctionEntityFromAuctionEntityDto(AuctionDto auctionEntityDto, @MappingTarget AuctionEntity auctionEntity);
+
+    AuctionEntity auctionDtoToAuctionEntity(AuctionDto auctionDto);
+
+    AuctionDto auctionEntityToAuctionDto(AuctionEntity auctionEntity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateAuctionEntityFromAuctionDto(AuctionDto auctionDto, @MappingTarget AuctionEntity auctionEntity);
 }

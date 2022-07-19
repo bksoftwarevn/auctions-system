@@ -1,0 +1,16 @@
+title: AuctionsLikedResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    type: array
+    items:
+      $ref: './auction-liked-item.yaml'
+  total:
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

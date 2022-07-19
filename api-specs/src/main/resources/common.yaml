@@ -164,6 +164,66 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/CommentsResponse'
+    CreateBidResponse:
+      description: create bid response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateBidResponse'
+    BidsResponse:
+      description: get list bid response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BidsResponse'
+    AcceptedBidResponse:
+      description: accepted bid response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AcceptedBidResponse'
+    CreateLikeResponse:
+      description: like response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateLikeResponse'
+    AuctionsLikedResponse:
+      description: auctions liked response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuctionsLikedResponse'
+    TotalLikedResponse:
+      description: total auctions liked response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TotalLikedResponse'
+    CreateNewsResponse:
+      description: create news response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateNewsResponse'
+    SearchNewsResponse:
+      description: search news response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchNewsResponse'
+    SearchNotificationsResponse:
+      description: search notifications response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchNotificationsResponse'
+    DetailNotificationsResponse:
+      description: detail notifications response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DetailNotificationsResponse'
 
   schemas:
     CommonResponse:
@@ -221,3 +281,23 @@ components:
       $ref: 'schemas/comment/create-comment-response.yaml'
     CommentsResponse:
       $ref: 'schemas/comment/comments-response.yaml'
+    CreateBidResponse:
+      $ref: 'schemas/bid/create-bid-response.yaml'
+    BidsResponse:
+      $ref: 'schemas/bid/bids-response.yaml'
+    AcceptedBidResponse:
+      $ref: 'schemas/bid/accept-bid-response.yaml'
+    CreateLikeResponse:
+      $ref: 'schemas/comment/create-like-response.yaml'
+    AuctionsLikedResponse:
+      $ref: 'schemas/comment/search-auctions-liked-response.yaml'
+    TotalLikedResponse:
+      $ref: 'schemas/comment/total-like-response.yaml'
+    CreateNewsResponse:
+      $ref: 'schemas/news/create-news-response.yaml'
+    SearchNewsResponse:
+      $ref: 'schemas/news/search-news-response.yaml'
+    SearchNotificationsResponse:
+      $ref: 'schemas/noti/search-notifications-response.yaml'
+    DetailNotificationsResponse:
+      $ref: 'schemas/noti/detail-notifications-response.yaml'

@@ -1,0 +1,13 @@
+title: SearchNewsItem
+type: object
+properties:
+  news:
+    description: news
+    type: array
+    items:
+      $ref: './news-item.yaml'
+  total:
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

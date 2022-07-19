@@ -1,0 +1,34 @@
+title: AcceptedProductItem
+type: object
+properties:
+  id:
+    description: product id
+    type: string
+  name:
+    description: Product name
+    type: string
+  brand:
+    $ref: '../brand/brand-item.yaml'
+  series:
+    description: series
+    type: string
+  startPrice:
+    description: Start price
+    type: string
+  maxBid:
+    description: max price current
+    type: string
+  seller:
+    $ref: '../user/user-data-item.yaml'
+  buyer:
+    $ref: '../user/user-data-item.yaml'
+  mainImage:
+    description: mainImage
+    type: string
+  images:
+    type: string
+  acceptedInfo:
+    description: info
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

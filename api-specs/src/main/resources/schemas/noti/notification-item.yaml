@@ -1,0 +1,37 @@
+title: NotificationItem
+type: object
+properties:
+  id:
+    type: string
+  eventId:
+    type: string
+  actionType:
+    type: string
+  actionCategory:
+    type: string
+  reason:
+    description: brand info
+    type: string
+  content:
+    description: brand info
+    type: string
+  createdDate:
+    description: desc
+    type: string
+  receiver:
+    description: desc
+    type: string
+  createdBy:
+    description: user name
+    type: string
+  updatedDate:
+    description: updated date
+    type: string
+  isRead:
+    description: read status
+    type: boolean
+  isDeleted:
+    description: read status
+    type: boolean
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

@@ -1,11 +1,17 @@
 package com.bksoftwarevn.auction.api;
 
+import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.model.ChangePasswordRequest;
 import com.bksoftwarevn.auction.model.ChangePasswordResponse;
 import com.bksoftwarevn.auction.model.CommonResponse;
+import com.bksoftwarevn.auction.model.CreateNewsResponse;
+import com.bksoftwarevn.auction.model.DetailNotificationsResponse;
+import com.bksoftwarevn.auction.model.SearchNotificationsResponse;
 import com.bksoftwarevn.auction.model.UpdateUserRequest;
 import com.bksoftwarevn.auction.model.UserRegisterResponse;
 import com.bksoftwarevn.auction.security.util.SecurityUtils;
+import com.bksoftwarevn.auction.service.NewsService;
+import com.bksoftwarevn.auction.service.NotificationsService;
 import com.bksoftwarevn.auction.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +26,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController implements AccountApi {
 
     private final UserService userService;
+    private final NewsService newsService;
+    private final NotificationsService notificationsService;
 
 
     @Override
     public ResponseEntity<UserRegisterResponse> getAccount() {
         return ResponseEntity.ok(userService.getAccount(SecurityUtils.getCurrentUserId()));
+    }
+
+    @Override
+    public ResponseEntity<CreateNewsResponse> getNewDetail(String id) {
+        log.info("[ClientController.getNewDetail] User read news detail [{}] request", id);
+        return ResponseEntity.ok(newsService.detail(SecurityUtils.getCurrentUserId(), id));
+    }
+
+    @Override
+    public ResponseEntity<DetailNotificationsResponse> getNotificationsDetail(String id) {
+        log.info("[ClientController.getNotificationsDetail] User read notifications detail [{}] request", id);
+        return ResponseEntity.ok(notificationsService.detail(SecurityUtils.getCurrentUserId(), id));
     }
 
     @Override
@@ -37,6 +57,12 @@ public class AccountController implements AccountApi {
     @Override
     public ResponseEntity<CommonResponse> postLogoutAccount() {
         return null;
+    }
+
+    @Override
+    public ResponseEntity<CommonResponse> postReadNews(String id) {
+        log.info("[ClientController.postReadNews] User read news [{}] request", id);
+        return ResponseEntity.ok(newsService.read(SecurityUtils.getCurrentUserId(), id));
     }
 
     @Override

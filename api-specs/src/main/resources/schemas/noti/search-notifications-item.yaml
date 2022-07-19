@@ -1,0 +1,16 @@
+title: SearchNotificationsItem
+type: object
+properties:
+  notifications:
+    description: notifications
+    type: array
+    items:
+      $ref: './notification-item.yaml'
+  totalUnRead:
+    type: integer
+    format: int64
+  total:
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

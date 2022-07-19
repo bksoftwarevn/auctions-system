@@ -1,0 +1,28 @@
+title: AuctionLikedItem
+type: object
+properties:
+  id:
+    description: Auction id
+    type: string
+  category:
+    $ref: '../category/category-item.yaml'
+  title:
+    description: aution title
+    type: string
+  startDate:
+    description: aution start time
+    type: string
+  endDate:
+    description: aution end time
+    type: string
+  createdDate:
+    description: aution created time
+    type: string
+  status:
+    description: aution status
+    type: string
+  isLiked:
+    description: aution descriptions
+    type: boolean
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

@@ -1,0 +1,23 @@
+title: SearchBidRequest
+type: object
+properties:
+  auctionId:
+    description: Auction id
+    type: string
+  productId:
+    description: product id
+    type: string
+  page:
+    description: page
+    type: integer
+    minimum: 0
+  size:
+    description: size
+    type: integer
+    minimum: 1
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - auctionId
+  - productId
+  - page

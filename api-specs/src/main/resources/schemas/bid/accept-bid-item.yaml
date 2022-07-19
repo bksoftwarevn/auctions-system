@@ -1,0 +1,9 @@
+title: AcceptedBidItem
+type: object
+properties:
+  product:
+    $ref: '../product/accept-product-item.yaml'
+  auction:
+    $ref: '../auction/auction-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

@@ -16,6 +16,9 @@ properties:
   startPrice:
     description: Start price
     type: string
+  maxBid:
+    description: max price current
+    type: string
   buyer:
     description: buyer info
     type: string

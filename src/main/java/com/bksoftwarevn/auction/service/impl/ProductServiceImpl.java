@@ -1,6 +1,7 @@
 package com.bksoftwarevn.auction.service.impl;
 
 
+import com.bksoftwarevn.auction.constant.ActionStatus;
 import com.bksoftwarevn.auction.constant.AucMessage;
 import com.bksoftwarevn.auction.constant.AuctionStatus;
 import com.bksoftwarevn.auction.exception.AucException;
@@ -23,6 +24,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -73,10 +76,12 @@ public class ProductServiceImpl implements ProductService {
             productEntity.setBrand(brandEntity);
             productEntity.setName(createProductRequest.getName());
             productEntity.setDescriptions(createProductRequest.getDescriptions());
-            productEntity.setStartPrice(createProductRequest.getStartPrice());
+            productEntity.setStartPrice(new BigDecimal(createProductRequest.getStartPrice()));
             productEntity.setMainImage(createProductRequest.getMainImage());
             productEntity.setImages(createProductRequest.getImages());
             productEntity.setSeries(createProductRequest.getSeries());
+            productEntity.setCreatedDate(Instant.now());
+            productEntity.setStatus(ActionStatus.CREATED.name());
 
             productEntity = repository.save(productEntity);
             if (ObjectUtils.isNotEmpty(productEntity)) {
@@ -103,8 +108,8 @@ public class ProductServiceImpl implements ProductService {
             if (!auctionEntity.getUser().getId().equalsIgnoreCase(SecurityUtils.getCurrentUserId())) {
                 throw new AucException(AucMessage.FORBIDDEN.getCode(), AucMessage.FORBIDDEN.getMessage());
             }
-            if (auctionEntity.getStatus().equalsIgnoreCase(AuctionStatus.PENDING.name())) {
-                throw new AucException(AucMessage.CANNOT_CREATE_PRODUCT.getCode(), AucMessage.CANNOT_CREATE_PRODUCT.getMessage());
+            if (!auctionEntity.getStatus().equalsIgnoreCase(AuctionStatus.PENDING.name()) || productEntity.getStatus().equals(ActionStatus.ACCEPTED.name())) {
+                throw new AucException(AucMessage.CANNOT_UPDATE_PRODUCT.getCode(), AucMessage.CANNOT_UPDATE_PRODUCT.getMessage());
             }
             BrandEntity brandEntity = brandRepository.findById(updateProductRequest.getBrandId()).orElseThrow(() -> new AucException(AucMessage.BRAND_NOT_FOUND.getCode(), AucMessage.BRAND_NOT_FOUND.getMessage()));
 
@@ -112,10 +117,12 @@ public class ProductServiceImpl implements ProductService {
             productEntity.setBrand(brandEntity);
             productEntity.setName(updateProductRequest.getName());
             productEntity.setDescriptions(updateProductRequest.getDescriptions());
-            productEntity.setStartPrice(updateProductRequest.getStartPrice());
+            productEntity.setStartPrice(new BigDecimal(updateProductRequest.getStartPrice()));
             productEntity.setMainImage(updateProductRequest.getMainImage());
             productEntity.setImages(updateProductRequest.getImages());
             productEntity.setSeries(updateProductRequest.getSeries());
+            productEntity.setUpdatedDate(Instant.now());
+            productEntity.setStatus(ActionStatus.UPDATED.name());
 
             productEntity = repository.save(productEntity);
             if (ObjectUtils.isNotEmpty(productEntity)) {
