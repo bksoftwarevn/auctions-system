@@ -1,0 +1,20 @@
+title: SearchAuctionRequest
+type: object
+properties:
+  type:
+    description: search type
+    example: 1 - Price, 2 - Start date, 3 - End date, 4 - Name
+    type: integer
+  keyword:
+    description: keyword
+    type: string
+  page:
+    description: page
+    type: integer
+    format: int64
+  size:
+    description: size
+    type: integer
+    format: int64
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

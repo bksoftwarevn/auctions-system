@@ -19,19 +19,36 @@ paths:
 
   /api/auctions/v1/search:
     post:
-      summary: get list auctions
-      description: return list actions
-      operationId: filterAuctions
+      summary: search auctions
+      description: return search actions
+      operationId: searchAuctions
       requestBody:
-        description: Create auction request body
+        description: search auction request body
         required: true
         content:
           application/json:
             schema:
-              $ref: 'schemas/auction/filter-auction-request.yaml'
+              $ref: 'schemas/auction/search-auction-request.yaml'
       responses:
         "200":
-          $ref: 'common.yaml#/components/responses/FilterAuctionResponse'
+          $ref: 'common.yaml#/components/responses/SearchAuctionResponse'
+      tags:
+        - auction
+  /api/auctions/v1/status:
+    put:
+      summary: update auctions
+      description: return update actions status
+      operationId: putUpdateAuctionsStatus
+      requestBody:
+        description: update auction status request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/auction/update-auction-status-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
       tags:
         - auction
   /api/auctions/v1/detail:
@@ -127,5 +144,22 @@ paths:
       responses:
         "200":
           $ref: 'common.yaml#/components/responses/CreateAuctionResponse'
+      tags:
+        - auction
+  /api/auctions/v1/management/search:
+    post:
+      summary: get list auctions
+      description: return list actions
+      operationId: filterAuctions
+      requestBody:
+        description: Create auction request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/auction/filter-auction-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/FilterAuctionResponse'
       tags:
         - auction

@@ -1,0 +1,17 @@
+title: UpdateStatusAuctionRequest
+type: object
+properties:
+  auctionId:
+    description: auction id
+    type: string
+  status:
+    description: aution title
+    type: string
+  descriptions:
+    description: aution descriptions
+    type: string
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'
+required:
+  - auctionId
+  - status

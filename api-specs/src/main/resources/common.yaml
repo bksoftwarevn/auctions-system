@@ -224,6 +224,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DetailNotificationsResponse'
+    SearchAuctionResponse:
+      description: search auctions response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchAuctionResponse'
 
   schemas:
     CommonResponse:
@@ -259,6 +265,8 @@ components:
       $ref: 'schemas/role/roles-response.yaml'
     AuctionsResponse:
       $ref: 'schemas/auction/auctions-response.yaml'
+    SearchAuctionResponse:
+      $ref: 'schemas/auction/search-auction-response.yaml'
     CategoriesResponse:
       $ref: 'schemas/category/categories-response.yaml'
     CreateCategoryResponse:

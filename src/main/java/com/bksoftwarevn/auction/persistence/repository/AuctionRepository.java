@@ -13,4 +13,5 @@ public interface AuctionRepository extends JpaRepository<AuctionEntity, String>,
 
     AuctionEntity findByIdAndUserId(String auctionId, String userId);
     Optional<AuctionEntity> findByIdAndStatus(String userId, String status);
+
 }

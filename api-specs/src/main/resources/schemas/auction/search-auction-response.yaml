@@ -1,0 +1,11 @@
+title: SearchAuctionResponse
+type: object
+properties:
+  code:
+    type: string
+  message:
+    type: string
+  data:
+    $ref: './search-auction-item.yaml'
+  additions:
+    $ref: '../../lib/schemas/additions.yaml'

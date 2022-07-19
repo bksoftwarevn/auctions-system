@@ -1,6 +1,7 @@
 package com.bksoftwarevn.auction.api;
 
 
+import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.model.AuctionsResponse;
 import com.bksoftwarevn.auction.model.CommonResponse;
 import com.bksoftwarevn.auction.model.CreateAuctionRequest;
@@ -9,7 +10,10 @@ import com.bksoftwarevn.auction.model.DetailAuctionResponse;
 import com.bksoftwarevn.auction.model.FilterAuctionRequest;
 import com.bksoftwarevn.auction.model.FilterAuctionResponse;
 import com.bksoftwarevn.auction.model.InfoAuctionResponse;
+import com.bksoftwarevn.auction.model.SearchAuctionRequest;
+import com.bksoftwarevn.auction.model.SearchAuctionResponse;
 import com.bksoftwarevn.auction.model.UpdateAuctionRequest;
+import com.bksoftwarevn.auction.model.UpdateAuctionStatusRequest;
 import com.bksoftwarevn.auction.security.util.SecurityUtils;
 import com.bksoftwarevn.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
@@ -67,5 +71,17 @@ public class AuctionController implements AuctionApi {
     public ResponseEntity<CreateAuctionResponse> putUpdateAuction(UpdateAuctionRequest updateAuctionRequest) {
         log.info("[AuctionController.putUpdateAuction] Start update category: {}", updateAuctionRequest);
         return ResponseEntity.ok(auctionService.update(updateAuctionRequest));
+    }
+
+    @Override
+    public ResponseEntity<CommonResponse> putUpdateAuctionsStatus(UpdateAuctionStatusRequest updateAuctionStatusRequest) {
+        log.info("[AuctionController.putUpdateAuctionsStatus] Start update auctions: {}", updateAuctionStatusRequest);
+        return ResponseEntity.ok(auctionService.updateStatus(updateAuctionStatusRequest));
+    }
+
+    @Override
+    public ResponseEntity<SearchAuctionResponse> searchAuctions(SearchAuctionRequest searchAuctionRequest) {
+        log.info("[AuctionController.searchAuctions] Start search auctions: {}", searchAuctionRequest);
+        return ResponseEntity.ok(auctionService.search(searchAuctionRequest));
     }
 }

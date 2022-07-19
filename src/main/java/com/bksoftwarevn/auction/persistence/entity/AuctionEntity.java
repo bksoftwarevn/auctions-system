@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -67,6 +68,12 @@ public class AuctionEntity {
     @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<ProductEntity> products = new LinkedHashSet<>();
+
+    @Column(name = "start_price", nullable = false, precision = 50)
+    private BigDecimal startPrice;
+
+    @OneToMany(mappedBy = "auction")
+    private Set<LikeAuctionEntity> likeAuctions = new LinkedHashSet<>();
 
     @Override
     public boolean equals(Object o) {

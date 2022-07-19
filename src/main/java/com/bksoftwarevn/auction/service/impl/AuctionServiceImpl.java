@@ -1,9 +1,6 @@
 package com.bksoftwarevn.auction.service.impl;
 
-import com.bksoftwarevn.auction.constant.ActionStatus;
-import com.bksoftwarevn.auction.constant.AucConstant;
-import com.bksoftwarevn.auction.constant.AucMessage;
-import com.bksoftwarevn.auction.constant.AuctionStatus;
+import com.bksoftwarevn.auction.constant.*;
 import com.bksoftwarevn.auction.dto.PaginationDTO;
 import com.bksoftwarevn.auction.dto.SearchDTO;
 import com.bksoftwarevn.auction.exception.AucException;
@@ -24,16 +21,18 @@ import com.bksoftwarevn.auction.model.FilterAuctionRequest;
 import com.bksoftwarevn.auction.model.FilterAuctionResponse;
 import com.bksoftwarevn.auction.model.GroupItem;
 import com.bksoftwarevn.auction.model.InfoAuctionResponse;
+import com.bksoftwarevn.auction.model.SearchAuctionItem;
+import com.bksoftwarevn.auction.model.SearchAuctionRequest;
+import com.bksoftwarevn.auction.model.SearchAuctionResponse;
 import com.bksoftwarevn.auction.model.UpdateAuctionRequest;
+import com.bksoftwarevn.auction.model.UpdateAuctionStatusRequest;
 import com.bksoftwarevn.auction.model.UserDataItem;
 import com.bksoftwarevn.auction.persistence.entity.*;
 import com.bksoftwarevn.auction.persistence.filter.Condition;
 import com.bksoftwarevn.auction.persistence.filter.Operator;
 import com.bksoftwarevn.auction.persistence.filter.Order;
-import com.bksoftwarevn.auction.persistence.repository.AuctionRepository;
-import com.bksoftwarevn.auction.persistence.repository.CategoryRepository;
-import com.bksoftwarevn.auction.persistence.repository.GroupRepository;
-import com.bksoftwarevn.auction.persistence.repository.UserRepository;
+import com.bksoftwarevn.auction.persistence.filter.SortType;
+import com.bksoftwarevn.auction.persistence.repository.*;
 import com.bksoftwarevn.auction.service.CommonQueryService;
 import com.bksoftwarevn.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +44,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.*;
 
@@ -253,7 +253,7 @@ public class AuctionServiceImpl implements AuctionService {
                     .data(filterAuctionItem);
 
         } catch (Exception ex) {
-            log.error("[AuctionServiceImpl.filterAuctions] Filter auction have exception: ", ex);
+            log.error("[AuctionServiceImpl.filterAuctions] search auction have exception: ", ex);
             filterAuctionResponse.message(ex.getMessage());
         }
 
@@ -307,6 +307,90 @@ public class AuctionServiceImpl implements AuctionService {
             log.error("[AuctionController.detail] Get info auction {}, have exception: ", auctionId, ex);
         }
         return detailAuctionResponse;
+    }
+
+    @Override
+    public SearchAuctionResponse search(SearchAuctionRequest searchAuctionRequest) {
+
+        SearchAuctionResponse searchAuctionResponse = new SearchAuctionResponse().code(AucMessage.AUCTION_NOT_FOUND.getCode()).message(AucMessage.AUCTION_NOT_FOUND.getMessage());
+        SearchAuctionItem searchAuctionItem = new SearchAuctionItem();
+        try {
+            List<Order> orders = new ArrayList<>();
+            Order order = Order.builder()
+                    .field(AuctionEntity_.CREATED_DATE)
+                    .sortType(SortType.DESC)
+                    .build();
+            orders.add(order);
+
+            List<Condition> conditions = new ArrayList<>();
+
+            int searchType = searchAuctionRequest.getType();
+            if (SearchType.START_PRICE.getType() == searchType) {
+                Condition condition = Condition.builder()
+                        .operator(Operator.EQUALS)
+                        .field(AuctionEntity_.START_PRICE)
+                        .value(new BigDecimal(searchAuctionRequest.getKeyword()))
+                        .build();
+                conditions.add(condition);
+            } else if (SearchType.START_TIME.getType() == searchType) {
+                Condition condition = Condition.builder()
+                        .operator(Operator.EQUALS)
+                        .field(AuctionEntity_.START_DATE)
+                        .value(DateUtils.parseDate(searchAuctionRequest.getKeyword(), AucConstant.DATE_FORMAT).toInstant())
+                        .build();
+                conditions.add(condition);
+            } else if (SearchType.END_TIME.getType() == searchType) {
+                Condition condition = Condition.builder()
+                        .operator(Operator.EQUALS)
+                        .field(AuctionEntity_.END_DATE)
+                        .value(DateUtils.parseDate(searchAuctionRequest.getKeyword(), AucConstant.DATE_FORMAT).toInstant())
+                        .build();
+                conditions.add(condition);
+            } else {
+                Condition condition = Condition.builder()
+                        .operator(Operator.LIKE)
+                        .field(AuctionEntity_.TITLE)
+                        .value(searchAuctionRequest.getKeyword())
+                        .build();
+                conditions.add(condition);
+            }
+
+            SearchDTO searchDTO = SearchDTO.builder()
+                    .page(searchAuctionRequest.getPage() == null ? 0 : searchAuctionRequest.getPage())
+                    .size(searchAuctionRequest.getSize() == null ? 10 : searchAuctionRequest.getSize())
+                    .orders(orders)
+                    .conditions(conditions)
+                    .build();
+            PaginationDTO<AuctionEntity> auctionItemPaginationDTO = commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null);
+            searchAuctionItem.setTotal(auctionItemPaginationDTO.getTotal());
+            searchAuctionItem.setAuctions(mapper.mappings(auctionItemPaginationDTO.getItems()));
+
+            searchAuctionResponse.code(AucMessage.PULL_AUCTION_SUCCESS.getCode()).message(AucMessage.PULL_GROUP_SUCCESS.getMessage()).data(searchAuctionItem);
+
+        } catch (Exception ex) {
+            log.error("[AuctionServiceImpl.filterAuctions] Filter auction have exception: ", ex);
+            searchAuctionResponse.message(ex.getMessage());
+        }
+
+        return searchAuctionResponse;
+    }
+
+    @Override
+    public CommonResponse updateStatus(UpdateAuctionStatusRequest updateAuctionStatusRequest) {
+        CommonResponse commonResponse = new CommonResponse().code(AucMessage.UPDATE_AUCTION_FAILED.getCode()).message(AucMessage.UPDATE_AUCTION_FAILED.getMessage());
+        try{
+            AuctionEntity auctionEntity = auctionRepository.findById(updateAuctionStatusRequest.getAuctionId()).orElseThrow(()-> new AucException(AucMessage.AUCTION_NOT_FOUND.getCode(), AucMessage.AUCTION_NOT_FOUND.getMessage()));
+            if(AuctionStatus.valueOf(updateAuctionStatusRequest.getStatus()).getStatus() > AuctionStatus.valueOf(auctionEntity.getStatus()).getStatus()){
+                auctionEntity.setStatus(updateAuctionStatusRequest.getStatus());
+                auctionRepository.save(auctionEntity);
+            }else {
+                throw new AucException(AucMessage.CANNOT_UPDATE_AUCTION.getCode(), AucMessage.CANNOT_UPDATE_AUCTION.getMessage());
+            }
+        }catch (Exception ex){
+            log.error("[AuctionServiceImpl.updateStatus] update status auction have exception: ", ex);
+            commonResponse.message(ex.getMessage());
+        }
+        return commonResponse;
     }
 
     private boolean validateAuctionData(UpdateAuctionRequest updateAuctionRequest) {
