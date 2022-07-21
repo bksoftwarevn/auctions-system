@@ -73,9 +73,10 @@ public enum AucMessage {
     UPDATE_AUCTION_SUCCESS("AU-2005", "Update  AUCTION successful.", HttpStatus.ACCEPTED),
     UPDATE_AUCTION_FAILED("AU-2006", "Update  AUCTION failed.", HttpStatus.NOT_ACCEPTABLE),
     VALIDATE_AUCTION_FAILED("AU-2007", "Validate auction info failed.", HttpStatus.BAD_REQUEST),
-    CANNOT_UPDATE_AUCTION("AU-2008", "Can't update auction after approval.", HttpStatus.BAD_REQUEST),
+    CANNOT_UPDATE_AUCTION("AU-2008", "Can't update auction.", HttpStatus.BAD_REQUEST),
     DELETE_AUCTION_SUCCESS("AU-2009", "Delete AUCTION successful.", HttpStatus.ACCEPTED),
     DELETE_AUCTION_FAILED("AU-2010", "Delete AUCTION failed.", HttpStatus.NOT_ACCEPTABLE),
+    CANNOT_UPDATE_AUCTION_PENDING("AU-2011", "Can't update auction pending or waiting.", HttpStatus.BAD_REQUEST),
 
     //IMAGE
     IMAGE_NOT_FOUND("IM-2000", "IMAGE not found.", HttpStatus.BAD_REQUEST),

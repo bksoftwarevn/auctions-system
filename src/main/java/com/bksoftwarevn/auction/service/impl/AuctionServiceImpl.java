@@ -33,6 +33,8 @@ import com.bksoftwarevn.auction.persistence.filter.Operator;
 import com.bksoftwarevn.auction.persistence.filter.Order;
 import com.bksoftwarevn.auction.persistence.filter.SortType;
 import com.bksoftwarevn.auction.persistence.repository.*;
+import com.bksoftwarevn.auction.security.authorization.AuthoritiesConstants;
+import com.bksoftwarevn.auction.security.util.SecurityUtils;
 import com.bksoftwarevn.auction.service.CommonQueryService;
 import com.bksoftwarevn.auction.service.AuctionService;
 import lombok.RequiredArgsConstructor;
@@ -378,15 +380,21 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public CommonResponse updateStatus(UpdateAuctionStatusRequest updateAuctionStatusRequest) {
         CommonResponse commonResponse = new CommonResponse().code(AucMessage.UPDATE_AUCTION_FAILED.getCode()).message(AucMessage.UPDATE_AUCTION_FAILED.getMessage());
-        try{
-            AuctionEntity auctionEntity = auctionRepository.findById(updateAuctionStatusRequest.getAuctionId()).orElseThrow(()-> new AucException(AucMessage.AUCTION_NOT_FOUND.getCode(), AucMessage.AUCTION_NOT_FOUND.getMessage()));
-            if(AuctionStatus.valueOf(updateAuctionStatusRequest.getStatus()).getStatus() > AuctionStatus.valueOf(auctionEntity.getStatus()).getStatus()){
+        try {
+            AuctionEntity auctionEntity = auctionRepository.findById(updateAuctionStatusRequest.getAuctionId()).orElseThrow(() -> new AucException(AucMessage.AUCTION_NOT_FOUND.getCode(), AucMessage.AUCTION_NOT_FOUND.getMessage()));
+
+            if ((AuctionStatus.PENDING.name().equalsIgnoreCase(auctionEntity.getStatus()) || (AuctionStatus.WAITING.name().equalsIgnoreCase(auctionEntity.getStatus()))) && SecurityUtils.hasCurrentUserNoneOfAuthorities(AuthoritiesConstants.ROLE_ADMIN.name())) {
+                throw new AucException(AucMessage.CANNOT_UPDATE_AUCTION_PENDING.getCode(), AucMessage.CANNOT_UPDATE_AUCTION_PENDING.getMessage());
+            }
+
+            if (AuctionStatus.valueOf(updateAuctionStatusRequest.getStatus()).getStatus() > AuctionStatus.valueOf(auctionEntity.getStatus()).getStatus()) {
                 auctionEntity.setStatus(updateAuctionStatusRequest.getStatus());
                 auctionRepository.save(auctionEntity);
-            }else {
+                commonResponse.code(AucMessage.UPDATE_AUCTION_SUCCESS.getCode()).message(AucMessage.UPDATE_AUCTION_SUCCESS.getMessage());
+            } else {
                 throw new AucException(AucMessage.CANNOT_UPDATE_AUCTION.getCode(), AucMessage.CANNOT_UPDATE_AUCTION.getMessage());
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("[AuctionServiceImpl.updateStatus] update status auction have exception: ", ex);
             commonResponse.message(ex.getMessage());
         }
