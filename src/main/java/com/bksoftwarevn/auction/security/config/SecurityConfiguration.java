@@ -60,7 +60,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests()
                 // guest
-                .antMatchers("/images/**", "/js/**", "/swagger-ui/**", "/docs.html", "/docs.json","/docs/**", "/test/**", "/templates/**").permitAll()
+                .antMatchers("/images/**", "/js/**", "/swagger-ui/**", "/docs.html", "/docs.json","/docs/**", "/test/**", "/templates/**", "/check").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 //admin

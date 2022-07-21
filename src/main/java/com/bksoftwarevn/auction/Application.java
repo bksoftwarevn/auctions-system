@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-@EnableDiscoveryClient
 @ConfigurationPropertiesScan
 @EnableAsync
 @EntityScan("com.bksoftwarevn.auction.persistence.entity")
