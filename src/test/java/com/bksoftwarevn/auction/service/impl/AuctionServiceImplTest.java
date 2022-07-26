@@ -2,6 +2,7 @@ package com.bksoftwarevn.auction.service.impl;
 
 import com.bksoftwarevn.auction.constant.AucMessage;
 import com.bksoftwarevn.auction.constant.AuctionStatus;
+import com.bksoftwarevn.auction.constant.SearchType;
 import com.bksoftwarevn.auction.dto.PaginationDTO;
 import com.bksoftwarevn.auction.dto.SearchDTO;
 import com.bksoftwarevn.auction.mapper.AuctionMapper;
@@ -17,10 +18,11 @@ import com.bksoftwarevn.auction.persistence.repository.AuctionRepository;
 import com.bksoftwarevn.auction.persistence.repository.CategoryRepository;
 import com.bksoftwarevn.auction.persistence.repository.GroupRepository;
 import com.bksoftwarevn.auction.persistence.repository.UserRepository;
+import com.bksoftwarevn.auction.security.authorization.AuthoritiesConstants;
+import com.bksoftwarevn.auction.security.util.SecurityUtils;
 import com.bksoftwarevn.auction.service.CommonQueryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -673,7 +675,6 @@ class AuctionServiceImplTest {
         Optional<UserEntity> optionalUserEntity = Optional.of(userEntity);
         UserDataItem userDataItem = mock(UserDataItem.class);
         GroupEntity groupEntity = mock(GroupEntity.class);
-        CategoryEntity categoryEntity = mock(CategoryEntity.class);
         Optional<CategoryEntity> optionalCategoryEntity = mock(Optional.class);
 
         when(groupRepository.findByType(MOCK_TYPE)).thenReturn(groupEntity);
@@ -705,7 +706,6 @@ class AuctionServiceImplTest {
         AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
                 userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
 
-        AuctionEntity auctionEntity = mock(AuctionEntity.class);
         when(auctionRepository.findById(MOCK_ID)).thenReturn(Optional.empty());
 
         DetailAuctionResponse actualResult = auctionService.detail(MOCK_ID);
@@ -763,18 +763,211 @@ class AuctionServiceImplTest {
         AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
                 userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
 
-        AuctionEntity auctionEntity = mock(AuctionEntity.class);
-
         when(auctionRepository.findByIdAndUserId(MOCK_ID, MOCK_ID)).thenReturn(null);
         InfoAuctionResponse actualResult = auctionService.info(MOCK_ID, MOCK_ID);
         Assertions.assertNotNull(actualResult);
     }
 
     @Test
-    void search() {
+    void give_whenSearch_then() {
+        SearchAuctionRequest searchAuctionRequest = mock(SearchAuctionRequest.class);
+        SearchDTO.SearchDTOBuilder searchDTOBuilder = mock(SearchDTO.SearchDTOBuilder.class);
+        SearchDTO searchDTO = mock(SearchDTO.class);
+        PaginationDTO<AuctionEntity> auctionItemPaginationDTO = mock(PaginationDTO.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SearchDTO> mockedStatic = mockStatic(SearchDTO.class);
+        mockedStatic.when(() -> SearchDTO.builder()).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.page(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.size(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.orders(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.conditions(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.build()).thenReturn(searchDTO);
+        when(commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null))
+                .thenReturn(auctionItemPaginationDTO);
+
+        SearchAuctionResponse actualResult = auctionService.search(searchAuctionRequest);
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
     }
 
     @Test
-    void updateStatus() {
+    void giveSearchType_whenSearch_then() {
+        SearchAuctionRequest searchAuctionRequest = mock(SearchAuctionRequest.class);
+        SearchDTO.SearchDTOBuilder searchDTOBuilder = mock(SearchDTO.SearchDTOBuilder.class);
+        SearchDTO searchDTO = mock(SearchDTO.class);
+        PaginationDTO<AuctionEntity> auctionItemPaginationDTO = mock(PaginationDTO.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SearchDTO> mockedStatic = mockStatic(SearchDTO.class);
+        mockedStatic.when(() -> SearchDTO.builder()).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.page(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.size(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.orders(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.conditions(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.build()).thenReturn(searchDTO);
+        when(commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null))
+                .thenReturn(auctionItemPaginationDTO);
+        when(searchAuctionRequest.getType()).thenReturn(SearchType.START_PRICE.getType());
+        when(searchAuctionRequest.getKeyword()).thenReturn("1234");
+
+        SearchAuctionResponse actualResult = auctionService.search(searchAuctionRequest);
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
+    }
+
+    @Test
+    void giveSearchType1_whenSearch_then() {
+        SearchAuctionRequest searchAuctionRequest = mock(SearchAuctionRequest.class);
+        SearchDTO.SearchDTOBuilder searchDTOBuilder = mock(SearchDTO.SearchDTOBuilder.class);
+        SearchDTO searchDTO = mock(SearchDTO.class);
+        PaginationDTO<AuctionEntity> auctionItemPaginationDTO = mock(PaginationDTO.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SearchDTO> mockedStatic = mockStatic(SearchDTO.class);
+        mockedStatic.when(() -> SearchDTO.builder()).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.page(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.size(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.orders(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.conditions(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.build()).thenReturn(searchDTO);
+        when(commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null))
+                .thenReturn(auctionItemPaginationDTO);
+        when(searchAuctionRequest.getType()).thenReturn(SearchType.START_TIME.getType());
+        when(searchAuctionRequest.getKeyword()).thenReturn("21/20/2022 15:05:33");
+        when(searchAuctionRequest.getSize()).thenReturn(3l);
+        when(searchAuctionRequest.getPage()).thenReturn(4l);
+
+        SearchAuctionResponse actualResult = auctionService.search(searchAuctionRequest);
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
+    }
+
+    @Test
+    void giveSearchType3_whenSearch_then() {
+        SearchAuctionRequest searchAuctionRequest = mock(SearchAuctionRequest.class);
+        SearchDTO.SearchDTOBuilder searchDTOBuilder = mock(SearchDTO.SearchDTOBuilder.class);
+        SearchDTO searchDTO = mock(SearchDTO.class);
+        PaginationDTO<AuctionEntity> auctionItemPaginationDTO = mock(PaginationDTO.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SearchDTO> mockedStatic = mockStatic(SearchDTO.class);
+        mockedStatic.when(() -> SearchDTO.builder()).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.page(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.size(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.orders(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.conditions(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.build()).thenReturn(searchDTO);
+        when(commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null))
+                .thenReturn(auctionItemPaginationDTO);
+        when(searchAuctionRequest.getType()).thenReturn(SearchType.END_TIME.getType());
+        when(searchAuctionRequest.getKeyword()).thenReturn("21/20/2022 15:05:33");
+        when(searchAuctionRequest.getSize()).thenReturn(null);
+        when(searchAuctionRequest.getPage()).thenReturn(null);
+
+        SearchAuctionResponse actualResult = auctionService.search(searchAuctionRequest);
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
+    }
+
+    @Test
+    void give_whenUpdateStatus_then() {
+        UpdateAuctionStatusRequest updateAuctionStatusRequest = mock(UpdateAuctionStatusRequest.class);
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        when(updateAuctionStatusRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findById(MOCK_ID)).thenReturn(Optional.empty());
+
+        CommonResponse actualResult = auctionService.updateStatus(updateAuctionStatusRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give1_whenUpdateStatus_then() {
+        UpdateAuctionStatusRequest updateAuctionStatusRequest = mock(UpdateAuctionStatusRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        when(updateAuctionStatusRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findById(MOCK_ID)).thenReturn(Optional.of(auctionEntity));
+        when(auctionEntity.getStatus()).thenReturn(AuctionStatus.PENDING.name());
+
+        CommonResponse actualResult = auctionService.updateStatus(updateAuctionStatusRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give2_whenUpdateStatus_then() {
+        UpdateAuctionStatusRequest updateAuctionStatusRequest = mock(UpdateAuctionStatusRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SecurityUtils> mockedStatic = mockStatic(SecurityUtils.class);
+        mockedStatic.when(() -> SecurityUtils.hasCurrentUserNoneOfAuthorities(eq(AuthoritiesConstants.ROLE_ADMIN.name()))).thenReturn(true);
+        when(updateAuctionStatusRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findById(MOCK_ID)).thenReturn(Optional.of(auctionEntity));
+        when(auctionEntity.getStatus()).thenReturn(AuctionStatus.WAITING.name());
+
+        CommonResponse actualResult = auctionService.updateStatus(updateAuctionStatusRequest);
+
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
+    }
+
+    @Test
+    void give3_whenUpdateStatus_then() {
+        UpdateAuctionStatusRequest updateAuctionStatusRequest = mock(UpdateAuctionStatusRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SecurityUtils> mockedStatic = mockStatic(SecurityUtils.class);
+        mockedStatic.when(() -> SecurityUtils.hasCurrentUserNoneOfAuthorities(eq(AuthoritiesConstants.ROLE_ADMIN.name()))).thenReturn(false);
+        when(updateAuctionStatusRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findById(MOCK_ID)).thenReturn(Optional.of(auctionEntity));
+        when(updateAuctionStatusRequest.getStatus()).thenReturn(AuctionStatus.DELIVERED.name());
+        when(auctionEntity.getStatus()).thenReturn(AuctionStatus.WAITING.name());
+
+        CommonResponse actualResult = auctionService.updateStatus(updateAuctionStatusRequest);
+
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
+    }
+
+    @Test
+    void give4_whenUpdateStatus_then() {
+        UpdateAuctionStatusRequest updateAuctionStatusRequest = mock(UpdateAuctionStatusRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SecurityUtils> mockedStatic = mockStatic(SecurityUtils.class);
+        mockedStatic.when(() -> SecurityUtils.hasCurrentUserNoneOfAuthorities(eq(AuthoritiesConstants.ROLE_ADMIN.name()))).thenReturn(false);
+        when(updateAuctionStatusRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findById(MOCK_ID)).thenReturn(Optional.of(auctionEntity));
+        when(updateAuctionStatusRequest.getStatus()).thenReturn(AuctionStatus.WAITING.name());
+        when(auctionEntity.getStatus()).thenReturn(AuctionStatus.DELIVERED.name());
+
+        CommonResponse actualResult = auctionService.updateStatus(updateAuctionStatusRequest);
+
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
     }
 }
