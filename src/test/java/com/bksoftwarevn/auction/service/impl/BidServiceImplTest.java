@@ -1,5 +1,6 @@
 package com.bksoftwarevn.auction.service.impl;
 
+import com.bksoftwarevn.auction.constant.ActionStatus;
 import com.bksoftwarevn.auction.constant.AuctionStatus;
 import com.bksoftwarevn.auction.dto.PaginationDTO;
 import com.bksoftwarevn.auction.dto.SearchDTO;
@@ -7,10 +8,7 @@ import com.bksoftwarevn.auction.mapper.AuctionMapper;
 import com.bksoftwarevn.auction.mapper.BidMapper;
 import com.bksoftwarevn.auction.mapper.BrandMapper;
 import com.bksoftwarevn.auction.mapper.UserMapper;
-import com.bksoftwarevn.auction.model.BidsResponse;
-import com.bksoftwarevn.auction.model.CreateBidRequest;
-import com.bksoftwarevn.auction.model.CreateBidResponse;
-import com.bksoftwarevn.auction.model.SearchBidRequest;
+import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.persistence.entity.*;
 import com.bksoftwarevn.auction.persistence.repository.AuctionRepository;
 import com.bksoftwarevn.auction.persistence.repository.BidRepository;
@@ -18,6 +16,7 @@ import com.bksoftwarevn.auction.persistence.repository.ProductRepository;
 import com.bksoftwarevn.auction.persistence.repository.UserRepository;
 import com.bksoftwarevn.auction.service.CommonQueryService;
 import com.bksoftwarevn.auction.service.EmailService;
+import liquibase.pro.packaged.M;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -370,6 +369,128 @@ class BidServiceImplTest {
     }
 
     @Test
-    void accept() {
+    void give1_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.empty());
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give2_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(acceptBidRequest.getProductId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.of(auctionEntity));
+        when(productRepository.findById(MOCK_ID)).thenReturn(Optional.empty());
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give3_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+        ProductEntity productEntity = mock(ProductEntity.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(acceptBidRequest.getProductId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.of(auctionEntity));
+        when(productRepository.findById(MOCK_ID)).thenReturn(Optional.of(productEntity));
+        when(productEntity.getStatus()).thenReturn(ActionStatus.ACCEPTED.name());
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give4_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+        ProductEntity productEntity = mock(ProductEntity.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(acceptBidRequest.getProductId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.of(auctionEntity));
+        when(productRepository.findById(MOCK_ID)).thenReturn(Optional.of(productEntity));
+        when(productEntity.getStatus()).thenReturn(ActionStatus.CREATED.name());
+        when(productEntity.getBuyer()).thenReturn(null);
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give５_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+        ProductEntity productEntity = mock(ProductEntity.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(acceptBidRequest.getProductId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.of(auctionEntity));
+        when(productRepository.findById(MOCK_ID)).thenReturn(Optional.of(productEntity));
+        when(productEntity.getStatus()).thenReturn(ActionStatus.CREATED.name());
+        when(productEntity.getBuyer()).thenReturn("あああ");
+        when(productEntity.getMaxBid()).thenReturn(null);
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give6_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+        ProductEntity productEntity = mock(ProductEntity.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(acceptBidRequest.getProductId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.of(auctionEntity));
+        when(productRepository.findById(MOCK_ID)).thenReturn(Optional.of(productEntity));
+        when(productEntity.getStatus()).thenReturn(ActionStatus.CREATED.name());
+        when(productEntity.getBuyer()).thenReturn("あああ");
+        when(productEntity.getMaxBid()).thenReturn(BigDecimal.TEN);
+        when(productRepository.save(productEntity)).thenReturn(null);
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give7_whenAccept_then() {
+        AcceptBidRequest acceptBidRequest = mock(AcceptBidRequest.class);
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+        ProductEntity productEntity = mock(ProductEntity.class);
+        AuctionItem auctionItem = mock(AuctionItem.class);
+
+        when(acceptBidRequest.getAuctionId()).thenReturn(MOCK_ID);
+        when(acceptBidRequest.getProductId()).thenReturn(MOCK_ID);
+        when(auctionRepository.findByIdAndStatus(MOCK_ID, AuctionStatus.STOPPED.name())).thenReturn(Optional.of(auctionEntity));
+        when(productRepository.findById(MOCK_ID)).thenReturn(Optional.of(productEntity));
+        when(productEntity.getStatus()).thenReturn(ActionStatus.CREATED.name());
+        when(productEntity.getBuyer()).thenReturn("あああ");
+        when(productEntity.getMaxBid()).thenReturn(BigDecimal.TEN);
+        when(productRepository.save(productEntity)).thenReturn(productEntity);
+        when(auctionMapper.mappingEntityToItem(auctionEntity)).thenReturn(auctionItem);
+        when(productEntity.getAuction()).thenReturn(auctionEntity);
+        when(auctionEntity.getUser()).thenReturn(mock(UserEntity.class));
+        when(productEntity.getStartPrice()).thenReturn(BigDecimal.TEN);
+
+        AcceptBidResponse actualResult = bidService.accept(acceptBidRequest);
+
+        Assertions.assertNotNull(actualResult);
     }
 }
