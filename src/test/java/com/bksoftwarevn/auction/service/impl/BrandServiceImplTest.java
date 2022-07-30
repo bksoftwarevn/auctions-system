@@ -1,5 +1,6 @@
 package com.bksoftwarevn.auction.service.impl;
 
+import com.bksoftwarevn.auction.exception.AucException;
 import com.bksoftwarevn.auction.mapper.BrandMapper;
 import com.bksoftwarevn.auction.model.BrandsResponse;
 import com.bksoftwarevn.auction.model.CreateBrandRequest;
@@ -56,6 +57,18 @@ class BrandServiceImplTest {
     }
 
     @Test
+    void give4_whenPull_then() {
+        List<BrandEntity> entities = new ArrayList<>();
+        entities.add(new BrandEntity());
+
+        when(brandRepository.findAll()).thenThrow(new AucException());
+
+        BrandsResponse actualResult = brandService.pull();
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
     void give_whenCreate_then() {
         CreateBrandRequest createBrandRequest = mock(CreateBrandRequest.class);
         BrandEntity brandEntity = mock(BrandEntity.class);
@@ -72,6 +85,17 @@ class BrandServiceImplTest {
         CreateBrandRequest createBrandRequest = mock(CreateBrandRequest.class);
 
         when(brandRepository.save(any(BrandEntity.class))).thenReturn(null);
+
+        CreateBrandResponse actualResult = brandService.create(createBrandRequest);
+
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void give2_whenCreate_then() {
+        CreateBrandRequest createBrandRequest = mock(CreateBrandRequest.class);
+
+        when(brandRepository.save(any(BrandEntity.class))).thenThrow(new AucException());
 
         CreateBrandResponse actualResult = brandService.create(createBrandRequest);
 

@@ -5,6 +5,7 @@ import com.bksoftwarevn.auction.constant.AuctionStatus;
 import com.bksoftwarevn.auction.constant.SearchType;
 import com.bksoftwarevn.auction.dto.PaginationDTO;
 import com.bksoftwarevn.auction.dto.SearchDTO;
+import com.bksoftwarevn.auction.exception.AucException;
 import com.bksoftwarevn.auction.mapper.AuctionMapper;
 import com.bksoftwarevn.auction.mapper.CategoryMapper;
 import com.bksoftwarevn.auction.mapper.GroupMapper;
@@ -729,6 +730,21 @@ class AuctionServiceImplTest {
     }
 
     @Test
+    void give2_whenDetail_then() {
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        AuctionEntity auctionEntity = mock(AuctionEntity.class);
+
+        Optional<AuctionEntity> optionalAuctionEntity = Optional.of(auctionEntity);
+        when(auctionRepository.findById(MOCK_ID)).thenReturn(optionalAuctionEntity);
+        when(mapper.mappingEntityToItem(auctionEntity)).thenThrow(new AucException());
+
+        DetailAuctionResponse actualResult = auctionService.detail(MOCK_ID);
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
     void delete() {
         AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
                 userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
@@ -742,6 +758,15 @@ class AuctionServiceImplTest {
         AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
                 userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
         when(auctionRepository.deleteByIdAndUserIdAndStatus(MOCK_ID, MOCK_ID, AuctionStatus.PENDING.name())).thenReturn(-1l);
+        CommonResponse actualResult = auctionService.delete(MOCK_ID, MOCK_ID);
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void delete2() {
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+        when(auctionRepository.deleteByIdAndUserIdAndStatus(MOCK_ID, MOCK_ID, AuctionStatus.PENDING.name())).thenThrow(new AucException());
         CommonResponse actualResult = auctionService.delete(MOCK_ID, MOCK_ID);
         Assertions.assertNotNull(actualResult);
     }
@@ -764,6 +789,16 @@ class AuctionServiceImplTest {
                 userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
 
         when(auctionRepository.findByIdAndUserId(MOCK_ID, MOCK_ID)).thenReturn(null);
+        InfoAuctionResponse actualResult = auctionService.info(MOCK_ID, MOCK_ID);
+        Assertions.assertNotNull(actualResult);
+    }
+
+    @Test
+    void info2() {
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        when(auctionRepository.findByIdAndUserId(MOCK_ID, MOCK_ID)).thenThrow(new AucException());
         InfoAuctionResponse actualResult = auctionService.info(MOCK_ID, MOCK_ID);
         Assertions.assertNotNull(actualResult);
     }
@@ -868,6 +903,35 @@ class AuctionServiceImplTest {
         when(searchDTOBuilder.build()).thenReturn(searchDTO);
         when(commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null))
                 .thenReturn(auctionItemPaginationDTO);
+        when(searchAuctionRequest.getType()).thenReturn(SearchType.END_TIME.getType());
+        when(searchAuctionRequest.getKeyword()).thenReturn("21/20/2022 15:05:33");
+        when(searchAuctionRequest.getSize()).thenReturn(null);
+        when(searchAuctionRequest.getPage()).thenReturn(null);
+
+        SearchAuctionResponse actualResult = auctionService.search(searchAuctionRequest);
+        Assertions.assertNotNull(actualResult);
+        mockedStatic.close();
+    }
+
+    @Test
+    void giveSearchType4_whenSearch_then() {
+        SearchAuctionRequest searchAuctionRequest = mock(SearchAuctionRequest.class);
+        SearchDTO.SearchDTOBuilder searchDTOBuilder = mock(SearchDTO.SearchDTOBuilder.class);
+        SearchDTO searchDTO = mock(SearchDTO.class);
+        PaginationDTO<AuctionEntity> auctionItemPaginationDTO = mock(PaginationDTO.class);
+
+        AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
+                userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
+
+        MockedStatic<SearchDTO> mockedStatic = mockStatic(SearchDTO.class);
+        mockedStatic.when(() -> SearchDTO.builder()).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.page(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.size(anyLong())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.orders(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.conditions(anyList())).thenReturn(searchDTOBuilder);
+        when(searchDTOBuilder.build()).thenReturn(searchDTO);
+        when(commonQueryService.search(AuctionEntity.class, AuctionEntity.class, searchDTO, null))
+                .thenThrow(new AucException());
         when(searchAuctionRequest.getType()).thenReturn(SearchType.END_TIME.getType());
         when(searchAuctionRequest.getKeyword()).thenReturn("21/20/2022 15:05:33");
         when(searchAuctionRequest.getSize()).thenReturn(null);
