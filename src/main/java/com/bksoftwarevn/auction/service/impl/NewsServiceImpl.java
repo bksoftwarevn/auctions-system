@@ -7,13 +7,7 @@ import com.bksoftwarevn.auction.dto.PaginationDTO;
 import com.bksoftwarevn.auction.dto.SearchDTO;
 import com.bksoftwarevn.auction.exception.AucException;
 import com.bksoftwarevn.auction.mapper.NewsMapper;
-import com.bksoftwarevn.auction.model.CommonResponse;
-import com.bksoftwarevn.auction.model.CreateNewsRequest;
-import com.bksoftwarevn.auction.model.CreateNewsResponse;
-import com.bksoftwarevn.auction.model.SearchNewsItem;
-import com.bksoftwarevn.auction.model.SearchNewsRequest;
-import com.bksoftwarevn.auction.model.SearchNewsResponse;
-import com.bksoftwarevn.auction.model.UpdateNewsRequest;
+import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.persistence.entity.*;
 import com.bksoftwarevn.auction.persistence.filter.Condition;
 import com.bksoftwarevn.auction.persistence.filter.Order;
@@ -115,9 +109,7 @@ public class NewsServiceImpl implements NewsService {
         try {
             NewsEntity entity = repository.findById(id).orElseThrow(() -> new AucException(AucMessage.NEWS_NOT_FOUND.getCode(), AucMessage.NEWS_NOT_FOUND.getMessage()));
             repository.delete(entity);
-            if (ObjectUtils.isNotEmpty(entity)) {
-                response.code(AucMessage.DELETE_NEWS_SUCCESS.getCode()).message(AucMessage.DELETE_NEWS_SUCCESS.getMessage());
-            }
+            response.code(AucMessage.DELETE_NEWS_SUCCESS.getCode()).message(AucMessage.DELETE_NEWS_SUCCESS.getMessage());
         } catch (Exception ex) {
             log.error("[NewsServiceImpl.delete] delete news [{}] exception: ", id, ex);
             response.message(ex.getMessage());
@@ -186,10 +178,8 @@ public class NewsServiceImpl implements NewsService {
             entityId.setNewsId(newsEntity.getId());
             entityId.setUserId(userEntity.getId());
             NewsKnowledgeEntity entity = newsKnowledgeRepository.findById(entityId).orElse(new NewsKnowledgeEntity());
-            if (ObjectUtils.isNotEmpty(newsEntity)) {
-                response.code(AucMessage.READ_NEWS_SUCCESS.getCode()).message(AucMessage.READ_NEWS_SUCCESS.getMessage())
-                        .data(mapper.mappingEntityToItem(newsEntity).isRead(entity.getIsRead()));
-            }
+            response.code(AucMessage.READ_NEWS_SUCCESS.getCode()).message(AucMessage.READ_NEWS_SUCCESS.getMessage())
+                    .data(mapper.mappingEntityToItem(newsEntity).isRead(entity.getIsRead()));
         } catch (Exception ex) {
             log.error("[NewsServiceImpl.read] Exception when read news: ", ex);
             response.message(ex.getMessage());
