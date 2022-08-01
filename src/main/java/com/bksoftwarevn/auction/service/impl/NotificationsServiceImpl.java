@@ -10,15 +10,11 @@ import com.bksoftwarevn.auction.mapper.AuctionMapper;
 import com.bksoftwarevn.auction.mapper.CategoryMapper;
 import com.bksoftwarevn.auction.mapper.NotificationMapper;
 import com.bksoftwarevn.auction.mapper.ProductMapper;
-import com.bksoftwarevn.auction.model.CommonResponse;
-import com.bksoftwarevn.auction.model.CreateNotificationsRequest;
-import com.bksoftwarevn.auction.model.DetailNotificationsItem;
-import com.bksoftwarevn.auction.model.DetailNotificationsResponse;
-import com.bksoftwarevn.auction.model.SearchNotificationsItem;
-import com.bksoftwarevn.auction.model.SearchNotificationsRequest;
-import com.bksoftwarevn.auction.model.SearchNotificationsResponse;
-import com.bksoftwarevn.auction.model.UpdateNotificationsRequest;
-import com.bksoftwarevn.auction.persistence.entity.*;
+import com.bksoftwarevn.auction.model.*;
+import com.bksoftwarevn.auction.persistence.entity.NotificationEntity;
+import com.bksoftwarevn.auction.persistence.entity.NotificationEntity_;
+import com.bksoftwarevn.auction.persistence.entity.ProductEntity;
+import com.bksoftwarevn.auction.persistence.entity.UserEntity;
 import com.bksoftwarevn.auction.persistence.filter.Condition;
 import com.bksoftwarevn.auction.persistence.filter.Operator;
 import com.bksoftwarevn.auction.persistence.filter.Order;
@@ -177,9 +173,7 @@ public class NotificationsServiceImpl implements NotificationsService {
             NotificationEntity entity = repository.findById(id).orElseThrow(() -> new AucException(AucMessage.NOTIFICATIONS_NOT_FOUND.getCode(), AucMessage.NOTIFICATIONS_NOT_FOUND.getMessage()));
             entity.setIsDeleted(true);
             repository.save(entity);
-            if (ObjectUtils.isNotEmpty(entity)) {
-                response.code(AucMessage.DELETE_NOTIFICATIONS_SUCCESS.getCode()).message(AucMessage.DELETE_NOTIFICATIONS_SUCCESS.getMessage());
-            }
+            response.code(AucMessage.DELETE_NOTIFICATIONS_SUCCESS.getCode()).message(AucMessage.DELETE_NOTIFICATIONS_SUCCESS.getMessage());
         } catch (Exception ex) {
             log.error("[NotificationsServiceImpl.delete] delete notifications [{}] exception: ", id, ex);
             response.message(ex.getMessage());
@@ -202,9 +196,8 @@ public class NotificationsServiceImpl implements NotificationsService {
             entity.setEventId(updateNotificationsRequest.getEventId());
             entity.setContent(updateNotificationsRequest.getContent());
             entity.setUpdatedDate(Instant.now());
-            if (ObjectUtils.isNotEmpty(entity)) {
-                response.code(AucMessage.UPDATE_NOTIFICATIONS_SUCCESS.getCode()).message(AucMessage.UPDATE_NOTIFICATIONS_SUCCESS.getMessage());
-            }
+            repository.save(entity);
+            response.code(AucMessage.UPDATE_NOTIFICATIONS_SUCCESS.getCode()).message(AucMessage.UPDATE_NOTIFICATIONS_SUCCESS.getMessage());
         } catch (Exception ex) {
             log.error("[NotificationsServiceImpl.update] Update notifications [{}] exception: ", updateNotificationsRequest, ex);
             response.message(ex.getMessage());
@@ -215,8 +208,8 @@ public class NotificationsServiceImpl implements NotificationsService {
     @Override
     public DetailNotificationsResponse detail(String currentUserId, String id) {
         DetailNotificationsResponse detailNotificationsResponse = new DetailNotificationsResponse().code(AucMessage.PULL_NOTIFICATIONS_FAILED.getCode()).message(AucMessage.PULL_NOTIFICATIONS_FAILED.getMessage());
-        try{
-            NotificationEntity notificationEntity = repository.findById(id).orElseThrow(()-> new AucException(AucMessage.NOTIFICATIONS_NOT_FOUND.getCode(), AucMessage.NOTIFICATIONS_NOT_FOUND.getMessage()));
+        try {
+            NotificationEntity notificationEntity = repository.findById(id).orElseThrow(() -> new AucException(AucMessage.NOTIFICATIONS_NOT_FOUND.getCode(), AucMessage.NOTIFICATIONS_NOT_FOUND.getMessage()));
 
             DetailNotificationsItem detailNotificationsItem = new DetailNotificationsItem();
             detailNotificationsItem.setActionType(notificationEntity.getActionType());
@@ -224,8 +217,8 @@ public class NotificationsServiceImpl implements NotificationsService {
             detailNotificationsItem.setActionCategory(notificationEntity.getActionCategory());
 
 
-            if(ActionCategory.BID.name().equalsIgnoreCase(notificationEntity.getActionCategory())){
-                ProductEntity productEntity = productRepository.findById(notificationEntity.getEventId()).orElseThrow(()-> new AucException(AucMessage.PRODUCT_NOT_FOUND.getCode(), AucMessage.PRODUCT_NOT_FOUND.getMessage()));
+            if (ActionCategory.BID.name().equalsIgnoreCase(notificationEntity.getActionCategory())) {
+                ProductEntity productEntity = productRepository.findById(notificationEntity.getEventId()).orElseThrow(() -> new AucException(AucMessage.PRODUCT_NOT_FOUND.getCode(), AucMessage.PRODUCT_NOT_FOUND.getMessage()));
                 detailNotificationsItem.setProduct(productMapper.productEntityToProductItem(productEntity));
                 detailNotificationsItem.setAuctions(auctionMapper.mappingEntityToItem(productEntity.getAuction()));
                 detailNotificationsItem.setCategory(categoryMapper.mappingEntityToItem(productEntity.getAuction().getCategory()));
@@ -233,7 +226,7 @@ public class NotificationsServiceImpl implements NotificationsService {
 
             detailNotificationsResponse.message(AucMessage.PULL_NOTIFICATIONS_SUCCESS.getMessage()).code(AucMessage.PULL_NOTIFICATIONS_SUCCESS.getCode()).data(detailNotificationsItem);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error("[NotificationsServiceImpl.update] Update notifications [{}] exception: ", id, ex);
             detailNotificationsResponse.message(ex.getMessage());
         }
