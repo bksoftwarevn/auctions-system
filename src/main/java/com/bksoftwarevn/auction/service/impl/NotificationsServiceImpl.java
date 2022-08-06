@@ -10,7 +10,13 @@ import com.bksoftwarevn.auction.mapper.AuctionMapper;
 import com.bksoftwarevn.auction.mapper.CategoryMapper;
 import com.bksoftwarevn.auction.mapper.NotificationMapper;
 import com.bksoftwarevn.auction.mapper.ProductMapper;
-import com.bksoftwarevn.auction.model.*;
+import com.bksoftwarevn.auction.model.CommonResponse;
+import com.bksoftwarevn.auction.model.DetailNotificationsItem;
+import com.bksoftwarevn.auction.model.DetailNotificationsResponse;
+import com.bksoftwarevn.auction.model.SearchNotificationsItem;
+import com.bksoftwarevn.auction.model.SearchNotificationsRequest;
+import com.bksoftwarevn.auction.model.SearchNotificationsResponse;
+import com.bksoftwarevn.auction.model.UpdateNotificationsRequest;
 import com.bksoftwarevn.auction.persistence.entity.NotificationEntity;
 import com.bksoftwarevn.auction.persistence.entity.NotificationEntity_;
 import com.bksoftwarevn.auction.persistence.entity.ProductEntity;
@@ -138,7 +144,7 @@ public class NotificationsServiceImpl implements NotificationsService {
     }
 
     @Override
-    public CommonResponse create(CreateNotificationsRequest createNotificationsRequest) {
+    public CommonResponse create(com.bksoftwarevn.auction.model.CreateNotificationsRequest createNotificationsRequest) {
         CommonResponse response = new CommonResponse().code(AucMessage.CREATE_NOTIFICATIONS_FAILED.getCode()).message(AucMessage.CREATE_NOTIFICATIONS_FAILED.getMessage());
         try {
 
@@ -210,7 +216,6 @@ public class NotificationsServiceImpl implements NotificationsService {
         DetailNotificationsResponse detailNotificationsResponse = new DetailNotificationsResponse().code(AucMessage.PULL_NOTIFICATIONS_FAILED.getCode()).message(AucMessage.PULL_NOTIFICATIONS_FAILED.getMessage());
         try {
             NotificationEntity notificationEntity = repository.findById(id).orElseThrow(() -> new AucException(AucMessage.NOTIFICATIONS_NOT_FOUND.getCode(), AucMessage.NOTIFICATIONS_NOT_FOUND.getMessage()));
-
             DetailNotificationsItem detailNotificationsItem = new DetailNotificationsItem();
             detailNotificationsItem.setActionType(notificationEntity.getActionType());
             detailNotificationsItem.setIsRead(notificationEntity.getIsRead());
@@ -225,6 +230,8 @@ public class NotificationsServiceImpl implements NotificationsService {
             }
 
             detailNotificationsResponse.message(AucMessage.PULL_NOTIFICATIONS_SUCCESS.getMessage()).code(AucMessage.PULL_NOTIFICATIONS_SUCCESS.getCode()).data(detailNotificationsItem);
+            repository.save(notificationEntity);
+            notificationEntity.setIsRead(Boolean.TRUE);
 
         } catch (Exception ex) {
             log.error("[NotificationsServiceImpl.update] Update notifications [{}] exception: ", id, ex);

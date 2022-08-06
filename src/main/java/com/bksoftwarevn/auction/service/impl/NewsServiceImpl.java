@@ -7,7 +7,12 @@ import com.bksoftwarevn.auction.dto.PaginationDTO;
 import com.bksoftwarevn.auction.dto.SearchDTO;
 import com.bksoftwarevn.auction.exception.AucException;
 import com.bksoftwarevn.auction.mapper.NewsMapper;
-import com.bksoftwarevn.auction.model.*;
+import com.bksoftwarevn.auction.model.CommonResponse;
+import com.bksoftwarevn.auction.model.CreateNewsResponse;
+import com.bksoftwarevn.auction.model.SearchNewsItem;
+import com.bksoftwarevn.auction.model.SearchNewsRequest;
+import com.bksoftwarevn.auction.model.SearchNewsResponse;
+import com.bksoftwarevn.auction.model.UpdateNewsRequest;
 import com.bksoftwarevn.auction.persistence.entity.*;
 import com.bksoftwarevn.auction.persistence.filter.Condition;
 import com.bksoftwarevn.auction.persistence.filter.Order;
@@ -77,7 +82,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    public CreateNewsResponse create(CreateNewsRequest createNewsRequest) {
+    public CreateNewsResponse create(com.bksoftwarevn.auction.model.CreateNewsRequest createNewsRequest) {
         CreateNewsResponse response = new CreateNewsResponse().code(AucMessage.CREATE_NEWS_FAILED.getCode()).message(AucMessage.CREATE_NEWS_FAILED.getMessage());
         try {
 

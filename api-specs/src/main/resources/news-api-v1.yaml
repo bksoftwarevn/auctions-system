@@ -35,22 +35,6 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateNewsResponse'
       tags:
         - News
-    get:
-      summary: Get list News
-      description: request to get list News
-      operationId: getListNews
-      requestBody:
-        description: get list news request body
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: 'schemas/news/search-news-request.yaml'
-      responses:
-        "200":
-          $ref: 'common.yaml#/components/responses/SearchNewsResponse'
-      tags:
-        - News
     put:
       summary: Put update News
       description: request to update News
@@ -76,5 +60,47 @@ paths:
       responses:
         "200":
           $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - News
+  /api/news/v1/list:
+    get:
+      summary: Get list News
+      description: request to get list News
+      operationId: getListNews
+      requestBody:
+        description: get list news request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/news/search-news-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/SearchNewsResponse'
+      tags:
+        - News
+  /api/news/v1/markread:
+    description: Read news
+    post:
+      summary: Post confirm read news
+      description: request to update readed news
+      operationId: postReadNews
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - News
+  /api/news/v1/detail:
+    get:
+      summary: get detail news
+      description: request to detail news
+      operationId: getNewDetail
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CreateNewsResponse'
       tags:
         - News

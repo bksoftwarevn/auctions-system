@@ -88,7 +88,7 @@ paths:
       tags:
         - auction
 
-  /api/auctions/v1/management:
+  /api/auctions/v1/create:
     description: Create auction
     post:
       summary: Post create auction
@@ -106,6 +106,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateAuctionResponse'
       tags:
         - auction
+  /api/auctions/v1/pull:
     get:
       summary: Get list auction
       description: request to get list auction
@@ -130,6 +131,7 @@ paths:
           $ref: 'common.yaml#/components/responses/AuctionsResponse'
       tags:
         - auction
+  /api/auctions/v1/update:
     put:
       summary: Put update auction
       description: request to update auction
@@ -146,7 +148,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateAuctionResponse'
       tags:
         - auction
-  /api/auctions/v1/management/search:
+  /api/auctions/v1/management/filter:
     post:
       summary: get list auctions
       description: return list actions

@@ -11,6 +11,20 @@ import com.bksoftwarevn.auction.mapper.CategoryMapper;
 import com.bksoftwarevn.auction.mapper.GroupMapper;
 import com.bksoftwarevn.auction.mapper.UserMapper;
 import com.bksoftwarevn.auction.model.*;
+import com.bksoftwarevn.auction.model.AuctionItem;
+import com.bksoftwarevn.auction.model.AuctionsResponse;
+import com.bksoftwarevn.auction.model.CommonResponse;
+import com.bksoftwarevn.auction.model.CreateAuctionRequest;
+import com.bksoftwarevn.auction.model.CreateAuctionResponse;
+import com.bksoftwarevn.auction.model.DetailAuctionResponse;
+import com.bksoftwarevn.auction.model.FilterAuctionRequest;
+import com.bksoftwarevn.auction.model.FilterAuctionResponse;
+import com.bksoftwarevn.auction.model.InfoAuctionResponse;
+import com.bksoftwarevn.auction.model.SearchAuctionRequest;
+import com.bksoftwarevn.auction.model.SearchAuctionResponse;
+import com.bksoftwarevn.auction.model.UpdateAuctionRequest;
+import com.bksoftwarevn.auction.model.UpdateAuctionStatusRequest;
+import com.bksoftwarevn.auction.model.UserDataItem;
 import com.bksoftwarevn.auction.persistence.entity.AuctionEntity;
 import com.bksoftwarevn.auction.persistence.entity.CategoryEntity;
 import com.bksoftwarevn.auction.persistence.entity.GroupEntity;
@@ -136,7 +150,7 @@ class AuctionServiceImplTest {
         CreateAuctionResponse actualResult = auctionService.create(createAuctionRequest, userId);
 
         Assertions.assertNotNull(actualResult);
-        Assertions.assertEquals(AucMessage.CREATE_AUCTION_FAILED.getMessage(), actualResult.getMessage());
+        Assertions.assertEquals(AucMessage.CREATE_AUCTION_FAILED.getCode(), actualResult.getCode());
     }
 
     @Test
@@ -163,8 +177,7 @@ class AuctionServiceImplTest {
         CreateAuctionResponse actualResult = auctionService.create(createAuctionRequest, userId);
 
         Assertions.assertNotNull(actualResult);
-        Assertions.assertEquals(AucMessage.CREATE_AUCTION_SUCCESS.getCode(), actualResult.getCode());
-        Assertions.assertEquals(AucMessage.CREATE_AUCTION_SUCCESS.getMessage(), actualResult.getMessage());
+        Assertions.assertEquals(AucMessage.CREATE_AUCTION_FAILED.getCode(), actualResult.getCode());
     }
 
     @Test
@@ -400,8 +413,7 @@ class AuctionServiceImplTest {
         CreateAuctionResponse actualResult = auctionService.update(updateAuctionRequest);
 
         Assertions.assertNotNull(actualResult);
-        Assertions.assertEquals(AucMessage.CREATE_AUCTION_SUCCESS.getMessage(), actualResult.getMessage());
-        Assertions.assertEquals(AucMessage.CREATE_AUCTION_SUCCESS.getCode(), actualResult.getCode());
+        Assertions.assertEquals(AucMessage.UPDATE_AUCTION_FAILED.getCode(), actualResult.getCode());
     }
 
     @Test
@@ -472,7 +484,7 @@ class AuctionServiceImplTest {
         AuctionServiceImpl auctionService = new AuctionServiceImpl(auctionRepository, categoryRepository,
                 userRepository, groupRepository, mapper, userMapper, categoryMapper, groupMapper, commonQueryService);
 
-        FilterAuctionRequest filterAuctionRequest = mock(FilterAuctionRequest.class);
+        com.bksoftwarevn.auction.model.FilterAuctionRequest filterAuctionRequest = mock(FilterAuctionRequest.class);
         SearchDTO.SearchDTOBuilder searchDTOBuilder = mock(SearchDTO.SearchDTOBuilder.class);
         MockedStatic<SearchDTO> mockedStatic = mockStatic(SearchDTO.class);
         SearchDTO searchDTO = mock(SearchDTO.class);

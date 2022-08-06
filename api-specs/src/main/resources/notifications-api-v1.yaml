@@ -35,22 +35,6 @@ paths:
           $ref: 'common.yaml#/components/responses/CommonResponse'
       tags:
         - Notifications
-    get:
-      summary: Get list Notifications
-      description: request to get list Notifications
-      operationId: getListNotifications
-      requestBody:
-        description: get list notifications request body
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: 'schemas/noti/search-notifications-request.yaml'
-      responses:
-        "200":
-          $ref: 'common.yaml#/components/responses/SearchNotificationsResponse'
-      tags:
-        - Notifications
     put:
       summary: Put update Notifications
       description: request to update Notifications
@@ -76,5 +60,35 @@ paths:
       responses:
         "200":
           $ref: 'common.yaml#/components/responses/CommonResponse'
+      tags:
+        - Notifications
+  /api/notifications/v1/list:
+    get:
+      summary: Get list Notifications
+      description: request to get list Notifications
+      operationId: getListNotifications
+      requestBody:
+        description: get list notifications request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/noti/search-notifications-request.yaml'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/SearchNotificationsResponse'
+      tags:
+        - Notifications
+  /api/notifications/v1/detail:
+    description: Read notifications
+    get:
+      summary: get detail notifications
+      description: request to detail notifications
+      operationId: getNotificationsDetail
+      parameters:
+        - $ref: 'common.yaml#/components/parameters/IdPathParam'
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/DetailNotificationsResponse'
       tags:
         - Notifications

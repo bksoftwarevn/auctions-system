@@ -7,6 +7,7 @@ import com.bksoftwarevn.auction.model.CreateNewsResponse;
 import com.bksoftwarevn.auction.model.SearchNewsRequest;
 import com.bksoftwarevn.auction.model.SearchNewsResponse;
 import com.bksoftwarevn.auction.model.UpdateNewsRequest;
+import com.bksoftwarevn.auction.security.util.SecurityUtils;
 import com.bksoftwarevn.auction.service.NewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,5 +44,17 @@ public class NewsController implements com.bksoftwarevn.auction.api.v1.NewsApi {
     public ResponseEntity<CreateNewsResponse> putUpdateNews(UpdateNewsRequest updateNewsRequest) {
         log.info("[NewsController.putUpdateNews] Start get update news with data: {}", updateNewsRequest);
         return ResponseEntity.ok(newsService.update(updateNewsRequest));
+    }
+
+    @Override
+    public ResponseEntity<CommonResponse> postReadNews(String id) {
+        log.info("[ClientController.postReadNews] User read news [{}] request", id);
+        return ResponseEntity.ok(newsService.read(SecurityUtils.getCurrentUserId(), id));
+    }
+
+    @Override
+    public ResponseEntity<CreateNewsResponse> getNewDetail(String id) {
+        log.info("[ClientController.getNewDetail] User read news detail [{}] request", id);
+        return ResponseEntity.ok(newsService.detail(SecurityUtils.getCurrentUserId(), id));
     }
 }

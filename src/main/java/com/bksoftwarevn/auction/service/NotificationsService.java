@@ -1,7 +1,6 @@
 package com.bksoftwarevn.auction.service;
 
 
-import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.model.CommonResponse;
 import com.bksoftwarevn.auction.model.CreateNotificationsRequest;
 import com.bksoftwarevn.auction.model.SearchNotificationsRequest;

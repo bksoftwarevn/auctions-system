@@ -16,6 +16,9 @@ properties:
   endDate:
     description: aution end time
     type: string
+  startPrice:
+    description: Product start price
+    type: string
   descriptions:
     description: aution descriptions
     type: string

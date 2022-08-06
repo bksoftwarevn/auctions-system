@@ -7,7 +7,12 @@ import com.bksoftwarevn.auction.mapper.AuctionMapper;
 import com.bksoftwarevn.auction.mapper.CategoryMapper;
 import com.bksoftwarevn.auction.mapper.NotificationMapper;
 import com.bksoftwarevn.auction.mapper.ProductMapper;
-import com.bksoftwarevn.auction.model.*;
+import com.bksoftwarevn.auction.model.CommonResponse;
+import com.bksoftwarevn.auction.model.CreateNotificationsRequest;
+import com.bksoftwarevn.auction.model.DetailNotificationsResponse;
+import com.bksoftwarevn.auction.model.SearchNotificationsRequest;
+import com.bksoftwarevn.auction.model.SearchNotificationsResponse;
+import com.bksoftwarevn.auction.model.UpdateNotificationsRequest;
 import com.bksoftwarevn.auction.persistence.entity.*;
 import com.bksoftwarevn.auction.persistence.repository.NotificationRepository;
 import com.bksoftwarevn.auction.persistence.repository.ProductRepository;
@@ -242,7 +247,7 @@ class NotificationsServiceImplTest {
 
     @Test
     void update() {
-        UpdateNotificationsRequest updateNotificationsRequest = mock(UpdateNotificationsRequest.class);
+        com.bksoftwarevn.auction.model.UpdateNotificationsRequest updateNotificationsRequest = mock(UpdateNotificationsRequest.class);
 
         when(updateNotificationsRequest.getId()).thenReturn(MOCK_ID);
         when(repository.findById(MOCK_ID)).thenReturn(Optional.empty());

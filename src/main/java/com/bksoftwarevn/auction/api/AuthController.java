@@ -15,7 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 
 @RestController
@@ -48,7 +52,8 @@ public class AuthController implements AuthApi {
 
 
     @Override
-    public ResponseEntity<UserRegisterResponse> postUserRegister(UserRegisterRequest userRegisterRequest) {
+    public ResponseEntity<UserRegisterResponse> postUserRegister(@Valid @NotNull
+                                                                     @RequestBody UserRegisterRequest userRegisterRequest) {
         log.info("[AuthController.postUserRegister] Register user data: {}", userRegisterRequest.getUsername());
         return ResponseEntity.ok(userService.registerUser(userRegisterRequest));
     }

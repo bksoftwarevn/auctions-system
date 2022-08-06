@@ -16,8 +16,17 @@ tags:
   - name: Category
 
 paths:
-
-  /api/category/v1/group:
+  /api/group/v1/list:
+    get:
+      summary: Get list category group
+      description: request to get list category group
+      operationId: getCategoryGroups
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/GroupsResponse'
+      tags:
+        - category
+  /api/group/v1/management:
     description: Create category group
     post:
       summary: Post create category group
@@ -33,15 +42,6 @@ paths:
       responses:
         "200":
           $ref: 'common.yaml#/components/responses/CreateCategoryGroupResponse'
-      tags:
-        - category
-    get:
-      summary: Get list category group
-      description: request to get list category group
-      operationId: getCategoryGroups
-      responses:
-        "200":
-          $ref: 'common.yaml#/components/responses/GroupsResponse'
       tags:
         - category
     put:
@@ -79,15 +79,6 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateCategoryResponse'
       tags:
         - category
-    get:
-      summary: Get list category 
-      description: request to get list category 
-      operationId: getCategories
-      responses:
-        "200":
-          $ref: 'common.yaml#/components/responses/CategoriesResponse'
-      tags:
-        - category
     put:
       summary: Put update category 
       description: request to update category 
@@ -102,5 +93,15 @@ paths:
       responses:
         "200":
           $ref: 'common.yaml#/components/responses/CreateCategoryResponse'
+      tags:
+        - category
+  /api/category/v1/list:
+    get:
+      summary: Get list category
+      description: request to get list category
+      operationId: getCategories
+      responses:
+        "200":
+          $ref: 'common.yaml#/components/responses/CategoriesResponse'
       tags:
         - category

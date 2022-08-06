@@ -29,7 +29,6 @@ public class AuctionController implements AuctionApi {
 
     private final AuctionService auctionService;
 
-
     @Override
     public ResponseEntity<CommonResponse> deleteAuction(String id) {
         log.info("[AuctionController.getAuctions] Start delete auction: [{}]", id);

@@ -26,6 +26,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.release>${java.version}</maven.compiler.release>
+        <validation-api.version>2.0.1.Final</validation-api.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <mapstruct.version>1.5.1.Final</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
@@ -67,6 +68,11 @@
                     <artifactId>tomcat-jdbc</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -149,7 +155,11 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -179,11 +189,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -521,20 +526,6 @@
                         <configuration>
                             <inputSpec>
                                 ${project.build.directory}/dependencies/auctions-spec/confirmation-api-v${auctions-spec.version}.yaml
-                            </inputSpec>
-                            <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
-                            <modelPackage>com.bksoftwarevn.auction.model</modelPackage>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>generate-admin-api-code</id>
-                        <goals>
-                            <goal>generate-spring-boot-embedded</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <inputSpec>
-                                ${project.build.directory}/dependencies/auctions-spec/admin-api-v${auctions-spec.version}.yaml
                             </inputSpec>
                             <apiPackage>com.bksoftwarevn.auction.api.v1</apiPackage>
                             <modelPackage>com.bksoftwarevn.auction.model</modelPackage>

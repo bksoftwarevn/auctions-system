@@ -1,13 +1,16 @@
 package com.bksoftwarevn.auction.persistence.filter;
 
+import com.bksoftwarevn.auction.constant.AucConstant;
 import com.bksoftwarevn.auction.constant.AucMessage;
 import com.bksoftwarevn.auction.exception.AucException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,8 +74,16 @@ public class QueryCommon {
                     predicates.add(criteriaBuilder.lt(root.get(condition.getField()),
                             (Number) castToRequiredType(root.get(condition.getField()).getJavaType(), condition.getValue())));
                     break;
+                case LTI:
+                    predicates.add(criteriaBuilder.lessThan(root.get(condition.getField()),
+                            (Instant) castToRequiredType(root.get(condition.getField()).getJavaType(), condition.getValue())));
+                    break;
+                case GTI:
+                    predicates.add(criteriaBuilder.greaterThan(root.get(condition.getField()),
+                            (Instant) castToRequiredType(root.get(condition.getField()).getJavaType(), condition.getValue())));
+                    break;
                 default:
-                    throw new AucException(AucMessage.OPERATION_NOT_SUPPORT.getCode(),AucMessage.OPERATION_NOT_SUPPORT.getMessage());
+                    throw new AucException(AucMessage.OPERATION_NOT_SUPPORT.getCode(), AucMessage.OPERATION_NOT_SUPPORT.getMessage());
             }
         }
         return predicates;
@@ -85,10 +96,16 @@ public class QueryCommon {
             return Integer.valueOf((Integer) value);
         } else if (Enum.class.isAssignableFrom(fieldType)) {
             return Enum.valueOf(fieldType, (String) value);
+        } else if (BigDecimal.class.isAssignableFrom(fieldType)) {
+            return new BigDecimal((String) value);
         } else if (boolean.class.isAssignableFrom(fieldType)) {
             return Boolean.valueOf((Boolean) value);
         } else if (Instant.class.isAssignableFrom(fieldType)) {
-            return Instant.parse((CharSequence) value);
+            try {
+                return DateUtils.parseDate((String) value, AucConstant.DATE_FORMAT).toInstant();
+            } catch (ParseException e) {
+                throw new AucException(AucMessage.INTERNAL_SERVER_ERROR.getCode(), e.getMessage());
+            }
         } else if (Long.class.isAssignableFrom(fieldType)) {
             return Long.valueOf((String) value);
         } else if (BigDecimal.class.isAssignableFrom(fieldType)) {
@@ -112,7 +129,7 @@ public class QueryCommon {
                     orders.add(criteriaBuilder.desc(root.get(order.getField())));
                     break;
                 default:
-                    throw new AucException(AucMessage.OPERATION_NOT_SUPPORT.getCode(),AucMessage.OPERATION_NOT_SUPPORT.getMessage());
+                    throw new AucException(AucMessage.OPERATION_NOT_SUPPORT.getCode(), AucMessage.OPERATION_NOT_SUPPORT.getMessage());
             }
         }
         return orders;

@@ -84,6 +84,7 @@ public class AuctionServiceImpl implements AuctionService {
                 entity.setStartDate(DateUtils.parseDate(createAuctionRequest.getStartDate(), AucConstant.DATE_FORMAT).toInstant());
                 entity.setEndDate(DateUtils.parseDate(createAuctionRequest.getEndDate(), AucConstant.DATE_FORMAT).toInstant());
                 entity.setDecscriptions(createAuctionRequest.getDescriptions());
+                entity.setStartPrice(new BigDecimal(createAuctionRequest.getStartPrice()));
                 entity.setStatus(AuctionStatus.PENDING.name());
                 entity.setReason(ActionStatus.CREATED.name());
                 entity = auctionRepository.save(entity);
@@ -150,7 +151,7 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public CreateAuctionResponse update(UpdateAuctionRequest updateAuctionRequest) {
-        CreateAuctionResponse response = new CreateAuctionResponse().code(AucMessage.CREATE_AUCTION_FAILED.getCode()).message(AucMessage.CREATE_AUCTION_FAILED.getMessage());
+        CreateAuctionResponse response = new CreateAuctionResponse().code(AucMessage.UPDATE_AUCTION_FAILED.getCode()).message(AucMessage.UPDATE_AUCTION_FAILED.getMessage());
         try {
 
             if (validateAuctionData(updateAuctionRequest)) {
@@ -161,10 +162,11 @@ public class AuctionServiceImpl implements AuctionService {
                     auctionEntity.setStartDate(DateUtils.parseDate(updateAuctionRequest.getStartDate(), AucConstant.DATE_FORMAT).toInstant());
                     auctionEntity.setEndDate(DateUtils.parseDate(updateAuctionRequest.getEndDate(), AucConstant.DATE_FORMAT).toInstant());
                     auctionEntity.setDecscriptions(updateAuctionRequest.getDescriptions());
+                    auctionEntity.setStartPrice(new BigDecimal(updateAuctionRequest.getStartPrice()));
                     auctionEntity.setReason(updateAuctionRequest.getReason());
                     auctionEntity = auctionRepository.save(auctionEntity);
                     if (ObjectUtils.isNotEmpty(auctionEntity)) {
-                        response.data(mapper.mappingEntityToItem(auctionEntity)).code(AucMessage.CREATE_AUCTION_SUCCESS.getCode()).message(AucMessage.CREATE_AUCTION_SUCCESS.getMessage());
+                        response.data(mapper.mappingEntityToItem(auctionEntity)).code(AucMessage.UPDATE_AUCTION_SUCCESS.getCode()).message(AucMessage.UPDATE_AUCTION_SUCCESS.getMessage());
                     }
                 } else {
                     response.data(mapper.mappingEntityToItem(auctionEntity)).code(AucMessage.CANNOT_UPDATE_AUCTION.getCode()).message(AucMessage.CANNOT_UPDATE_AUCTION.getMessage());
@@ -267,10 +269,23 @@ public class AuctionServiceImpl implements AuctionService {
         DetailAuctionResponse detailAuctionResponse = new DetailAuctionResponse().code(AucMessage.AUCTION_NOT_FOUND.getCode()).message(AucMessage.AUCTION_NOT_FOUND.getMessage());
         try {
             Optional<AuctionEntity> auctionEntity = auctionRepository.findById(id);
+
             if (auctionEntity.isPresent()) {
+                AuctionEntity auction = auctionEntity.get();
+                if(AuctionStatus.valueOf(auction.getStatus()).getStatus()<= AuctionStatus.STOPPED.getStatus()){
+                    if(auction.getEndDate().isBefore(Instant.now())){
+                        auction.setStatus(AuctionStatus.STOPPED.name());
+                    }else if(auction.getStartDate().isBefore(Instant.now())) {
+                        auction.setStatus(AuctionStatus.STARTING.name());
+                    }
+                    auctionRepository.save(auction);
+                }
+
                 DetailAuctionItem detailAuctionItem = new DetailAuctionItem().auctions(mapper.mappingEntityToItem(auctionEntity.get()))
                         .category(categoryMapper.mappingEntityToItem(auctionEntity.get().getCategory()))
                         .sellingUser(userMapper.mappingEntity(auctionEntity.get().getUser()));
+
+
                 // need add detail product, buyer,...
                 detailAuctionResponse.code(AucMessage.PULL_AUCTION_SUCCESS.getCode()).message(AucMessage.PULL_AUCTION_SUCCESS.getMessage()).data(detailAuctionItem);
             }
@@ -329,23 +344,23 @@ public class AuctionServiceImpl implements AuctionService {
             int searchType = searchAuctionRequest.getType();
             if (SearchType.START_PRICE.getType() == searchType) {
                 Condition condition = Condition.builder()
-                        .operator(Operator.EQUALS)
+                        .operator(Operator.GREATER_THAN)
                         .field(AuctionEntity_.START_PRICE)
-                        .value(new BigDecimal(searchAuctionRequest.getKeyword()))
+                        .value(searchAuctionRequest.getKeyword())
                         .build();
                 conditions.add(condition);
             } else if (SearchType.START_TIME.getType() == searchType) {
                 Condition condition = Condition.builder()
-                        .operator(Operator.EQUALS)
+                        .operator(Operator.GTI)
                         .field(AuctionEntity_.START_DATE)
-                        .value(DateUtils.parseDate(searchAuctionRequest.getKeyword(), AucConstant.DATE_FORMAT).toInstant())
+                        .value(searchAuctionRequest.getKeyword())
                         .build();
                 conditions.add(condition);
             } else if (SearchType.END_TIME.getType() == searchType) {
                 Condition condition = Condition.builder()
-                        .operator(Operator.EQUALS)
+                        .operator(Operator.LTI)
                         .field(AuctionEntity_.END_DATE)
-                        .value(DateUtils.parseDate(searchAuctionRequest.getKeyword(), AucConstant.DATE_FORMAT).toInstant())
+                        .value(searchAuctionRequest.getKeyword())
                         .build();
                 conditions.add(condition);
             } else {

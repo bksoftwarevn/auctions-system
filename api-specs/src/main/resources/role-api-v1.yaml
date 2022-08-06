@@ -17,7 +17,7 @@ tags:
 
 paths:
 
-  /api/role/v1/role:
+  /api/role/v1/management:
     description: Create role
     post:
       summary: Post create role

@@ -17,7 +17,7 @@ tags:
 
 paths:
 
-  /api/comment/v1/management:
+  /api/comment/v1/create:
     description: Create comment
     post:
       summary: Post create comment
@@ -35,6 +35,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateCommentResponse'
       tags:
         - comment
+  /api/comment/v1/update:
     put:
       summary: Put update comment
       description: request to update comment
@@ -51,6 +52,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateCommentResponse'
       tags:
         - comment
+  /api/comment/v1/list:
     get:
       summary: get list comments
       description: request to get comments
@@ -67,6 +69,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CommentsResponse'
       tags:
         - comment
+  /api/comment/v1/delete:
     delete:
       summary: delete comment
       description: request to delete comment
@@ -79,7 +82,7 @@ paths:
       tags:
         - comment
 
-  /api/like/v1/management:
+  /api/like/v1/create:
     description: Create like
     post:
       summary: Post create like
@@ -97,6 +100,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateLikeResponse'
       tags:
         - comment
+  /api/like/v1/list:
     get:
       summary: get list auctions liked
       description: request to get auction liked

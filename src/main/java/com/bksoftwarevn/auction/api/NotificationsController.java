@@ -1,13 +1,12 @@
 package com.bksoftwarevn.auction.api;
 
-import com.bksoftwarevn.auction.model.*;
 import com.bksoftwarevn.auction.model.CommonResponse;
 import com.bksoftwarevn.auction.model.CreateNotificationsRequest;
+import com.bksoftwarevn.auction.model.DetailNotificationsResponse;
 import com.bksoftwarevn.auction.model.SearchNotificationsRequest;
 import com.bksoftwarevn.auction.model.SearchNotificationsResponse;
 import com.bksoftwarevn.auction.model.UpdateNotificationsRequest;
 import com.bksoftwarevn.auction.security.util.SecurityUtils;
-import com.bksoftwarevn.auction.service.NewsService;
 import com.bksoftwarevn.auction.service.NotificationsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +21,16 @@ public class NotificationsController implements com.bksoftwarevn.auction.api.v1.
 
     private final NotificationsService notificationsService;
 
-
-
     @Override
     public ResponseEntity<SearchNotificationsResponse> getListNotifications(SearchNotificationsRequest searchNotificationsRequest) {
         log.info("[NotificationsController.getListNotifications] Start get list notifications with data: {}", searchNotificationsRequest);
         return ResponseEntity.ok(notificationsService.search(searchNotificationsRequest));
+    }
+
+    @Override
+    public ResponseEntity<DetailNotificationsResponse> getNotificationsDetail(String id) {
+        log.info("[ClientController.getNotificationsDetail] User read notifications detail [{}] request", id);
+        return ResponseEntity.ok(notificationsService.detail(SecurityUtils.getCurrentUserId(), id));
     }
 
     @Override

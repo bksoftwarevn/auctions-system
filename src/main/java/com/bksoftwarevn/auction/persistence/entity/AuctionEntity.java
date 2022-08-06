@@ -73,6 +73,7 @@ public class AuctionEntity {
     private BigDecimal startPrice;
 
     @OneToMany(mappedBy = "auction")
+    @ToString.Exclude
     private Set<LikeAuctionEntity> likeAuctions = new LinkedHashSet<>();
 
     @Override

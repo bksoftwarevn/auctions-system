@@ -17,7 +17,7 @@ tags:
 
 paths:
 
-  /api/product/v1/management:
+  /api/product/v1/create:
     description: Create product
     post:
       summary: Post create product
@@ -35,6 +35,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateProductResponse'
       tags:
         - product
+  /api/product/v1/update:
     put:
       summary: Put update product
       description: request to update product
@@ -51,6 +52,7 @@ paths:
           $ref: 'common.yaml#/components/responses/CreateProductResponse'
       tags:
         - product
+  /api/product/v1/detail:
     get:
       summary: get info product
       description: request to get info product

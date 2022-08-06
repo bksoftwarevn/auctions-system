@@ -55,7 +55,7 @@ public class ProductEntity {
     @Column(name = "buyer", length = 36)
     private String buyer;
 
-    @Column(name = "max_bid", nullable = false, precision = 30)
+    @Column(name = "max_bid", precision = 30)
     private BigDecimal maxBid;
 
     @OneToMany(mappedBy = "product")

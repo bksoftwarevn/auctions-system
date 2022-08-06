@@ -15,6 +15,9 @@ properties:
     description: aution end time
     type: string
     example: "21/20/2022 15:05:33"
+  startPrice:
+    description: Product start price
+    type: string
   descriptions:
     description: aution descriptions
     type: string
